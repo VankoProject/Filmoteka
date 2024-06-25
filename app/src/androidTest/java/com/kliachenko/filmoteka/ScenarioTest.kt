@@ -24,7 +24,7 @@ class ScenarioTest {
 
     @Test
     fun `load_dashboard_with_error_success_and_favorites_interaction`() = with(dashboardPage) {
-        checkDashboardProgressState(message = "loading...", tab = "Popular")
+        checkDashboardProgressState(message = "loading...", tabName = "Popular")
         waitUntilDashboardProgressStateIsNotVisible()
         checkErrorState(errorMessage = "No internet connection")
         tapRetryButton()
