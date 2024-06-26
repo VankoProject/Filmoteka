@@ -2,6 +2,8 @@ package com.kliachenko.filmoteka
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.kliachenko.filmoteka.pageobject.DashboardPage
+import com.kliachenko.filmoteka.pageobject.Film
 import org.junit.Before
 import org.junit.Rule
 
@@ -30,7 +32,14 @@ class ScenarioTest {
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Popular")
         waitUntilDashboardProgressStateIsNotVisible()
-        checkSuccessfulState()
+        checkSuccessfulState(
+            films = listOf(
+                Film(title = "Film#1", rate = "1.0", isFavorite = false),
+                Film(title = "Film#2", rate = "2.0", isFavorite = false),
+                Film(title = "Film#3", rate = "3.0", isFavorite = false),
+                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            )
+        )
         tapTab(tabName = "Top rated")
         checkDashboardProgressState(message = "loading...", tabName = "Top rated")
         waitUntilDashboardProgressStateIsNotVisible()
@@ -38,7 +47,13 @@ class ScenarioTest {
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Top rated")
         waitUntilDashboardProgressStateIsNotVisible()
-        checkSuccessfulState()
+        checkSuccessfulState(
+            films = listOf(
+                Film(title = "Film#1", rate = "1.0", isFavorite = false),
+                Film(title = "Film#2", rate = "2.0", isFavorite = false),
+                Film(title = "Film#3", rate = "3.0", isFavorite = false),
+                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+                ))
         tapTab(tabName = "Upcoming")
         checkDashboardProgressState(message = "loading...", tabName = "Upcoming")
         waitUntilDashboardProgressStateIsNotVisible()
@@ -46,13 +61,43 @@ class ScenarioTest {
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Upcoming")
         waitUntilDashboardProgressStateIsNotVisible()
-        checkSuccessfulState()
-        tapUnlikeBookmarkIcon()
-        checkAddToFavorites()
-        tapLikeBookmarkIcon()
-        checkRemovedFromFavorites()
+        checkSuccessfulState(
+            films = listOf(
+                Film(title = "Film#1", rate = "1.0", isFavorite = false),
+                Film(title = "Film#2", rate = "2.0", isFavorite = false),
+                Film(title = "Film#3", rate = "3.0", isFavorite = false),
+                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            )
+        )
+        tapFilmBookmarkIcon(position = 0)
+        checkSuccessfulState(
+            films = listOf(
+                Film(title = "Film#1", rate = "1.0", isFavorite = true),
+                Film(title = "Film#2", rate = "2.0", isFavorite = false),
+                Film(title = "Film#3", rate = "3.0", isFavorite = false),
+                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            )
+        )
+        tapFilmBookmarkIcon(position = 0)
+        checkSuccessfulState(
+            films = listOf(
+                Film(title = "Film#1", rate = "1.0", isFavorite = false),
+                Film(title = "Film#2", rate = "2.0", isFavorite = false),
+                Film(title = "Film#3", rate = "3.0", isFavorite = false),
+                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            )
+        )
         tapTab(tabName = "Popular")
-        checkSuccessfulState()
+        checkSuccessfulState(
+            films = listOf(
+                Film(title = "Film#1", rate = "1.0", isFavorite = false),
+                Film(title = "Film#2", rate = "2.0", isFavorite = false),
+                Film(title = "Film#3", rate = "3.0", isFavorite = false),
+                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            )
+        )
+        tapFilm(position = 1)
+        checkNavigateToDetailScreen()
     }
 
 }
