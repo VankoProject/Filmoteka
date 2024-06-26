@@ -28,11 +28,12 @@ class ScenarioTest {
     fun `load_dashboard_with_error_success_and_favorites_interaction`() = with(dashboardPage) {
         checkDashboardProgressState(message = "loading...", tabName = "Popular")
         waitUntilDashboardProgressStateIsNotVisible()
-        checkErrorState(errorMessage = "No internet connection")
+        checkErrorState(errorMessage = "No internet connection", tabName = "Popular")
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Popular")
         waitUntilDashboardProgressStateIsNotVisible()
         checkSuccessfulState(
+            tabName = "Popular",
             films = listOf(
                 Film(title = "Film#1", rate = "1.0", isFavorite = false),
                 Film(title = "Film#2", rate = "2.0", isFavorite = false),
@@ -43,11 +44,12 @@ class ScenarioTest {
         tapTab(tabName = "Top rated")
         checkDashboardProgressState(message = "loading...", tabName = "Top rated")
         waitUntilDashboardProgressStateIsNotVisible()
-        checkErrorState(errorMessage = "No internet connection")
+        checkErrorState(errorMessage = "No internet connection", tabName = "Top rated")
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Top rated")
         waitUntilDashboardProgressStateIsNotVisible()
         checkSuccessfulState(
+            tabName = "Top rated",
             films = listOf(
                 Film(title = "Film#1", rate = "1.0", isFavorite = false),
                 Film(title = "Film#2", rate = "2.0", isFavorite = false),
@@ -57,11 +59,12 @@ class ScenarioTest {
         tapTab(tabName = "Upcoming")
         checkDashboardProgressState(message = "loading...", tabName = "Upcoming")
         waitUntilDashboardProgressStateIsNotVisible()
-        checkErrorState(errorMessage = "No internet connection")
+        checkErrorState(errorMessage = "No internet connection", tabName = "Upcoming")
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Upcoming")
         waitUntilDashboardProgressStateIsNotVisible()
         checkSuccessfulState(
+            tabName = "Upcoming",
             films = listOf(
                 Film(title = "Film#1", rate = "1.0", isFavorite = false),
                 Film(title = "Film#2", rate = "2.0", isFavorite = false),
@@ -71,6 +74,7 @@ class ScenarioTest {
         )
         tapFilmBookmarkIcon(position = 0)
         checkSuccessfulState(
+            tabName = "Upcoming",
             films = listOf(
                 Film(title = "Film#1", rate = "1.0", isFavorite = true),
                 Film(title = "Film#2", rate = "2.0", isFavorite = false),
@@ -80,6 +84,7 @@ class ScenarioTest {
         )
         tapFilmBookmarkIcon(position = 0)
         checkSuccessfulState(
+            tabName = "Upcoming",
             films = listOf(
                 Film(title = "Film#1", rate = "1.0", isFavorite = false),
                 Film(title = "Film#2", rate = "2.0", isFavorite = false),
@@ -89,6 +94,7 @@ class ScenarioTest {
         )
         tapTab(tabName = "Popular")
         checkSuccessfulState(
+            tabName = "Popular",
             films = listOf(
                 Film(title = "Film#1", rate = "1.0", isFavorite = false),
                 Film(title = "Film#2", rate = "2.0", isFavorite = false),
@@ -97,7 +103,7 @@ class ScenarioTest {
             )
         )
         tapFilm(position = 1)
-        checkNavigateToDetailScreen()
+        checkDashboardIsNotVisible()
     }
 
 }
