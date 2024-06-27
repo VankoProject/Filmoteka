@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import android.view.View
 import android.widget.LinearLayout
@@ -17,37 +17,33 @@ class DashboardPage {
         parentId = parentId,
         parentClass = parentClass,
         tabs = listOf("Popular", "Top rated", "Upcoming"),
-        tabsIds = listOf(R.id.popularTab, R.id.topRatedTab, R.id.upcomingTab))
-    private val errorTextView = ErrorTextViewUi(parentId = parentId, parentClass = parentClass)
-    private val progressBar = ProgressBarUi(parentId = parentId, parentClass = parentClass)
-    private val retryButtonUi = RetryButtonUi(parentId = parentId, parentClass = parentClass)
-    private val progressTextView =
-        ProgressTextViewUi(parentId = parentId, parentClass = parentClass)
-    private val filmsListUi = FilmsListUi(parentId = parentId, parentClass = parentClass)
+        tabsIds = listOf(R.id.popularTab, R.id.topRatedTab, R.id.upcomingTab)
+    )
+    private val errorTextViewUi = ErrorTextViewUi(parentId, parentClass)
+    private val progressBarUi = ProgressBarUi(parentId, parentClass)
+    private val retryButtonUi = RetryButtonUi(parentId, parentClass)
+    private val progressTextViewUi = ProgressTextViewUi(parentId, parentClass)
+    private val filmsListUi = FilmsListUi(parentId, parentClass)
 
     fun checkDashboardProgressState(message: String, tabName: String) {
-        dashboardTabsUi.checkVisible(
-            activeTab = tabName
-        )
-        errorTextView.checkDashboardProgressState()
-        progressBar.checkDashboardProgressState()
+        dashboardTabsUi.checkVisible(activeTab = tabName)
+        errorTextViewUi.checkDashboardProgressState()
+        progressBarUi.checkDashboardProgressState()
         retryButtonUi.checkDashboardProgressState()
-        progressTextView.checkDashboardProgressState(message = message)
+        progressTextViewUi.checkDashboardProgressState(message = message)
         filmsListUi.checkDashboardProgressState()
     }
 
     fun waitUntilDashboardProgressStateIsNotVisible() {
-        progressBar.waitUntilIsNotVisible()
+        progressBarUi.waitUntilIsNotVisible()
     }
 
     fun checkErrorState(errorMessage: String, tabName: String) {
-        dashboardTabsUi.checkVisible(
-            activeTab = tabName
-        )
-        errorTextView.checkErrorState(message = errorMessage)
-        progressBar.checkErrorState()
+        dashboardTabsUi.checkVisible(activeTab = tabName)
+        errorTextViewUi.checkErrorState(message = errorMessage)
+        progressBarUi.checkErrorState()
         retryButtonUi.checkErrorState()
-        progressTextView.checkErrorState()
+        progressTextViewUi.checkErrorState()
         filmsListUi.checkErrorState()
     }
 
@@ -60,14 +56,12 @@ class DashboardPage {
     }
 
     fun checkSuccessfulState(filmItems: List<FilmItem>, tabName: String) {
-        dashboardTabsUi.checkVisible(
-            activeTab = tabName
-        )
-        errorTextView.checkSuccessfulState()
-        progressBar.checkSuccessfulState()
+        dashboardTabsUi.checkVisible(activeTab = tabName)
+        errorTextViewUi.checkSuccessfulState()
+        progressBarUi.checkSuccessfulState()
         retryButtonUi.checkSuccessfulState()
-        progressTextView.checkSuccessfulState()
-        filmsListUi.checkSuccessfulState(filmItems = filmItems)
+        progressTextViewUi.checkSuccessfulState()
+        filmsListUi.checkSuccessfulState(films = filmItems)
     }
 
     fun tapTab(tabName: String) {
@@ -80,10 +74,10 @@ class DashboardPage {
 
     fun checkDashboardIsNotVisible() {
         dashboardTabsUi.checkDashboardIsNotVisible()
-        errorTextView.checkDashboardIsNotVisible()
-        progressBar.checkDashboardIsNotVisible()
+        errorTextViewUi.checkDashboardIsNotVisible()
+        progressBarUi.checkDashboardIsNotVisible()
         retryButtonUi.checkDashboardIsNotVisible()
-        progressTextView.checkDashboardIsNotVisible()
+        progressTextViewUi.checkDashboardIsNotVisible()
         filmsListUi.checkDashboardIsNotVisible()
     }
 }

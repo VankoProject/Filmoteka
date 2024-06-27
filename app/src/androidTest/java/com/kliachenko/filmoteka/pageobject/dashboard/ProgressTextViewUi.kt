@@ -1,33 +1,31 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import android.view.View
+import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.google.android.material.button.MaterialButton
 import com.kliachenko.filmoteka.R
-import com.kliachenko.filmoteka.matchers.ColorMatcher
-import com.kliachenko.filmoteka.matchers.RecyclerViewMatcher
+import com.kliachenko.filmoteka.core.ColorMatcher
+import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 /**
 Properties:
-1. color
-2. text
-3. visibility
+1. color //1
+2. visibility
  */
 
-class RetryButtonUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
+class ProgressTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
-    private val retryButtonMatcher = RecyclerViewMatcher(
+    private val progressTextViewMatcher = RecyclerViewMatcher(
         position = 1,
-        targetViewId = R.id.retryButton,
+        targetViewId = R.id.progressTextView,
         recyclerViewId = R.id.dashboardRecyclerView
     )
 
@@ -35,25 +33,21 @@ class RetryButtonUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         allOf(
             parentId,
             parentClass,
-            retryButtonMatcher,
-            isAssignableFrom(MaterialButton::class.java)
+            progressTextViewMatcher,
+            isAssignableFrom(TextView::class.java)
         )
     )
 
-    fun checkDashboardProgressState() {
-        interaction.check(matches(not(isDisplayed())))
-    }
-
-    fun checkErrorState() {
+    fun checkDashboardProgressState(message: String) {
         interaction.apply {
             check(matches(isDisplayed()))
-            check(matches(withText("Retry")))
-            check(matches(ColorMatcher("#2F479B")))
+            check(matches(withText(message)))
+            check(matches(ColorMatcher("#FFFFFF")))
         }
     }
 
-    fun tap() {
-        interaction.perform(click())
+    fun checkErrorState() {
+        interaction.check(matches(not(isDisplayed())))
     }
 
     fun checkSuccessfulState() {

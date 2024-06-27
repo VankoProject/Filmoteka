@@ -1,31 +1,33 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import android.view.View
-import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import com.google.android.material.button.MaterialButton
 import com.kliachenko.filmoteka.R
-import com.kliachenko.filmoteka.matchers.ColorMatcher
-import com.kliachenko.filmoteka.matchers.RecyclerViewMatcher
+import com.kliachenko.filmoteka.core.ColorMatcher
+import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 /**
 Properties:
-1. color //1
-2. visibility
+1. color
+2. text
+3. visibility
  */
 
-class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
+class RetryButtonUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
-    private val errorTextViewMatcher = RecyclerViewMatcher(
-        position = 0,
-        targetViewId = R.id.errorTextView,
+    private val retryButtonMatcher = RecyclerViewMatcher(
+        position = 1,
+        targetViewId = R.id.retryButton,
         recyclerViewId = R.id.dashboardRecyclerView
     )
 
@@ -33,8 +35,8 @@ class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         allOf(
             parentId,
             parentClass,
-            errorTextViewMatcher,
-            isAssignableFrom(TextView::class.java),
+            retryButtonMatcher,
+            isAssignableFrom(MaterialButton::class.java)
         )
     )
 
@@ -42,12 +44,16 @@ class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         interaction.check(matches(not(isDisplayed())))
     }
 
-    fun checkErrorState(message: String) {
+    fun checkErrorState() {
         interaction.apply {
             check(matches(isDisplayed()))
-            check(matches(withText(message)))
-            check(matches(ColorMatcher("FF0505")))
+            check(matches(withText("Retry")))
+            check(matches(ColorMatcher("#2F479B")))
         }
+    }
+
+    fun tap() {
+        interaction.perform(click())
     }
 
     fun checkSuccessfulState() {

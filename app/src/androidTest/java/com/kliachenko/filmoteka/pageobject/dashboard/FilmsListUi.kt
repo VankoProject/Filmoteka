@@ -1,7 +1,7 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import android.view.View
-import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
@@ -12,7 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.kliachenko.filmoteka.R
-import com.kliachenko.filmoteka.matchers.RecyclerViewMatcher
+import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -32,7 +32,7 @@ class FilmsListUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
     private val filmItemInteraction: ViewInteraction = onView(
         allOf(
             withId(R.id.filmItemLayout),
-            isAssignableFrom(CardView::class.java),
+            isAssignableFrom(ConstraintLayout::class.java),
             withParent(withId(recyclerViewId)),
             withParent(isAssignableFrom(RecyclerView::class.java))
         )
@@ -56,9 +56,9 @@ class FilmsListUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         ).perform(click())
     }
 
-    fun checkSuccessfulState(filmItems: List<FilmItem>) {
+    fun checkSuccessfulState(films: List<FilmItem>) {
         recyclerViewInteraction.check(matches(isDisplayed()))
-        filmItems.forEachIndexed { position, film ->
+        films.forEachIndexed { position, film ->
             film.check(position)
         }
     }

@@ -1,12 +1,12 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.kliachenko.filmoteka.R
-import com.kliachenko.filmoteka.matchers.DrawableMatcher
-import com.kliachenko.filmoteka.matchers.RecyclerViewMatcher
+import com.kliachenko.filmoteka.core.DrawableMatcher
+import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 
 class FilmItem(
     private val title: String,
@@ -14,12 +14,14 @@ class FilmItem(
     private val isFavorite: Boolean,
 ) {
 
+    private val recyclerViewId: Int = R.id.dashboardRecyclerView
+
     fun check(position: Int) {
         onView(
             RecyclerViewMatcher(
                 position = position,
                 targetViewId = R.id.posterImageView,
-                recyclerViewId = R.id.dashboardRecyclerView
+                recyclerViewId = recyclerViewId
             )
         ).check(matches((isDisplayed())))
 
@@ -27,7 +29,7 @@ class FilmItem(
             RecyclerViewMatcher(
                 position = position,
                 targetViewId = R.id.titleFilmTextView,
-                recyclerViewId = R.id.dashboardRecyclerView
+                recyclerViewId = recyclerViewId
             )
         ).check(matches(ViewMatchers.withText(title)))
 
@@ -35,7 +37,7 @@ class FilmItem(
             RecyclerViewMatcher(
                 position = position,
                 targetViewId = R.id.rateTextView,
-                recyclerViewId = R.id.dashboardRecyclerView
+                recyclerViewId = recyclerViewId
             )
         ).check(matches(ViewMatchers.withText(rate)))
 
@@ -43,7 +45,7 @@ class FilmItem(
             RecyclerViewMatcher(
                 position = position,
                 targetViewId = R.id.rateFilmBar,
-                recyclerViewId = R.id.dashboardRecyclerView
+                recyclerViewId = recyclerViewId
             )
         ).check(matches((isDisplayed())))
 
@@ -51,7 +53,7 @@ class FilmItem(
             RecyclerViewMatcher(
                 position = position,
                 targetViewId = R.id.iconImageView,
-                recyclerViewId = R.id.dashboardRecyclerView
+                recyclerViewId = recyclerViewId
             )
         ).check(
             matches(

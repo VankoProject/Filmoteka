@@ -9,10 +9,11 @@
     android:layout_margin="24dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/posterImageView"
             android:layout_width="124dp"
             android:layout_height="176dp"
+            android:contentDescription="@string/film_s_poster_description"
             tools:src="@drawable/ic_launcher_foreground"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"

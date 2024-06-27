@@ -2,8 +2,8 @@ package com.kliachenko.filmoteka
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.kliachenko.filmoteka.pageobject.DashboardPage
-import com.kliachenko.filmoteka.pageobject.FilmItem
+import com.kliachenko.filmoteka.pageobject.dashboard.DashboardPage
+import com.kliachenko.filmoteka.pageobject.dashboard.FilmItem
 import org.junit.Before
 import org.junit.Rule
 
@@ -24,7 +24,7 @@ class ScenarioTest {
     }
 
     @Test
-    fun `load_dashboard_with_error_success_and_favorites_interaction`() = with(dashboardPage) {
+    fun `load dashboard with error success and favorites interaction`() = with(dashboardPage) {
         checkDashboardProgressState(message = "loading...", tabName = "Popular")
         waitUntilDashboardProgressStateIsNotVisible()
         checkErrorState(errorMessage = "No internet connection", tabName = "Popular")

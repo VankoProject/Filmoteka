@@ -2,8 +2,9 @@
     <string name="app_name">Filmoteka</string>
     <string name="error_text_internet">No internet connection</string>
     <string name="retry_button">Retry</string>
-    <string name="loading_text">loading...</string>
+    <string name="loading_text">loading…</string>
     <string name="popular_tab">Popular</string>
     <string name="top_rated_tab">Top rated</string>
     <string name="upcoming_tab">Upcoming</string>
+    <string name="film_s_poster_description">film\'s poster</string>
 </resources>

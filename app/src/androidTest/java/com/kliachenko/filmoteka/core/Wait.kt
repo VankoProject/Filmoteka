@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.matchers
+package com.kliachenko.filmoteka.core
 
 import android.view.View
 import androidx.test.espresso.PerformException
@@ -15,6 +15,7 @@ fun waitUntilProgressIsNotDisplayed(targetViewId: Int, timeout: Long) =
     waitForView(targetViewId = targetViewId, viewMatcher = not(isDisplayed()), timeout = timeout)
 
 fun waitForView(targetViewId: Int, viewMatcher: Matcher<View>, timeout: Long): ViewAction {
+
     return object : ViewAction {
         override fun getDescription(): String {
             return "wait for a specific view with id $targetViewId; during $timeout millis"

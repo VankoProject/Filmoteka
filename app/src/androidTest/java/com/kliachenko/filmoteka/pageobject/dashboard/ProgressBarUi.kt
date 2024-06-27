@@ -1,31 +1,34 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import android.view.View
-import android.widget.TextView
+import android.widget.ProgressBar
+import androidx.annotation.IdRes
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import com.kliachenko.filmoteka.R
-import com.kliachenko.filmoteka.matchers.ColorMatcher
-import com.kliachenko.filmoteka.matchers.RecyclerViewMatcher
+import com.kliachenko.filmoteka.core.RecyclerViewMatcher
+import com.kliachenko.filmoteka.core.waitUntilProgressIsNotDisplayed
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 /**
 Properties:
-1. color //1
-2. visibility
+1. visibility
  */
 
-class ProgressTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
+class ProgressBarUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
-    private val progressTextViewMatcher = RecyclerViewMatcher(
-        position = 1,
-        targetViewId = R.id.progressTextView,
+    @IdRes
+    private val progressBarId: Int = R.id.progressBar
+
+    private val progressBarMatcher = RecyclerViewMatcher(
+        position = 0,
+        targetViewId = progressBarId,
         recyclerViewId = R.id.dashboardRecyclerView
     )
 
@@ -33,17 +36,17 @@ class ProgressTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         allOf(
             parentId,
             parentClass,
-            progressTextViewMatcher,
-            isAssignableFrom(TextView::class.java)
+            progressBarMatcher,
+            isAssignableFrom(ProgressBar::class.java)
         )
     )
 
-    fun checkDashboardProgressState(message: String) {
-        interaction.apply {
-            check(matches(isDisplayed()))
-            check(matches(withText(message)))
-            check(matches(ColorMatcher("#FFFFFF")))
-        }
+    fun checkDashboardProgressState() {
+        interaction.check(matches((isDisplayed())))
+    }
+
+    fun waitUntilIsNotVisible() {
+        onView(isRoot()).perform(waitUntilProgressIsNotDisplayed(progressBarId, 3000))
     }
 
     fun checkErrorState() {
