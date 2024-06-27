@@ -1,34 +1,31 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import android.view.View
-import android.widget.ProgressBar
-import androidx.annotation.IdRes
+import android.widget.TextView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isRoot
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.kliachenko.filmoteka.R
-import com.kliachenko.filmoteka.matchers.RecyclerViewMatcher
-import com.kliachenko.filmoteka.matchers.waitUntilProgressIsNotDisplayed
+import com.kliachenko.filmoteka.core.ColorMatcher
+import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 /**
 Properties:
-1. visibility
+1. color //1
+2. visibility
  */
 
-class ProgressBarUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
+class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
-    @IdRes
-    private val progressBarId: Int = R.id.progressBar
-
-    private val progressBarMatcher = RecyclerViewMatcher(
+    private val errorTextViewMatcher = RecyclerViewMatcher(
         position = 0,
-        targetViewId = progressBarId,
+        targetViewId = R.id.errorTextView,
         recyclerViewId = R.id.dashboardRecyclerView
     )
 
@@ -36,21 +33,21 @@ class ProgressBarUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         allOf(
             parentId,
             parentClass,
-            progressBarMatcher,
-            isAssignableFrom(ProgressBar::class.java)
+            errorTextViewMatcher,
+            isAssignableFrom(TextView::class.java),
         )
     )
 
     fun checkDashboardProgressState() {
-        interaction.check(matches((isDisplayed())))
-    }
-
-    fun waitUntilIsNotVisible() {
-        onView(isRoot()).perform(waitUntilProgressIsNotDisplayed(progressBarId, 3000))
-    }
-
-    fun checkErrorState() {
         interaction.check(matches(not(isDisplayed())))
+    }
+
+    fun checkErrorState(message: String) {
+        interaction.apply {
+            check(matches(isDisplayed()))
+            check(matches(withText(message)))
+            check(matches(ColorMatcher("FF0505")))
+        }
     }
 
     fun checkSuccessfulState() {

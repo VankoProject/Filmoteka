@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.matchers
+package com.kliachenko.filmoteka.core
 
 import android.view.View
 import android.widget.ImageView
@@ -16,5 +16,4 @@ class DrawableMatcher(@DrawableRes private val id: Int): TypeSafeMatcher<View>()
         val expectedBitmap = item.context.getDrawable(id)!!.toBitmap()
         return (item as ImageView).drawable.toBitmap().sameAs(expectedBitmap)
     }
-
 }

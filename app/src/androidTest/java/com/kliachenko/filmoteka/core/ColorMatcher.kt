@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.matchers
+package com.kliachenko.filmoteka.core
 
 import android.graphics.Color
 import android.view.View

@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.pageobject
+package com.kliachenko.filmoteka.pageobject.dashboard
 
 import android.view.View
 import androidx.test.espresso.Espresso.onView
@@ -13,7 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.tabs.TabLayout.TabView
 import com.google.android.material.textview.MaterialTextView
 import com.kliachenko.filmoteka.R
-import com.kliachenko.filmoteka.matchers.ColorMatcher
+import com.kliachenko.filmoteka.core.ColorMatcher
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.not
@@ -22,6 +22,7 @@ import org.hamcrest.Matchers.not
 Properties:
 1. color //2
 2. active position //3
+3. clickable
  */
 
 class DashboardTabsUi(

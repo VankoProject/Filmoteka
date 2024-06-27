@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.matchers
+package com.kliachenko.filmoteka.core
 
 import android.content.res.Resources
 import android.view.View
@@ -24,7 +24,6 @@ class RecyclerViewMatcher(
                 String.format("%s (resource name not found)", recyclerViewId)
             }
         }
-
         description.appendText("RecyclerView with id: $idDescription at position: $position")
     }
 
