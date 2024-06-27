@@ -34,19 +34,20 @@ class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
             parentId,
             parentClass,
             errorTextViewMatcher,
-            isAssignableFrom(TextView::class.java)
+            isAssignableFrom(TextView::class.java),
         )
     )
 
     fun checkDashboardProgressState() {
-        interaction.apply {
-            check(matches(not(isDisplayed())))
-            check(matches(ColorMatcher("FF0505")))
-        }
+        interaction.check(matches(not(isDisplayed())))
     }
 
     fun checkErrorState(message: String) {
-        interaction.check(matches(withText(message)))
+        interaction.apply {
+            check(matches(isDisplayed()))
+            check(matches(withText(message)))
+            check(matches(ColorMatcher("FF0505")))
+        }
     }
 
     fun checkSuccessfulState() {
@@ -56,6 +57,5 @@ class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
     fun checkDashboardIsNotVisible() {
         interaction.check(matches(not(isDisplayed())))
     }
-
 
 }

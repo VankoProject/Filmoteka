@@ -3,7 +3,7 @@ package com.kliachenko.filmoteka
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kliachenko.filmoteka.pageobject.DashboardPage
-import com.kliachenko.filmoteka.pageobject.Film
+import com.kliachenko.filmoteka.pageobject.FilmItem
 import org.junit.Before
 import org.junit.Rule
 
@@ -23,7 +23,6 @@ class ScenarioTest {
         dashboardPage = DashboardPage()
     }
 
-
     @Test
     fun `load_dashboard_with_error_success_and_favorites_interaction`() = with(dashboardPage) {
         checkDashboardProgressState(message = "loading...", tabName = "Popular")
@@ -34,11 +33,11 @@ class ScenarioTest {
         waitUntilDashboardProgressStateIsNotVisible()
         checkSuccessfulState(
             tabName = "Popular",
-            films = listOf(
-                Film(title = "Film#1", rate = "1.0", isFavorite = false),
-                Film(title = "Film#2", rate = "2.0", isFavorite = false),
-                Film(title = "Film#3", rate = "3.0", isFavorite = false),
-                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = false),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
             )
         )
         tapTab(tabName = "Top rated")
@@ -50,11 +49,11 @@ class ScenarioTest {
         waitUntilDashboardProgressStateIsNotVisible()
         checkSuccessfulState(
             tabName = "Top rated",
-            films = listOf(
-                Film(title = "Film#1", rate = "1.0", isFavorite = false),
-                Film(title = "Film#2", rate = "2.0", isFavorite = false),
-                Film(title = "Film#3", rate = "3.0", isFavorite = false),
-                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = false),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
                 ))
         tapTab(tabName = "Upcoming")
         checkDashboardProgressState(message = "loading...", tabName = "Upcoming")
@@ -65,41 +64,41 @@ class ScenarioTest {
         waitUntilDashboardProgressStateIsNotVisible()
         checkSuccessfulState(
             tabName = "Upcoming",
-            films = listOf(
-                Film(title = "Film#1", rate = "1.0", isFavorite = false),
-                Film(title = "Film#2", rate = "2.0", isFavorite = false),
-                Film(title = "Film#3", rate = "3.0", isFavorite = false),
-                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = false),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
             )
         )
         tapFilmBookmarkIcon(position = 0)
         checkSuccessfulState(
             tabName = "Upcoming",
-            films = listOf(
-                Film(title = "Film#1", rate = "1.0", isFavorite = true),
-                Film(title = "Film#2", rate = "2.0", isFavorite = false),
-                Film(title = "Film#3", rate = "3.0", isFavorite = false),
-                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = true),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
             )
         )
         tapFilmBookmarkIcon(position = 0)
         checkSuccessfulState(
             tabName = "Upcoming",
-            films = listOf(
-                Film(title = "Film#1", rate = "1.0", isFavorite = false),
-                Film(title = "Film#2", rate = "2.0", isFavorite = false),
-                Film(title = "Film#3", rate = "3.0", isFavorite = false),
-                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = false),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
             )
         )
         tapTab(tabName = "Popular")
         checkSuccessfulState(
             tabName = "Popular",
-            films = listOf(
-                Film(title = "Film#1", rate = "1.0", isFavorite = false),
-                Film(title = "Film#2", rate = "2.0", isFavorite = false),
-                Film(title = "Film#3", rate = "3.0", isFavorite = false),
-                Film(title = "Film#4", rate = "4.0", isFavorite = false),
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = false),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
             )
         )
         tapFilm(position = 1)

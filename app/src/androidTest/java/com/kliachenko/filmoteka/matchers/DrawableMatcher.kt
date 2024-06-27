@@ -16,5 +16,4 @@ class DrawableMatcher(@DrawableRes private val id: Int): TypeSafeMatcher<View>()
         val expectedBitmap = item.context.getDrawable(id)!!.toBitmap()
         return (item as ImageView).drawable.toBitmap().sameAs(expectedBitmap)
     }
-
 }

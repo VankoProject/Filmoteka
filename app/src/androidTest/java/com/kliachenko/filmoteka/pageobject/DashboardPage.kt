@@ -10,7 +10,7 @@ import org.hamcrest.Matcher
 
 class DashboardPage {
 
-    private val parentId: Matcher<View> = withParent(withId(R.id.dashboardLayout))
+    private val parentId: Matcher<View> = withParent(withId(R.id.fragmentContainer))
     private val parentClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
     private val dashboardTabsUi = DashboardTabsUi(
@@ -59,7 +59,7 @@ class DashboardPage {
         filmsListUi.tapBookmarkIcon(position = position)
     }
 
-    fun checkSuccessfulState(films: List<Film>, tabName: String) {
+    fun checkSuccessfulState(filmItems: List<FilmItem>, tabName: String) {
         dashboardTabsUi.checkVisible(
             activeTab = tabName
         )
@@ -67,7 +67,7 @@ class DashboardPage {
         progressBar.checkSuccessfulState()
         retryButtonUi.checkSuccessfulState()
         progressTextView.checkSuccessfulState()
-        filmsListUi.checkSuccessfulState(films = films)
+        filmsListUi.checkSuccessfulState(filmItems = filmItems)
     }
 
     fun tapTab(tabName: String) {
@@ -86,6 +86,4 @@ class DashboardPage {
         progressTextView.checkDashboardIsNotVisible()
         filmsListUi.checkDashboardIsNotVisible()
     }
-
-
 }
