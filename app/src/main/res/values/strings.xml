@@ -7,4 +7,7 @@
     <string name="top_rated_tab">Top rated</string>
     <string name="upcoming_tab">Upcoming</string>
     <string name="film_s_poster_description">film\'s poster</string>
+    <string name="dashboard_item">Dashboard</string>
+    <string name="search_item">Search</string>
+    <string name="favorites_item">Favorites</string>
 </resources>

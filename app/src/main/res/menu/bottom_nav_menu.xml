@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/dashboardTab"
+        android:enabled="true"
+        android:icon="@drawable/ic_dashboard_24"
+        android:title="@string/dashboard_item"/>
+
+    <item
+        android:id="@+id/searchTab"
+        android:enabled="true"
+        android:icon="@drawable/ic_search_24"
+        android:title="@string/search_item"/>
+
+    <item
+        android:id="@+id/favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorites_24"
+        android:title="@string/favorites_item"/>
+
+</menu>
