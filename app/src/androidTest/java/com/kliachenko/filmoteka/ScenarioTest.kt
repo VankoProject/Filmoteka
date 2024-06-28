@@ -4,6 +4,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kliachenko.filmoteka.pageobject.dashboard.DashboardPage
 import com.kliachenko.filmoteka.pageobject.dashboard.FilmItem
+import com.kliachenko.filmoteka.pageobject.main.MainPage
 import org.junit.Before
 import org.junit.Rule
 
@@ -16,12 +17,25 @@ class ScenarioTest {
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
+    private lateinit var mainPage: MainPage
     private lateinit var dashboardPage: DashboardPage
 
     @Before
     fun setup() {
         dashboardPage = DashboardPage()
+        mainPage = MainPage()
     }
+
+    @Test
+    fun `navigate between bottom navigation tabs`() = with(mainPage) {
+        checkMainState(activeTab = "Dashboard")
+        tapNavTab(tabName = "Search")
+        checkMainState(activeTab = "Search")
+        tapNavTab(tabName = "Favorites")
+        checkMainState(activeTab = "Favorites")
+        tapNavTab(tabName = "Dashboard")
+    }
+
 
     @Test
     fun `load dashboard with error success and favorites interaction`() = with(dashboardPage) {
