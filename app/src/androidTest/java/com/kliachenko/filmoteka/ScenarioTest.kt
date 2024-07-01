@@ -27,24 +27,46 @@ class ScenarioTest {
     }
 
     @Test
-    fun `navigate between bottom navigation tabs`() = with(mainPage) {
+    fun navigate_between_bottom_navigation_tabs() = with(mainPage) {
+        checkMainState(activeTab = "Dashboard")
+        activityScenarioRule.scenario.recreate()
         checkMainState(activeTab = "Dashboard")
         tapNavTab(tabName = "Search")
         checkMainState(activeTab = "Search")
+        activityScenarioRule.scenario.recreate()
+        checkMainState(activeTab = "Search")
         tapNavTab(tabName = "Favorites")
         checkMainState(activeTab = "Favorites")
+        activityScenarioRule.scenario.recreate()
+        checkMainState(activeTab = "Favorites")
+        tapNavTab(tabName = "Dashboard")
+        activityScenarioRule.scenario.recreate()
         tapNavTab(tabName = "Dashboard")
     }
 
 
     @Test
-    fun `load dashboard with error success and favorites interaction`() = with(dashboardPage) {
+    fun load_dashboard_with_error_success_and_favorites_interaction() = with(dashboardPage) {
         checkDashboardProgressState(message = "loading...", tabName = "Popular")
         waitUntilDashboardProgressStateIsNotVisible()
         checkErrorState(errorMessage = "No internet connection", tabName = "Popular")
+        activityScenarioRule.scenario.recreate()
+        checkErrorState(errorMessage = "No internet connection", tabName = "Popular")
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Popular")
+        activityScenarioRule.scenario.recreate()
+        checkDashboardProgressState(message = "loading...", tabName = "Popular")
         waitUntilDashboardProgressStateIsNotVisible()
+        checkSuccessfulState(
+            tabName = "Popular",
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = false),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
+            )
+        )
+        activityScenarioRule.scenario.recreate()
         checkSuccessfulState(
             tabName = "Popular",
             filmItems = listOf(
@@ -57,6 +79,8 @@ class ScenarioTest {
         tapTab(tabName = "Top rated")
         checkDashboardProgressState(message = "loading...", tabName = "Top rated")
         waitUntilDashboardProgressStateIsNotVisible()
+        checkErrorState(errorMessage = "No internet connection", tabName = "Top rated")
+        activityScenarioRule.scenario.recreate()
         checkErrorState(errorMessage = "No internet connection", tabName = "Top rated")
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Top rated")
@@ -76,6 +100,16 @@ class ScenarioTest {
         tapRetryButton()
         checkDashboardProgressState(message = "loading...", tabName = "Upcoming")
         waitUntilDashboardProgressStateIsNotVisible()
+        checkSuccessfulState(
+            tabName = "Upcoming",
+            filmItems = listOf(
+                FilmItem(title = "Film#1", rate = "1.0", isFavorite = false),
+                FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
+                FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
+                FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
+            )
+        )
+        activityScenarioRule.scenario.recreate()
         checkSuccessfulState(
             tabName = "Upcoming",
             filmItems = listOf(
