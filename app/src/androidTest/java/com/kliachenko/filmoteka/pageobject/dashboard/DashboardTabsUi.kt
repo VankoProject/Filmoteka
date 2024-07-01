@@ -32,6 +32,8 @@ class DashboardTabsUi(
     private val tabsIds: List<Int>,
 ) {
 
+    private val activeTabColor = "#FFF500"
+    private val notActiveTabColor = "#FFFFFF"
     private val interaction: ViewInteraction = onView(
         allOf(
             parentId,
@@ -47,7 +49,7 @@ class DashboardTabsUi(
         tabs.forEachIndexed { index, tabName ->
             val tabId = tabsIds[index]
             val isClickable = tabName != activeTab
-            val colorHex = if (tabName == activeTab) "#FFF500" else "#FFFFFF"
+            val colorHex = if (tabName == activeTab) activeTabColor else notActiveTabColor
 
             onView(
                 allOf(

@@ -25,6 +25,8 @@ Properties:
 
 class RetryButtonUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
+    private val buttonText = "Retry"
+    private val buttonBackGround = "#2F479B"
     private val retryButtonMatcher = RecyclerViewMatcher(
         position = 1,
         targetViewId = R.id.retryButton,
@@ -47,8 +49,8 @@ class RetryButtonUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
     fun checkErrorState() {
         interaction.apply {
             check(matches(isDisplayed()))
-            check(matches(withText("Retry")))
-            check(matches(ColorMatcher("#2F479B")))
+            check(matches(withText(buttonText)))
+            check(matches(ColorMatcher(buttonBackGround)))
         }
     }
 

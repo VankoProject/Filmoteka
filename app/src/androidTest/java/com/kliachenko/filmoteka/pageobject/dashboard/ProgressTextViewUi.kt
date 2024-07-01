@@ -23,6 +23,7 @@ Properties:
 
 class ProgressTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
+    private val progressTextColor = "#FFFFFF"
     private val progressTextViewMatcher = RecyclerViewMatcher(
         position = 1,
         targetViewId = R.id.progressTextView,
@@ -42,7 +43,7 @@ class ProgressTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         interaction.apply {
             check(matches(isDisplayed()))
             check(matches(withText(message)))
-            check(matches(ColorMatcher("#FFFFFF")))
+            check(matches(ColorMatcher(progressTextColor)))
         }
     }
 

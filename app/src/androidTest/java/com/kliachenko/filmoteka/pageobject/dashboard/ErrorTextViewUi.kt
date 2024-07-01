@@ -23,6 +23,7 @@ Properties:
 
 class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
+    private val errorTextColor = "#FF0505"
     private val errorTextViewMatcher = RecyclerViewMatcher(
         position = 0,
         targetViewId = R.id.errorTextView,
@@ -46,7 +47,7 @@ class ErrorTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         interaction.apply {
             check(matches(isDisplayed()))
             check(matches(withText(message)))
-            check(matches(ColorMatcher("FF0505")))
+            check(matches(ColorMatcher(errorTextColor)))
         }
     }
 

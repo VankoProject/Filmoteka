@@ -10,6 +10,9 @@ import org.hamcrest.Matcher
 
 class MainPage {
 
+    private val tabDashboard = "Dashboard"
+    private val tabSearch = "Search"
+    private val tabFavorites = "Favorites"
     private val parentId: Matcher<View> = withParent(withId(R.id.rootLayout))
     private val parentClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
@@ -17,7 +20,7 @@ class MainPage {
     private val bottomNavigationTabsUi = BottomNavigationTabsUi(
         parentId = parentId,
         parentClass = parentClass,
-        tabs = listOf("Dashboard", "Search", "Favorites"),
+        tabs = listOf(tabDashboard, tabSearch, tabFavorites),
         tabsIds = listOf(R.id.dashboardTab, R.id.searchTab, R.id.favorites)
     )
 
