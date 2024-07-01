@@ -2,6 +2,7 @@ package com.kliachenko.filmoteka
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.kliachenko.filmoteka.main.MainActivity
 import com.kliachenko.filmoteka.pageobject.dashboard.DashboardPage
 import com.kliachenko.filmoteka.pageobject.dashboard.FilmItem
 import com.kliachenko.filmoteka.pageobject.main.MainPage
