@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel = MainViewModel()
 
-        viewModel.init(savedInstanceState == null)
+//        viewModel.init(savedInstanceState == null)
 
         binding.bottomNavMenu.setOnItemSelectedListener { item ->
             val selectedItem = binding.bottomNavMenu.menu.children.indexOf(item)
-            viewModel.switchTab(selectedItem)
+//            viewModel.switchTab(selectedItem)
             true
         }
     }
