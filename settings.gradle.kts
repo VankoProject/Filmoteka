@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Filmoteka"
 include(":app")
+include(":core")
