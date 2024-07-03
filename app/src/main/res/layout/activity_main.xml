@@ -9,9 +9,9 @@
     android:background="@color/lightBlue"
     tools:context=".main.MainActivity">
 
-    <FrameLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainer"
-        android:transitionName="androidx.navigation.fragment.NavHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/bottom_tabs_graph"
         android:layout_width="match_parent"

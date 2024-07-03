@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.databinding.ActivityMainBinding
+import com.kliachenko.filmoteka.navigation.NavigationCommunication
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +20,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val viewModel = MainViewModel()
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        val navController = navHost.navController
+
+        NavigationUI.setupWithNavController(binding.bottomNavMenu, navController)
+
+        val viewModel = MainViewModel(
+            NavigationCommunication.Base(navController = navController),
+            MainCommunication.Base,
+            listOf(R.id.dashboard, R.id.search, R.id.favorites)
+        )
 
         viewModel.init(savedInstanceState == null)
 
@@ -24,6 +38,10 @@ class MainActivity : AppCompatActivity() {
             val selectedItem = binding.bottomNavMenu.menu.children.indexOf(item)
             viewModel.switchTab(selectedItem)
             true
+        }
+
+        viewModel.liveData().observe(this) {
+            it.updateState(binding.bottomNavMenu)
         }
     }
 
