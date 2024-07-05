@@ -6,13 +6,13 @@ interface MainUiState {
 
     fun updateState(bottomNavigation: View)
 
-    object Main: MainUiState {
+    object Main : MainUiState {
         override fun updateState(bottomNavigation: View) {
             bottomNavigation.visibility = View.VISIBLE
         }
     }
 
-    object Secondary: MainUiState {
+    object Secondary : MainUiState {
         override fun updateState(bottomNavigation: View) {
             bottomNavigation.visibility = View.GONE
         }

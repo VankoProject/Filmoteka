@@ -23,9 +23,5 @@
         android:id="@+id/detailFragment3"
         android:name="com.kliachenko.filmoteka.fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
-        <action
-            android:id="@+id/action_detailFragment3_to_favoritesFragment"
-            app:destination="@id/favoritesFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_detail" />
 </navigation>

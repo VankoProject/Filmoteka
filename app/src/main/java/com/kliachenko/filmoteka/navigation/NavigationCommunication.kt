@@ -7,22 +7,25 @@ interface NavigationCommunication {
 
     fun navigateTo(destinationId: Int)
 
-    fun navigateTo(directions: NavDirections)
+    fun navigateWithArgs(directions: NavDirections)
 
     fun popBackStack(): Boolean
 
-    class Base(private val navController: NavController): NavigationCommunication {
+    class Base(
+        private val navController: NavController,
+    ) : NavigationCommunication {
 
         override fun navigateTo(destinationId: Int) {
             navController.navigate(destinationId)
         }
 
-        override fun navigateTo(directions: NavDirections) {
+        override fun navigateWithArgs(directions: NavDirections) {
             navController.navigate(directions)
         }
 
         override fun popBackStack(): Boolean {
             return navController.popBackStack()
         }
+
     }
 }

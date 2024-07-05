@@ -18,8 +18,7 @@
         app:tabSelectedTextColor="@color/yellow"
         app:tabGravity="center"
         app:tabPaddingStart="@dimen/medium_padding"
-        app:tabIndicatorColor="@color/royalBlue"
-        android:layout_marginTop="@dimen/medium_margin">
+        app:tabIndicatorColor="@color/royalBlue">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/popularTab"
