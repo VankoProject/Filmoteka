@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.kliachenko.core.modules.ProvideViewModel
 import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.databinding.ActivityMainBinding
-import com.kliachenko.filmoteka.di.ProvideViewModel
 
 class MainActivity : AppCompatActivity(), ProvideViewModel {
 

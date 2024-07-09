@@ -1,4 +1,4 @@
-package com.kliachenko.core
+package com.kliachenko.core.modules
 
 import androidx.lifecycle.ViewModel
 

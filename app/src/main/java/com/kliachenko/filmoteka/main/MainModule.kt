@@ -1,7 +1,7 @@
 package com.kliachenko.filmoteka.main
 
-import com.kliachenko.core.Module
-import com.kliachenko.filmoteka.di.Clear
+import com.kliachenko.core.modules.Clear
+import com.kliachenko.core.modules.Module
 
 class MainModule(
     private val clear: Clear

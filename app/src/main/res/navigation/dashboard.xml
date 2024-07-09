@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.kliachenko.filmoteka.fragments.DashboardFragment"
+        android:name="com.kliachenko.dashboard.presentation.DashboardFragment"
         android:label="Films"
         tools:layout="@layout/fragment_dashboard">
 

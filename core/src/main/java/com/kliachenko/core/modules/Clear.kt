@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.di
+package com.kliachenko.core.modules
 
 import androidx.lifecycle.ViewModel
 
