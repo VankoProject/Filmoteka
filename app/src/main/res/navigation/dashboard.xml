@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.kliachenko.filmoteka.fragments.DashboardFragment"
+        android:name="com.kliachenko.dashboard.presentation.DashboardFragment"
         android:label="Films"
         tools:layout="@layout/fragment_dashboard">
 
@@ -25,16 +25,6 @@
         android:id="@+id/detailFragment"
         android:name="com.kliachenko.filmoteka.fragments.DetailFragment"
         android:label="Detail film info"
-        tools:layout="@layout/fragment_detail">
-
-        <action
-            android:id="@+id/action_detailFragment_to_dashBoardFragment"
-            app:destination="@+id/dashboardFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_enter_anim"
-            app:popExitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/dashboardFragment"/>
-    </fragment>
+        tools:layout="@layout/fragment_detail"/>
 
 </navigation>

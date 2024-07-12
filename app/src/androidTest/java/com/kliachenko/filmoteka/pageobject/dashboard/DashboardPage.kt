@@ -10,7 +10,7 @@ import org.hamcrest.Matcher
 
 class DashboardPage {
 
-    private val parentId: Matcher<View> = withParent(withId(R.id.fragmentContainer))
+    private val parentId: Matcher<View> = withParent(withId(R.id.tabsFragmentContainer))
     private val parentClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
     private val dashboardTabsUi = DashboardTabsUi(

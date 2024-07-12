@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
+import com.kliachenko.core.modules.ProvideViewModel
 
 abstract class BaseFragment<T: ViewBinding, VM: ViewModel>: Fragment() {
 
@@ -27,6 +28,7 @@ abstract class BaseFragment<T: ViewBinding, VM: ViewModel>: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as ProvideViewModel).viewModel(viewModelClass)
     }
 
     protected abstract fun inflate(

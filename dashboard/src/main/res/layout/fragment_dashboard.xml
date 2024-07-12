@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dashboardFragment"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.DashboardFragment">
+    tools:context="com.kliachenko.dashboard.presentation.DashboardFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/dashboardTabs"
@@ -22,19 +21,16 @@
         android:layout_marginTop="@dimen/medium_margin">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/popularTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/popular_tab"/>
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/topRatedTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/top_rated_tab"/>
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/upcomingTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upcoming_tab"/>
