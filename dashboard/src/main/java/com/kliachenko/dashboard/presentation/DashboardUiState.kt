@@ -17,7 +17,7 @@ interface DashboardUiState {
 
     data class Progress(private val message: String): DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
-            TODO("Not yet implemented")
+
         }
     }
 
@@ -32,7 +32,7 @@ interface DashboardUiState {
         }
 
         override fun updateAdapter(adapter: ShowList) {
-            TODO("Not yet implemented")
+
         }
 
     }

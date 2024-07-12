@@ -2,9 +2,8 @@ package com.kliachenko.dashboard.presentation
 
 import com.kliachenko.core.Communication
 
-interface DashboardCommunication: Communication.Abstract<DashboardUiState> {
+interface DashboardCommunication: Communication.Mutable<DashboardUiState> {
 
-    class Base: Communication.Mutable<DashboardUiState>, DashboardCommunication {
+    class Base: Communication.Abstract<DashboardUiState>(), DashboardCommunication
 
-    }
 }
