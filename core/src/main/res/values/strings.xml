@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="service_unavailable">Service unavailable</string>
+    <string name="no_internet">No internet connection</string>
+
+</resources>

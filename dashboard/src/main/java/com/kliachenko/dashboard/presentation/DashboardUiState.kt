@@ -1,11 +1,14 @@
 package com.kliachenko.dashboard.presentation
 
+import com.kliachenko.dashboard.presentation.adapter.DashboardUi
+import com.kliachenko.dashboard.presentation.adapter.ShowList
+
 
 interface DashboardUiState {
 
     fun updateAdapter(adapter: ShowList)
 
-    fun updateState(filmUi: FilmUi): DashboardUiState = this
+    fun updateState(filmUi: DashboardUi): DashboardUiState = this
 
     fun changeFilmStatus(): DashboardUiState = this
 
@@ -21,9 +24,9 @@ interface DashboardUiState {
         }
     }
 
-    data class FilmsList(private val filmsList: List<FilmUi>): DashboardUiState {
+    data class FilmsList(private val filmsList: List<DashboardUi>): DashboardUiState {
 
-        override fun updateState(filmUi: FilmUi): DashboardUiState {
+        override fun updateState(filmUi: DashboardUi): DashboardUiState {
             return super.updateState(filmUi)
         }
 
