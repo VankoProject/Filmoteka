@@ -22,7 +22,7 @@ class App : Application(), ProvideViewModel {
 
         viewmodelFactory = ProvideViewModel.Factory(
             BaseProvideViewModel(
-                ProvideModule.Base(Core.Base(this), clear)
+                ProvideModule.Base(Core.Base(this, true), clear)
             )
         )
     }

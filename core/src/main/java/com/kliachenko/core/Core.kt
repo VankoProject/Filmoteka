@@ -1,6 +1,8 @@
 package com.kliachenko.core
 
 import android.content.Context
+import com.kliachenko.core.modules.FilmsDatabaseModule
+import com.kliachenko.data.cache.FilmsDataBase
 import com.kliachenko.data.cloud.MakeService
 import com.kliachenko.data.cloud.ProvideHttpLoggingInterceptor
 
@@ -12,10 +14,15 @@ interface Core {
 
     fun provideManageResources(): ManageResource
 
+    fun provideDataBase(): FilmsDataBase
+
     class Base(
-        private val context: Context,
-        private val debug: Boolean,
+        context: Context,
+        debug: Boolean,
     ) : Core {
+
+        private val filmsDatabaseModule: FilmsDatabaseModule =
+            FilmsDatabaseModule.Factory(context, debug)
 
         private val runAsync = RunAsync.Base()
 
@@ -28,6 +35,8 @@ interface Core {
         override fun provideMakeService() = makeService
 
         override fun provideManageResources() = manageResource
+
+        override fun provideDataBase() = filmsDatabaseModule.database()
 
     }
 }
