@@ -12,9 +12,6 @@ interface FilmsDao {
     suspend fun saveFilm(films: FilmCache)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun deleteFilm(films: FilmCache)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveRelation(relation: FilmsAndCategoryRelationCache)
 
     @Query("SELECT * FROM film_table WHERE id IN (SELECT filmId FROM films_and_category_table WHERE categoryName == :categoryName)")
