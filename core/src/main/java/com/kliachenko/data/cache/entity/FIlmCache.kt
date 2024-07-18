@@ -1,4 +1,4 @@
-package com.kliachenko.data.cache
+package com.kliachenko.data.cache.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

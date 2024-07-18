@@ -1,9 +1,11 @@
-package com.kliachenko.data.cache
+package com.kliachenko.data.cache.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.kliachenko.data.cache.entity.FavoriteCache
+import com.kliachenko.data.cache.entity.FilmCache
 
 @Dao
 interface FavoriteDao {
@@ -12,7 +14,7 @@ interface FavoriteDao {
     suspend fun favorites(): List<FilmCache>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addToFavorite(favoriteCache: FavoriteCache)
+    suspend fun addToFavorite(favorite: FavoriteCache)
 
     @Query("DELETE FROM favorite_films_table WHERE film_id = :filmId")
     suspend fun removeFromFavorite(filmId: Int)
