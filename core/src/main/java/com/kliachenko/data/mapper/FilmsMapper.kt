@@ -1,7 +1,7 @@
 package com.kliachenko.data.mapper
 
-import com.kliachenko.data.cache.FavoriteCache
-import com.kliachenko.data.cache.FilmCache
+import com.kliachenko.data.cache.entity.FavoriteCache
+import com.kliachenko.data.cache.entity.FilmCache
 import com.kliachenko.domain.FilmDomain
 
 interface FilmsMapper<T : Any> {

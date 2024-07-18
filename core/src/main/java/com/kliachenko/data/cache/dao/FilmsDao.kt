@@ -1,15 +1,17 @@
-package com.kliachenko.data.cache
+package com.kliachenko.data.cache.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmsAndCategoryRelationCache
 
 @Dao
 interface FilmsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveFilm(films: FilmCache)
+    suspend fun saveFilm(film: FilmCache)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveRelation(relation: FilmsAndCategoryRelationCache)
