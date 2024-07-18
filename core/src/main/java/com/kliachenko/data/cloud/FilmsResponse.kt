@@ -1,8 +1,8 @@
 package com.kliachenko.data.cloud
 
 import com.google.gson.annotations.SerializedName
-import com.kliachenko.data.FilmsMapper
-import com.kliachenko.data.MapResponse
+import com.kliachenko.data.mapper.FilmsMapper
+import com.kliachenko.data.mapper.MapFilms
 
 data class FilmsResponse(
 
@@ -29,7 +29,7 @@ data class FilmCloud(
     private val title: String,
     @SerializedName("vote_average")
     private val voteAverage: Double,
-): MapResponse {
+): MapFilms {
     override fun <T : Any> map(mapper: FilmsMapper<T>): T =
         mapper.map(id, overview, posterPath, releaseDate, title, voteAverage)
 
