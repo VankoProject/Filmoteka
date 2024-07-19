@@ -3,6 +3,8 @@ package com.kliachenko.data.cache.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.kliachenko.data.mapper.FilmsMapper
+import com.kliachenko.data.mapper.MapFilms
 
 @Entity(tableName = "film_table")
 data class FilmCache(
@@ -21,4 +23,7 @@ data class FilmCache(
     @ColumnInfo(name = "vote_average")
     private val voteAverage: Double,
 
-)
+    ) : MapFilms {
+    override fun <T : Any> map(mapper: FilmsMapper<T>): T =
+        mapper.map(id, overview, posterPath, releaseDate, title, voteAverage)
+}

@@ -2,6 +2,7 @@ package com.kliachenko.data.mapper
 
 import com.kliachenko.data.cache.entity.FavoriteCache
 import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmsAndCategoryRelationCache
 import com.kliachenko.domain.FilmDomain
 
 interface FilmsMapper<T : Any> {
@@ -69,6 +70,24 @@ interface FilmsMapper<T : Any> {
                 voteAverage: Double,
             ) : FavoriteCache = FavoriteCache(
                 filmId = id
+            )
+
+        }
+    }
+
+    interface ToRelation: FilmsMapper<FilmsAndCategoryRelationCache> {
+
+        class Base(private val categoryName: String): ToRelation {
+            override fun map(
+                id: Int,
+                overview: String,
+                posterPath: String,
+                releaseDate: String,
+                title: String,
+                voteAverage: Double,
+            ): FilmsAndCategoryRelationCache = FilmsAndCategoryRelationCache(
+                filmId = id,
+                categoryName = categoryName
             )
 
         }
