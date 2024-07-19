@@ -4,13 +4,13 @@ import com.kliachenko.core.BaseCloudDataSource
 
 interface FilmsCloudDataSource {
 
-    suspend fun films(category: String): FilmsResponse
+    suspend fun loadFilms(category: String): FilmsResponse
 
     class Base(
         private val service: FilmsService
     ): BaseCloudDataSource(), FilmsCloudDataSource {
 
-        override suspend fun films(category: String): FilmsResponse =
+        override suspend fun loadFilms(category: String): FilmsResponse =
             handleRequest(service.filmsByCategory(category))
 
     }

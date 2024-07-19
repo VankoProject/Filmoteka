@@ -14,7 +14,13 @@ data class FilmsResponse(
     private val totalPages: Int,
     @SerializedName("total_results")
     private val totalResults: Int
-)
+) {
+    fun <T: Any> map(mapper: FilmsMapper<T>): List<T> = results.map {
+        it.map(mapper)
+    }
+
+    fun results(): List<FilmCloud> = results
+}
 
 data class FilmCloud(
     @SerializedName("id")
