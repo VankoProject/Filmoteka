@@ -21,7 +21,7 @@ interface DashboardUi {
 
     fun type(): DashboardUiType
 
-    object Progress: DashboardUi {
+    object Progress : DashboardUi {
 
         override fun id(): String = javaClass.simpleName
 
@@ -63,16 +63,23 @@ interface DashboardUi {
         override fun show(binding: FilmItemLayoutBinding) = with(binding) {
             rateTextView.text = rate.toString()
             titleFilmTextView.text = title
+            posterImageView.show(URL_POSTER + imageUrl)
+            rateFilmBar.rating = setupRatBar(rate)
             iconImageView.setImageResource(
                 if (isFavorite)
                     R.drawable.ic_like_bookmark
                 else
                     R.drawable.ic_unlike_bookmark
             )
-            //todo add customView ImageView for using pic engine
         }
 
         override fun changeStatus() = copy(isFavorite = !isFavorite)
+    }
+
+    companion object {
+        private const val URL_POSTER = "https://image.tmdb.org/t/p/w500"
+
+        fun setupRatBar(rate: Double) = rate.toFloat() * 0.5F
     }
 
 }
