@@ -1,12 +1,13 @@
 package com.kliachenko.data.cache
 
 import com.kliachenko.data.cache.dao.FavoriteDao
+import com.kliachenko.data.cache.entity.FavoriteCache
 import com.kliachenko.data.cache.entity.FilmCache
 
 interface FavoritesCacheDataSource {
 
     interface Save {
-        suspend fun save(filmId: Int)
+        suspend fun save(favorite: FavoriteCache)
     }
 
     interface Read {
@@ -25,8 +26,8 @@ interface FavoritesCacheDataSource {
 
     class Base(private val favoriteDao: FavoriteDao) : Mutable {
 
-        override suspend fun save(filmId: Int) {
-            favoriteDao.addToFavorite(filmId)
+        override suspend fun save(favorite: FavoriteCache) {
+            favoriteDao.addToFavorite(favorite)
         }
 
         override suspend fun favorites() = favoriteDao.favorites()

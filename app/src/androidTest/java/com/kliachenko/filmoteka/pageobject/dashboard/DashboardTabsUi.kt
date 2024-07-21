@@ -12,7 +12,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.tabs.TabLayout.TabView
 import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.core.ColorMatcher
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
@@ -38,7 +37,7 @@ class DashboardTabsUi(
         allOf(
             parentId,
             parentClass,
-            withId(R.id.dashboardTabs),
+            withId(com.kliachenko.dashboard.R.id.dashboardTabs),
         )
     )
 

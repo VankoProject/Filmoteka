@@ -5,6 +5,8 @@ import com.kliachenko.dashboard.data.cache.DashboardCacheDataSource
 import com.kliachenko.dashboard.domain.DashboardRepository
 import com.kliachenko.dashboard.domain.DashboardResult
 import com.kliachenko.data.cache.FavoritesCacheDataSource
+import com.kliachenko.data.cache.entity.CategoryCache
+import com.kliachenko.data.cache.entity.FavoriteCache
 import com.kliachenko.data.cloud.FilmsCloudDataSource
 import com.kliachenko.data.mapper.FilmsMapper
 
@@ -22,7 +24,7 @@ class DashboardRepositoryImpl(
         try {
             if (isEmptyCache) {
                 val films = cloudDataSource.loadFilms(category).results()
-                categoryCacheDataSource.save(category)
+                categoryCacheDataSource.save(CategoryCache(categoryName = category))
                 val relationMapper = FilmsMapper.ToRelation.Base(category)
                 val result = films.map { itemCloud ->
                     dashboardCacheDataSource.saveRelation(itemCloud.map(relationMapper))
@@ -44,7 +46,7 @@ class DashboardRepositoryImpl(
 
 
     override suspend fun addToFavorite(filmId: Int) {
-        favoritesCacheDataSource.save(filmId = filmId)
+        favoritesCacheDataSource.save(FavoriteCache(filmId = filmId))
     }
 
     override suspend fun removeFromFavorites(filmId: Int) {

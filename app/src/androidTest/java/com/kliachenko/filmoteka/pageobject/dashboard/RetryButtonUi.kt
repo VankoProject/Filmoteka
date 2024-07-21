@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.button.MaterialButton
-import com.kliachenko.filmoteka.R
+import com.kliachenko.dashboard.R
 import com.kliachenko.filmoteka.core.ColorMatcher
 import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import org.hamcrest.Matcher

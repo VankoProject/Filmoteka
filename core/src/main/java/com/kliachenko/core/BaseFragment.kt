@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import com.kliachenko.core.modules.ProvideViewModel
 
-abstract class BaseFragment<T: ViewBinding, VM: ViewModel>: Fragment() {
+abstract class BaseFragment<T : ViewBinding, VM : ViewModel> : Fragment() {
 
     private var _binding: T? = null
     protected val binding get() = _binding!!
@@ -20,7 +20,7 @@ abstract class BaseFragment<T: ViewBinding, VM: ViewModel>: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = inflate(inflater, container)
         return binding.root
@@ -33,7 +33,7 @@ abstract class BaseFragment<T: ViewBinding, VM: ViewModel>: Fragment() {
 
     protected abstract fun inflate(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ): T
 
     override fun onDestroyView() {

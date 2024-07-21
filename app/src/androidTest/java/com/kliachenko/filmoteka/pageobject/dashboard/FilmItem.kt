@@ -4,7 +4,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import com.kliachenko.filmoteka.R
+import com.kliachenko.dashboard.R
 import com.kliachenko.filmoteka.core.DrawableMatcher
 import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 

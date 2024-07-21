@@ -1,7 +1,20 @@
 package com.kliachenko.domain
 
-import com.kliachenko.data.mapper.FilmsMapper
-import com.kliachenko.data.mapper.MapFilms
+interface DashboardItem {
+
+    fun <T : Any> map(mapper: Mapper<T>): T
+
+    interface Mapper<T : Any> {
+        fun mapItems(
+            id: Int,
+            overview: String,
+            posterPath: String,
+            releaseDate: String,
+            title: String,
+            voteAverage: Double,
+        ): T
+    }
+}
 
 data class FilmDomain(
     private val id: Int,
@@ -10,7 +23,7 @@ data class FilmDomain(
     private val releaseDate: String,
     private val title: String,
     private val voteAverage: Double,
-) : MapFilms {
-    override fun <T : Any> map(mapper: FilmsMapper<T>): T =
-        mapper.map(id, overview, posterPath, releaseDate, title, voteAverage)
+) : DashboardItem {
+    override fun <T : Any> map(mapper: DashboardItem.Mapper<T>): T =
+        mapper.mapItems(id, overview, posterPath, releaseDate, title, voteAverage)
 }

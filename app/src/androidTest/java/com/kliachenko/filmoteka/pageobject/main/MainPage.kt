@@ -21,7 +21,11 @@ class MainPage {
         parentId = parentId,
         parentClass = parentClass,
         tabs = listOf(tabDashboard, tabSearch, tabFavorites),
-        tabsIds = listOf(R.id.dashboardTab, R.id.searchTab, R.id.favorites)
+        tabsIds = listOf(
+            R.id.dashboard,
+            R.id.search,
+            R.id.favorites
+        )
     )
 
     fun checkMainState(activeTab: String) {

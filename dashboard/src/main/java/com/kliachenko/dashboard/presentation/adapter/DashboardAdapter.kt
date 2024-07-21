@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.kliachenko.dashboard.R
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
@@ -73,8 +74,10 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     ) : DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
             item.show(binding)
-            binding.posterImageView.setOnClickListener {
-                clickListener.openDetail()
+            binding.root.setOnClickListener {
+                if(itemView.id != R.id.iconImageView) {
+                    clickListener.openDetail()
+                }
             }
             binding.iconImageView.setOnClickListener {
                 clickListener.changeStatus(item = item)

@@ -5,19 +5,19 @@ import android.widget.LinearLayout
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.kliachenko.filmoteka.R
+import com.kliachenko.dashboard.R
 import org.hamcrest.Matcher
 
 class DashboardPage {
 
-    private val parentId: Matcher<View> = withParent(withId(R.id.tabsFragmentContainer))
+    private val parentId: Matcher<View> = withParent(withId(R.id.dashboardTabs))
     private val parentClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
     private val dashboardTabsUi = DashboardTabsUi(
         parentId = parentId,
         parentClass = parentClass,
         tabs = listOf("Popular", "Top rated", "Upcoming"),
-        tabsIds = listOf(R.id.popularTab, R.id.topRatedTab, R.id.upcomingTab)
+        tabsIds = listOf(R.id.popular_tab, R.id.top_rated_tab, R.id.upcoming_tab)
     )
     private val errorTextViewUi = ErrorTextViewUi(parentId, parentClass)
     private val progressBarUi = ProgressBarUi(parentId, parentClass)

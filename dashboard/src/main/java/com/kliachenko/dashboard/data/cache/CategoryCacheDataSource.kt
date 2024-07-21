@@ -1,11 +1,12 @@
 package com.kliachenko.dashboard.data.cache
 
 import com.kliachenko.data.cache.dao.CategoryDao
+import com.kliachenko.data.cache.entity.CategoryCache
 
 interface CategoryCacheDataSource {
 
     interface Save {
-        suspend fun save(category: String)
+        suspend fun save(category: CategoryCache)
     }
 
     interface Read {
@@ -16,7 +17,7 @@ interface CategoryCacheDataSource {
 
     class Base(private val categoryDao: CategoryDao): Mutable {
 
-        override suspend fun save(category: String) {
+        override suspend fun save(category: CategoryCache) {
             categoryDao.save(category)
         }
 

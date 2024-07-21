@@ -92,7 +92,6 @@ interface FilmsMapper<T : Any> {
 
         }
     }
-
 }
 
 interface MapFilms {
