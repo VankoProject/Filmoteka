@@ -37,13 +37,11 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.kliachenko.dashboard.presentation.customView.CustomRecyclerView
         android:id="@+id/dashboardRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
         tools:listitem="@layout/film_item_layout"
         tools:itemCount="10"/>
 
