@@ -12,7 +12,7 @@ interface DashboardInteractor {
         private val repository: DashboardRepository,
     ) : DashboardInteractor {
 
-        override suspend fun filmsByCategory(category: String) =
+        override suspend fun filmsByCategory(category: String): DashboardResult =
             repository.filmsByCategory(category)
 
         override suspend fun addToFavorite(filmId: Int) {

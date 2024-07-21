@@ -15,20 +15,20 @@ interface DashboardUi {
 
     fun isFavorite(): Boolean = false
 
+    fun changeStatus(): DashboardUi = this
+
     fun id(): String
 
     fun type(): DashboardUiType
 
-    data class Progress(
-        private val progressMessage: String,
-    ) : DashboardUi {
+    object Progress: DashboardUi {
 
         override fun id(): String = javaClass.simpleName
 
         override fun type() = DashboardUiType.Progress
 
         override fun show(binding: ProgressLayoutBinding) {
-            binding.progressTextView.text = progressMessage
+            binding.progressTextView.text = R.string.loading_text.toString()
         }
     }
 
@@ -47,10 +47,12 @@ interface DashboardUi {
     }
 
     data class Film(
-        private val filmId: Long,
+        private val filmId: Int,
+        private val overView: String,
         private val imageUrl: String,
+        private val releaseDate: String,
         private val title: String,
-        private val rate: Int,
+        private val rate: Double,
         private val isFavorite: Boolean,
     ) : DashboardUi {
 
@@ -69,6 +71,8 @@ interface DashboardUi {
             )
             //todo add customView ImageView for using pic engine
         }
+
+        override fun changeStatus() = copy(isFavorite = !isFavorite)
     }
 
 }

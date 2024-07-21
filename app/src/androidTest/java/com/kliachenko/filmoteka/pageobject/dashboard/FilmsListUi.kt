@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.kliachenko.filmoteka.R
+import com.kliachenko.dashboard.R
 import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf

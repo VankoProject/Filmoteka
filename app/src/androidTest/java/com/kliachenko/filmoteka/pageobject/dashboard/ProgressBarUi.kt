@@ -9,7 +9,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
-import com.kliachenko.filmoteka.R
+import com.kliachenko.dashboard.R
 import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import com.kliachenko.filmoteka.core.waitUntilProgressIsNotDisplayed
 import org.hamcrest.Matcher

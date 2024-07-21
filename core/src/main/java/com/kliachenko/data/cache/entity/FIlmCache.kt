@@ -11,17 +11,17 @@ data class FilmCache(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    private val id: Int,
+    val id: Int,
     @ColumnInfo(name = "overview")
-    private val overview: String,
+    val overview: String,
     @ColumnInfo(name = "poster_path")
-    private val posterPath: String,
+    val posterPath: String,
     @ColumnInfo(name = "release_date")
-    private val releaseDate: String,
+    val releaseDate: String,
     @ColumnInfo(name = "title")
-    private val title: String,
+    val title: String,
     @ColumnInfo(name = "vote_average")
-    private val voteAverage: Double,
+    val voteAverage: Double,
 
     ) : MapFilms {
     override fun <T : Any> map(mapper: FilmsMapper<T>): T =

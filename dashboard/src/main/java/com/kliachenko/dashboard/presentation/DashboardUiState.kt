@@ -8,35 +8,43 @@ interface DashboardUiState {
 
     fun updateAdapter(adapter: ShowList)
 
-    fun updateState(filmUi: DashboardUi): DashboardUiState = this
-
-    fun changeFilmStatus(): DashboardUiState = this
+    fun updateFilmState(filmUi: DashboardUi): DashboardUiState = this
 
     data class Error (private val message: String): DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
-
+            adapter.show(listOf(DashboardUi.Error(message)))
         }
     }
 
-    data class Progress(private val message: String): DashboardUiState {
+    object Progress: DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
-
+            adapter.show(listOf(DashboardUi.Progress))
         }
     }
 
     data class FilmsList(private val filmsList: List<DashboardUi>): DashboardUiState {
 
-        override fun updateState(filmUi: DashboardUi): DashboardUiState {
-            return super.updateState(filmUi)
-        }
-
-        override fun changeFilmStatus(): DashboardUiState {
-            return super.changeFilmStatus()
+        override fun updateFilmState(filmUi: DashboardUi): DashboardUiState {
+            val newList = filmsList.toMutableList()
+            val newFilmIndex = filmsList.indexOf(filmUi)
+            newList[newFilmIndex] = filmUi.changeStatus()
+            filmsList.find { it.isFavorite() }?.let { currentlyStatus->
+                if(filmUi != currentlyStatus) {
+                    val index = filmsList.indexOf(currentlyStatus)
+                    newList[index] = currentlyStatus.changeStatus()
+                }
+            }
+            return FilmsList(newList)
         }
 
         override fun updateAdapter(adapter: ShowList) {
-
+            adapter.show(filmsList)
         }
 
     }
+
+    object Empty: DashboardUiState {
+        override fun updateAdapter(adapter: ShowList) = Unit
+    }
+
 }
