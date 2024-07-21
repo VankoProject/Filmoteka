@@ -1,6 +1,7 @@
 package com.kliachenko.dashboard
 
 import com.kliachenko.core.Core
+import com.kliachenko.core.HandleError
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.core.modules.Module
 import com.kliachenko.dashboard.data.DashboardRepositoryImpl
@@ -37,6 +38,7 @@ class DashboardModule(
                     categoryCacheDataSource = CategoryCacheDataSource.Base(
                         core.provideDataBase().categoryDao()
                     ),
+                    handleError = HandleError.Base(core.provideManageResources())
                 )
             ),
             communication = DashboardCommunication.Base(),

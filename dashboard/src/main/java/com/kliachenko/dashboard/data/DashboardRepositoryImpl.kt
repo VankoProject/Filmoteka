@@ -1,5 +1,6 @@
 package com.kliachenko.dashboard.data
 
+import com.kliachenko.core.HandleError
 import com.kliachenko.dashboard.data.cache.CategoryCacheDataSource
 import com.kliachenko.dashboard.data.cache.DashboardCacheDataSource
 import com.kliachenko.dashboard.domain.DashboardRepository
@@ -17,6 +18,7 @@ class DashboardRepositoryImpl(
     private val categoryCacheDataSource: CategoryCacheDataSource.Mutable,
     private val mapToCache: FilmsMapper.ToCache = FilmsMapper.ToCache.Base,
     private val mapToDomain: FilmsMapper.ToDomain = FilmsMapper.ToDomain.Base,
+    private val handleError: HandleError<String>
 ) : DashboardRepository {
 
     override suspend fun filmsByCategory(category: String): DashboardResult {
@@ -40,7 +42,7 @@ class DashboardRepositoryImpl(
                 return DashboardResult.Success(result)
             }
         } catch (e: Exception) {
-            return DashboardResult.Error(e.message.toString())
+            return DashboardResult.Error(handleError.handle(e))
         }
     }
 

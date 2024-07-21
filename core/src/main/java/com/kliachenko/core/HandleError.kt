@@ -10,9 +10,9 @@ interface HandleError<T : Any> {
 
         override fun handle(e: Exception) =
             if (e is UnknownHostException)
-                manageResource.serviceUnavailable()
-            else
                 manageResource.noInternetConnection()
+            else
+                manageResource.serviceUnavailable()
 
     }
 }

@@ -30,8 +30,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             tabPosition = binding.dashboardTabs.selectedTabPosition
         )
 
-        viewModel.liveData().observe(viewLifecycleOwner) {
-            it.updateAdapter(adapter)
+        viewModel.liveData().observe(viewLifecycleOwner) { state ->
+            state.updateAdapter(adapter)
+            (binding.dashboardRecyclerView).updateLayoutManager(state)
         }
 
         binding.dashboardTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

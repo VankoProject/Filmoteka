@@ -27,9 +27,6 @@ interface DashboardUi {
 
         override fun type() = DashboardUiType.Progress
 
-        override fun show(binding: ProgressLayoutBinding) {
-            binding.progressTextView.text = R.string.loading_text.toString()
-        }
     }
 
     data class Error(
