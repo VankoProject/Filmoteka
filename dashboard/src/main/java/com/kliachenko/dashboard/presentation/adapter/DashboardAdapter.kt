@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.kliachenko.dashboard.R
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
@@ -11,7 +12,11 @@ import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 class DashboardAdapter(
     private val clickListener: ClickActions,
-    private val typeList: List<DashboardUiType> = listOf(DashboardUiType.Error, DashboardUiType.Progress, DashboardUiType.Film),
+    private val typeList: List<DashboardUiType> = listOf(
+        DashboardUiType.Error,
+        DashboardUiType.Progress,
+        DashboardUiType.Film
+    ),
 ) : RecyclerView.Adapter<DashboardViewHolder>(), ShowList {
 
     private val list = mutableListOf<DashboardUi>()
@@ -75,17 +80,25 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         override fun bind(item: DashboardUi) {
             item.show(binding)
             binding.root.setOnClickListener {
-                if(itemView.id != R.id.iconImageView) {
+                if (itemView.id != R.id.iconImageView) {
                     clickListener.openDetail()
                 }
             }
             binding.iconImageView.setOnClickListener {
-                clickListener.changeStatus(item = item)
+                val message = if (item.isFavorite()) {
+                    clickListener.remove(item)
+                    R.string.removes_from_favorites
+                } else {
+                    clickListener.add(item)
+                    R.string.added_to_favorites
+                }
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
             }
         }
     }
 }
 
+
 interface ShowList {
-    fun show(list: List<DashboardUi>)
+    fun show(uiState: List<DashboardUi>)
 }

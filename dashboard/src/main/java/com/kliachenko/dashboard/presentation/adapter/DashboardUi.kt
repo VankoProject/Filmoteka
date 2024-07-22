@@ -19,6 +19,8 @@ interface DashboardUi {
 
     fun id(): String
 
+    fun filmId(): Int = -1
+
     fun type(): DashboardUiType
 
     object Progress : DashboardUi {
@@ -55,6 +57,8 @@ interface DashboardUi {
 
         override fun id(): String = filmId.toString()
 
+        override fun filmId() = filmId
+
         override fun type() = DashboardUiType.Film
 
         override fun show(binding: FilmItemLayoutBinding) = with(binding) {
@@ -76,7 +80,7 @@ interface DashboardUi {
     companion object {
         private const val URL_POSTER = "https://image.tmdb.org/t/p/w500"
 
-        fun setupRatBar(rate: Double) = rate.toFloat() * 0.5F
+        private fun setupRatBar(rate: Double) = rate.toFloat() * 0.5F
     }
 
 }

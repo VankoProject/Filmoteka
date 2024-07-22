@@ -3,7 +3,7 @@ package com.kliachenko.dashboard.presentation
 import com.kliachenko.dashboard.presentation.adapter.DashboardUi
 import com.kliachenko.domain.DashboardItem
 
-class BaseDashboardItemMapper: DashboardItem.Mapper<DashboardUi> {
+class BaseDashboardUiMapper: DashboardItem.Mapper<DashboardUi> {
 
     override fun mapItems(
         id: Int,
