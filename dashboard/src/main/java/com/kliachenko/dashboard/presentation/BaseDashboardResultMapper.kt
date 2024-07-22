@@ -4,7 +4,7 @@ import com.kliachenko.dashboard.domain.DashboardResult
 import com.kliachenko.domain.FilmDomain
 
 class BaseDashboardResultMapper(
-    private val mapper: BaseDashboardItemMapper,
+    private val mapper: BaseDashboardUiMapper,
 ) : DashboardResult.Mapper<DashboardUiState> {
 
     override fun mapSuccess(items: List<FilmDomain>): DashboardUiState {

@@ -35,8 +35,8 @@ class DashboardViewModel(
         communication.update(DashboardUiState.Progress)
         runAsync({
             interactor.filmsByCategory(category)
-        }) {
-            val result: DashboardUiState = it.map(mapper)
+        }) { films ->
+            val result: DashboardUiState = films.map(mapper)
             communication.update(result)
         }
     }
@@ -45,14 +45,30 @@ class DashboardViewModel(
         load(currentTabPosition)
     }
 
-    override fun changeStatus(item: DashboardUi) {
-        runAsync({
-            interactor.addToFavorite(item.id().toInt())
-        }) {}
-    }
-
     override fun openDetail() {
         clear.clear(DashboardViewModel::class.java)
+    }
+
+    override fun remove(item: DashboardUi) {
+        runAsync({
+            interactor.removeFromFavorites(item.filmId())
+        }) {
+            val updateState = communication.liveData().value?.updateFilmState(item)
+            updateState?.let {
+                communication.update(it)
+            }
+        }
+    }
+
+    override fun add(item: DashboardUi) {
+        runAsync({
+            interactor.addToFavorite(item.filmId())
+        }) {
+            val updateState = communication.liveData().value?.updateFilmState(item)
+            updateState?.let {
+                communication.update(it)
+            }
+        }
     }
 
 }

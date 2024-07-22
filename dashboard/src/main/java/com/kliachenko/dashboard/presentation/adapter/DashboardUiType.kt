@@ -16,9 +16,7 @@ interface DashboardUiType {
             clickActions: ClickActions,
         ) = DashboardViewHolder.Progress(
             ProgressLayoutBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }
@@ -28,8 +26,9 @@ interface DashboardUiType {
             parent: ViewGroup,
             clickActions: ClickActions,
         ) = DashboardViewHolder.Error(
-            ErrorLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            clickActions
+            ErrorLayoutBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ), clickActions
         )
     }
 
@@ -38,8 +37,9 @@ interface DashboardUiType {
             parent: ViewGroup,
             clickActions: ClickActions,
         ) = DashboardViewHolder.Film(
-            FilmItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-            clickActions
+            FilmItemLayoutBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ), clickActions
         )
     }
 

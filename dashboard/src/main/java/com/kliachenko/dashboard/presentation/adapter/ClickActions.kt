@@ -4,7 +4,9 @@ interface ClickActions {
 
     fun retry()
 
-    fun changeStatus(item: DashboardUi)
+    fun remove(item: DashboardUi)
+
+    fun add(item: DashboardUi)
 
     fun openDetail()
 }

@@ -25,14 +25,9 @@ interface DashboardUiState {
     data class FilmsList(private val filmsList: List<DashboardUi>): DashboardUiState {
 
         override fun updateFilmState(filmUi: DashboardUi): DashboardUiState {
-            val newList = filmsList.toMutableList()
-            val newFilmIndex = filmsList.indexOf(filmUi)
-            newList[newFilmIndex] = filmUi.changeStatus()
-            filmsList.find { it.isFavorite() }?.let { currentlyStatus->
-                if(filmUi != currentlyStatus) {
-                    val index = filmsList.indexOf(currentlyStatus)
-                    newList[index] = currentlyStatus.changeStatus()
-                }
+            val newList = filmsList.map {
+                if(it == filmUi) it.changeStatus()
+                else it
             }
             return FilmsList(newList)
         }

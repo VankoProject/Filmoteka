@@ -8,8 +8,8 @@ import com.kliachenko.dashboard.data.DashboardRepositoryImpl
 import com.kliachenko.dashboard.data.cache.CategoryCacheDataSource
 import com.kliachenko.dashboard.data.cache.DashboardCacheDataSource
 import com.kliachenko.dashboard.domain.DashboardInteractor
-import com.kliachenko.dashboard.presentation.BaseDashboardItemMapper
 import com.kliachenko.dashboard.presentation.BaseDashboardResultMapper
+import com.kliachenko.dashboard.presentation.BaseDashboardUiMapper
 import com.kliachenko.dashboard.presentation.DashboardCommunication
 import com.kliachenko.dashboard.presentation.DashboardViewModel
 import com.kliachenko.dashboard.presentation.TabIdToCategoryMapper
@@ -43,7 +43,7 @@ class DashboardModule(
             ),
             communication = DashboardCommunication.Base(),
             clear = clear,
-            mapper = BaseDashboardResultMapper(BaseDashboardItemMapper()),
+            mapper = BaseDashboardResultMapper(BaseDashboardUiMapper()),
             categoryMapper = TabIdToCategoryMapper.Base,
             core.provideRunAsync()
         )
