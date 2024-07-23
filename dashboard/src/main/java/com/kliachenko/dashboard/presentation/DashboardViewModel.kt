@@ -1,5 +1,6 @@
 package com.kliachenko.dashboard.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.kliachenko.core.BaseViewModel
 import com.kliachenko.core.RunAsync
@@ -26,10 +27,12 @@ class DashboardViewModel(
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
             load(tabPosition)
+            Log.d("Filmateka", "VM init")
         }
     }
 
     fun load(tabPosition: Int) {
+        Log.d("Filmateka", "VM load")
         currentTabPosition = tabPosition
         val category = categoryMapper.map(tabPosition)
         communication.update(DashboardUiState.Progress)

@@ -1,6 +1,5 @@
 package com.kliachenko.dashboard.presentation.adapter
 
-import com.kliachenko.dashboard.R
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
@@ -66,12 +65,7 @@ interface DashboardUi {
             titleFilmTextView.text = title
             posterImageView.show(URL_POSTER + imageUrl)
             rateFilmBar.rating = setupRatBar(rate)
-            iconImageView.setImageResource(
-                if (isFavorite)
-                    R.drawable.ic_like_bookmark
-                else
-                    R.drawable.ic_unlike_bookmark
-            )
+            iconImageView.setIcon(isFavorite = isFavorite)
         }
 
         override fun changeStatus() = copy(isFavorite = !isFavorite)

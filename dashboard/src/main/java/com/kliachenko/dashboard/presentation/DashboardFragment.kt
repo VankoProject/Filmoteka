@@ -1,6 +1,7 @@
 package com.kliachenko.dashboard.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("Filmateka", "DashboardFragment onViewCreated()")
 
         val adapter = DashboardAdapter(clickListener = viewModel)
         binding.dashboardRecyclerView.adapter = adapter
@@ -32,6 +34,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
         viewModel.liveData().observe(viewLifecycleOwner) { state ->
             state.updateAdapter(adapter)
+            Log.d("FIlmateka", "updateAdapter in Fragment$state")
             (binding.dashboardRecyclerView).updateLayoutManager(state)
         }
 
@@ -52,7 +55,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         super.onViewStateRestored(savedInstanceState)
         val restoredTabPosition = savedInstanceState?.getInt("tabPosition") ?: 0
         binding.dashboardTabs.getTabAt(restoredTabPosition)?.select()
-        viewModel.load(restoredTabPosition)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
