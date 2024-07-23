@@ -75,6 +75,8 @@ interface DashboardUi {
         }
 
         override fun changeStatus() = copy(isFavorite = !isFavorite)
+
+        override fun isFavorite() = isFavorite
     }
 
     companion object {
