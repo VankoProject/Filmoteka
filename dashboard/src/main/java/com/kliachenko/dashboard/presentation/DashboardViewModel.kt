@@ -54,8 +54,8 @@ class DashboardViewModel(
             interactor.removeFromFavorites(item.filmId())
         }) {
             val updateState = communication.liveData().value?.updateFilmState(item)
-            updateState?.let {
-                communication.update(it)
+            updateState?.let { newState ->
+                communication.update(newState)
             }
         }
     }
@@ -65,8 +65,8 @@ class DashboardViewModel(
             interactor.addToFavorite(item.filmId())
         }) {
             val updateState = communication.liveData().value?.updateFilmState(item)
-            updateState?.let {
-                communication.update(it)
+            updateState?.let { newState ->
+                communication.update(newState)
             }
         }
     }
