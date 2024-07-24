@@ -47,11 +47,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    //NAVIGATION COMPONENT
-    implementation (libs.androidx.navigation.fragment.ktx)
-    implementation (libs.androidx.navigation.ui.ktx)
-    androidTestImplementation (libs.androidx.navigation.testing)
-
     //ROOM
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)

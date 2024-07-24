@@ -44,10 +44,6 @@ class DashboardViewModel(
         load(currentTabPosition)
     }
 
-    override fun openDetail() {
-        clear.clear(DashboardViewModel::class.java)
-    }
-
     override fun remove(item: DashboardUi) {
         runAsync({
             interactor.removeFromFavorites(item.filmId())
@@ -68,6 +64,10 @@ class DashboardViewModel(
                 communication.update(newState)
             }
         }
+    }
+
+    override fun navigate(filmId: Int) {
+        clear.clear(DashboardViewModel::class.java)
     }
 
 }

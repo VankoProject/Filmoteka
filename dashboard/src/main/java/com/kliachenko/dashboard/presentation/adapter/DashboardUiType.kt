@@ -8,12 +8,13 @@ import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 interface DashboardUiType {
 
-    fun viewHolder(parent: ViewGroup, clickActions: ClickActions): DashboardViewHolder
+    fun viewHolder(parent: ViewGroup, clickActions: ClickActions, navigate: (Int) -> Unit,): DashboardViewHolder
 
     object Progress : DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
+            navigate: (Int) -> Unit
         ) = DashboardViewHolder.Progress(
             ProgressLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -25,6 +26,7 @@ interface DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
+            navigate: (Int) -> Unit
         ) = DashboardViewHolder.Error(
             ErrorLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -36,10 +38,11 @@ interface DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
+            navigate: (Int) -> Unit
         ) = DashboardViewHolder.Film(
             FilmItemLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            ), clickActions
+            ), clickActions, navigate
         )
     }
 

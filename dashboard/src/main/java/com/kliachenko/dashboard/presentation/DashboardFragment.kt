@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.kliachenko.core.BaseFragment
 import com.kliachenko.dashboard.databinding.FragmentDashboardBinding
 import com.kliachenko.dashboard.presentation.adapter.DashboardAdapter
 import com.kliachenko.dashboard.presentation.customView.TabSelectedListener
 
-class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>(), TabSelectedListener {
+class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
+    TabSelectedListener {
 
     override val viewModelClass: Class<DashboardViewModel>
         get() = DashboardViewModel::class.java
@@ -22,7 +24,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = DashboardAdapter(clickListener = viewModel)
+        val adapter = DashboardAdapter(clickListener = viewModel, navigate = { filmId ->
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashBoardFragmentToDetailFragment(
+                    filmId
+                )
+            )
+        })
+
         binding.dashboardRecyclerView.adapter = adapter
 
         binding.dashboardTabs.setOnTabSelectedListener(this)
@@ -41,5 +50,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     override fun onTabSelected(position: Int) {
         viewModel.load(position)
     }
+
 
 }

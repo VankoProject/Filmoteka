@@ -24,7 +24,10 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.kliachenko.filmoteka.fragments.DetailFragment"
-        android:label="Detail film info"
-        tools:layout="@layout/fragment_detail"/>
+        android:label="Detail film info" >
+        <argument
+            android:name="filmId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

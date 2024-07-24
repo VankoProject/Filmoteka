@@ -1,12 +1,14 @@
 package com.kliachenko.dashboard.presentation.adapter
 
-interface ClickActions {
+interface ClickActions: NavigateToDetail {
 
     fun retry()
 
     fun remove(item: DashboardUi)
 
     fun add(item: DashboardUi)
+}
 
-    fun openDetail()
+interface NavigateToDetail {
+    fun navigate(filmId: Int)
 }
