@@ -24,7 +24,7 @@ interface DashboardCacheDataSource {
 
     interface Mutable : SaveFilm, ReadFilms, ReadFilm, SaveRelation
 
-    class Base(private val filmsDao: FilmsDao) : Mutable {
+    class Base(private val filmsDao: FilmsDao, ) : Mutable {
 
         override suspend fun save(film: FilmCache) {
             filmsDao.saveFilm(film)

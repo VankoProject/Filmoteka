@@ -18,34 +18,31 @@ class DashboardRepositoryImpl(
     private val categoryCacheDataSource: CategoryCacheDataSource.Mutable,
     private val mapToCache: FilmsMapper.ToCache = FilmsMapper.ToCache.Base,
     private val mapToDomain: FilmsMapper.ToDomain = FilmsMapper.ToDomain.Base,
-    private val handleError: HandleError<String>
+    private val handleError: HandleError<String>,
 ) : DashboardRepository {
 
     override suspend fun filmsByCategory(category: String): DashboardResult {
         val isEmptyCache = dashboardCacheDataSource.filmsByCategory(category).isEmpty()
         try {
-            if (isEmptyCache) {
-                val films = cloudDataSource.loadFilms(category).results()
+            val films = if (isEmptyCache) {
+                val cloudFilms = cloudDataSource.loadFilms(category).results()
                 categoryCacheDataSource.save(CategoryCache(categoryName = category))
                 val relationMapper = FilmsMapper.ToRelation.Base(category)
-                val result = films.map { itemCloud ->
+                cloudFilms.forEach { itemCloud ->
                     dashboardCacheDataSource.saveRelation(itemCloud.map(relationMapper))
                     dashboardCacheDataSource.save(itemCloud.map(mapToCache))
-                    itemCloud.map(mapToDomain)
                 }
-                return DashboardResult.Success(result)
+                cloudFilms.map { itemCloud -> itemCloud.map(mapToDomain) }
             } else {
-                val cache = dashboardCacheDataSource.filmsByCategory(category)
-                val result = cache.map { itemCache ->
-                    itemCache.map(mapToDomain)
-                }
-                return DashboardResult.Success(result)
+                dashboardCacheDataSource.filmsByCategory(category)
+                    .map { itemCache -> itemCache.map(mapToDomain) }
             }
+            val favoriteFilmIds = favoritesCacheDataSource.favoriteFilmsIds()
+            return DashboardResult.Success(films, favoriteFilmIds)
         } catch (e: Exception) {
             return DashboardResult.Error(handleError.handle(e))
         }
     }
-
 
     override suspend fun addToFavorite(filmId: Int) {
         favoritesCacheDataSource.save(FavoriteCache(filmId = filmId))

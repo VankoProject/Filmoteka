@@ -16,6 +16,8 @@ interface FavoritesCacheDataSource {
 
     interface Remove {
         suspend fun remove(filmId: Int)
+
+        suspend fun favoriteFilmsIds(): Set<Int>
     }
 
     interface Status {
@@ -36,9 +38,11 @@ interface FavoritesCacheDataSource {
             favoriteDao.removeFromFavorite(filmId)
         }
 
+        override suspend fun favoriteFilmsIds(): Set<Int> =
+            favoriteDao.favoriteFilmsIds().toSet()
+
         override suspend fun isFavorite(filmId: Int) = favoriteDao.isFavorite(filmId)
 
     }
-
 
 }

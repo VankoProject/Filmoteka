@@ -22,4 +22,7 @@ interface FavoriteDao {
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_films_table WHERE film_id = :filmId)")
     suspend fun isFavorite(filmId: Int): Boolean
 
+    @Query("SELECT film_id FROM favorite_films_table")
+    suspend fun favoriteFilmsIds(): List<Int>
+
 }
