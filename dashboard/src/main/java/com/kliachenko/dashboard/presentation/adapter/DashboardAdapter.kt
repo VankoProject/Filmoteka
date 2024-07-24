@@ -12,6 +12,7 @@ import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 class DashboardAdapter(
     private val clickListener: ClickActions,
+    private val navigate: (Int) -> Unit,
     private val typeList: List<DashboardUiType> = listOf(
         DashboardUiType.Error,
         DashboardUiType.Progress,
@@ -31,7 +32,7 @@ class DashboardAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
-        return typeList[viewType].viewHolder(parent, clickListener)
+        return typeList[viewType].viewHolder(parent, clickListener, navigate)
     }
 
     override fun onBindViewHolder(holder: DashboardViewHolder, position: Int) {
@@ -76,12 +77,13 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class Film(
         private val binding: FilmItemLayoutBinding,
         private val clickListener: ClickActions,
+        private val navigate: (Int) -> Unit
     ) : DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
             item.show(binding)
             binding.root.setOnClickListener {
                 if (itemView.id != R.id.iconImageView) {
-                    clickListener.openDetail()
+                   navigate(item.filmId())
                 }
             }
             binding.iconImageView.setOnClickListener {
