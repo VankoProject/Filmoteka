@@ -9,7 +9,6 @@ import com.kliachenko.dashboard.domain.DashboardInteractor
 import com.kliachenko.dashboard.domain.DashboardResult
 import com.kliachenko.dashboard.presentation.adapter.ClickActions
 import com.kliachenko.dashboard.presentation.adapter.DashboardUi
-import kotlin.properties.Delegates
 
 class DashboardViewModel(
     private val interactor: DashboardInteractor,
@@ -20,14 +19,17 @@ class DashboardViewModel(
     runAsync: RunAsync,
 ) : BaseViewModel(runAsync), ClickActions {
 
-    private var currentTabPosition by Delegates.notNull<Int>()
+    private var currentTabPosition = 0
 
     fun liveData(): LiveData<DashboardUiState> = communication.liveData()
+
+    init {
+        Log.d("Filmateka", "VM create")
+    }
 
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
             load(tabPosition)
-            Log.d("Filmateka", "VM init")
         }
     }
 

@@ -48,7 +48,7 @@ class CustomImageIconView : AppCompatImageView, SetIcon {
 
 internal class IdSavedState : View.BaseSavedState {
 
-    var savedId: Int = -1
+    var savedId: Int = 0
 
     constructor(superState: Parcelable) : super(superState)
 

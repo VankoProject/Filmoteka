@@ -22,7 +22,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Filmateka", "DashboardFragment onViewCreated()")
 
         val adapter = DashboardAdapter(clickListener = viewModel)
         binding.dashboardRecyclerView.adapter = adapter
@@ -34,7 +33,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
         viewModel.liveData().observe(viewLifecycleOwner) { state ->
             state.updateAdapter(adapter)
-            Log.d("FIlmateka", "updateAdapter in Fragment$state")
             (binding.dashboardRecyclerView).updateLayoutManager(state)
         }
 
@@ -43,6 +41,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val position = tab.position
                 viewModel.load(position)
+                Log.d("Filmateka", "tab clickListener")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
@@ -55,10 +54,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         super.onViewStateRestored(savedInstanceState)
         val restoredTabPosition = savedInstanceState?.getInt("tabPosition") ?: 0
         binding.dashboardTabs.getTabAt(restoredTabPosition)?.select()
+        Log.d("Filmateka", "onViewStateRestored $restoredTabPosition")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        Log.d("Filmateka", "onSaveInstanceState ${binding.dashboardTabs.selectedTabPosition}")
         outState.putInt("tabPosition", binding.dashboardTabs.selectedTabPosition)
     }
 

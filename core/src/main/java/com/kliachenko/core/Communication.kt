@@ -20,7 +20,7 @@ interface Communication {
     interface Mutable<T: Any> : Read<T>, Update<T>
 
     abstract class Abstract<T: Any>(
-        protected val liveData: MutableLiveData<T> = SingleLiveEvent(),
+        protected val liveData: MutableLiveData<T> = MutableLiveData(),
     ): Mutable<T> {
 
         override fun liveData(): LiveData<T> {
