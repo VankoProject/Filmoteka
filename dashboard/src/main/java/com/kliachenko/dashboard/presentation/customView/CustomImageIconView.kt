@@ -1,10 +1,8 @@
 package com.kliachenko.dashboard.presentation.customView
 
 import android.content.Context
-import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import com.kliachenko.dashboard.R
 
@@ -43,29 +41,6 @@ class CustomImageIconView : AppCompatImageView, SetIcon {
             if (isFavorite) R.drawable.ic_like_bookmark
             else R.drawable.ic_unlike_bookmark
         setImageResource(currentIconResId)
-    }
-}
-
-internal class IdSavedState : View.BaseSavedState {
-
-    var savedId: Int = 0
-
-    constructor(superState: Parcelable) : super(superState)
-
-    private constructor(parcel: Parcel) : super(parcel) {
-        savedId = parcel.readInt()
-    }
-
-    override fun writeToParcel(out: Parcel, flags: Int) {
-        super.writeToParcel(out, flags)
-        out.writeInt(savedId)
-    }
-
-    override fun describeContents() = 0
-
-    companion object CREATOR : Parcelable.Creator<IdSavedState> {
-        override fun createFromParcel(source: Parcel) = IdSavedState(source)
-        override fun newArray(size: Int): Array<IdSavedState?> = arrayOfNulls(size)
     }
 }
 
