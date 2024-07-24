@@ -2,7 +2,7 @@ package com.kliachenko.domain
 
 interface DashboardItem {
 
-    fun <T : Any> map(mapper: Mapper<T>): T
+    fun <T : Any> map(mapper: Mapper<T>, isFavorite: Boolean): T
 
     interface Mapper<T : Any> {
         fun mapItems(
@@ -12,6 +12,7 @@ interface DashboardItem {
             releaseDate: String,
             title: String,
             voteAverage: Double,
+            isFavorite: Boolean,
         ): T
     }
 }
@@ -24,6 +25,17 @@ data class FilmDomain(
     private val title: String,
     private val voteAverage: Double,
 ) : DashboardItem {
-    override fun <T : Any> map(mapper: DashboardItem.Mapper<T>): T =
-        mapper.mapItems(id, overview, posterPath, releaseDate, title, voteAverage)
+
+    fun id(): Int = id
+
+    override fun <T : Any> map(mapper: DashboardItem.Mapper<T>, isFavorite: Boolean): T =
+        mapper.mapItems(
+            id,
+            overview,
+            posterPath,
+            releaseDate,
+            title,
+            voteAverage,
+            isFavorite
+        )
 }

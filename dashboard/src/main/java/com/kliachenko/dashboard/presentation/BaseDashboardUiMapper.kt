@@ -12,6 +12,7 @@ class BaseDashboardUiMapper: DashboardItem.Mapper<DashboardUi> {
         releaseDate: String,
         title: String,
         voteAverage: Double,
+        isFavorite: Boolean
     ) = DashboardUi.Film(
         filmId = id,
         overView = overview,
@@ -19,6 +20,6 @@ class BaseDashboardUiMapper: DashboardItem.Mapper<DashboardUi> {
         releaseDate = releaseDate,
         title = title,
         rate = voteAverage,
-        isFavorite = false
+        isFavorite = isFavorite
     )
 }
