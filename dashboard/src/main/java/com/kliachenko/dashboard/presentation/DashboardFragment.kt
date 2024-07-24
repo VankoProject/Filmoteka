@@ -1,6 +1,7 @@
 package com.kliachenko.dashboard.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val position = tab.position
                 viewModel.load(position)
+                Log.d("Filmateka", "tab clickListener")
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
@@ -52,11 +54,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         super.onViewStateRestored(savedInstanceState)
         val restoredTabPosition = savedInstanceState?.getInt("tabPosition") ?: 0
         binding.dashboardTabs.getTabAt(restoredTabPosition)?.select()
-        viewModel.load(restoredTabPosition)
+        Log.d("Filmateka", "onViewStateRestored $restoredTabPosition")
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        Log.d("Filmateka", "onSaveInstanceState ${binding.dashboardTabs.selectedTabPosition}")
         outState.putInt("tabPosition", binding.dashboardTabs.selectedTabPosition)
     }
 
