@@ -23,10 +23,6 @@ class DashboardViewModel(
 
     fun liveData(): LiveData<DashboardUiState> = communication.liveData()
 
-    init {
-        Log.d("Filmateka", "VM create")
-    }
-
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
             load(tabPosition)

@@ -1,16 +1,15 @@
 package com.kliachenko.dashboard.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.tabs.TabLayout
 import com.kliachenko.core.BaseFragment
 import com.kliachenko.dashboard.databinding.FragmentDashboardBinding
 import com.kliachenko.dashboard.presentation.adapter.DashboardAdapter
+import com.kliachenko.dashboard.presentation.customView.TabSelectedListener
 
-class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>() {
+class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>(), TabSelectedListener {
 
     override val viewModelClass: Class<DashboardViewModel>
         get() = DashboardViewModel::class.java
@@ -26,6 +25,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         val adapter = DashboardAdapter(clickListener = viewModel)
         binding.dashboardRecyclerView.adapter = adapter
 
+        binding.dashboardTabs.setOnTabSelectedListener(this)
+
         viewModel.init(
             firstRun = savedInstanceState == null,
             tabPosition = binding.dashboardTabs.selectedTabPosition
@@ -35,32 +36,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             state.updateAdapter(adapter)
             (binding.dashboardRecyclerView).updateLayoutManager(state)
         }
-
-        binding.dashboardTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                val position = tab.position
-                viewModel.load(position)
-                Log.d("Filmateka", "tab clickListener")
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-
-            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-        })
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        val restoredTabPosition = savedInstanceState?.getInt("tabPosition") ?: 0
-        binding.dashboardTabs.getTabAt(restoredTabPosition)?.select()
-        Log.d("Filmateka", "onViewStateRestored $restoredTabPosition")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Log.d("Filmateka", "onSaveInstanceState ${binding.dashboardTabs.selectedTabPosition}")
-        outState.putInt("tabPosition", binding.dashboardTabs.selectedTabPosition)
+    override fun onTabSelected(position: Int) {
+        viewModel.load(position)
     }
 
 }
