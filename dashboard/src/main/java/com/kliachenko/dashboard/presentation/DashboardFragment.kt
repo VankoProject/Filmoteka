@@ -30,6 +30,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
                     filmId
                 )
             )
+            viewModel.clear(viewModelClass)
         })
 
         binding.dashboardRecyclerView.adapter = adapter
