@@ -1,6 +1,6 @@
 package com.kliachenko.dashboard.presentation.adapter
 
-interface ClickActions: NavigateToDetail {
+interface ClickActions {
 
     fun retry()
 

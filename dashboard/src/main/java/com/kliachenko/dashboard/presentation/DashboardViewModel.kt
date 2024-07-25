@@ -1,6 +1,7 @@
 package com.kliachenko.dashboard.presentation
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.kliachenko.core.BaseViewModel
 import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
@@ -16,7 +17,7 @@ class DashboardViewModel(
     private val uiMapper: DashboardResult.Mapper<DashboardUiState>,
     private val categoryMapper: TabIdToCategoryMapper,
     runAsync: RunAsync,
-) : BaseViewModel(runAsync), ClickActions {
+) : BaseViewModel(runAsync), ClickActions, Clear {
 
     private var currentTabPosition = 0
 
@@ -67,7 +68,7 @@ class DashboardViewModel(
         }
     }
 
-    override fun navigate(filmId: Int) {
+    override fun clear(viewModelClass: Class<out ViewModel>) {
         clear.clear(DashboardViewModel::class.java)
     }
 

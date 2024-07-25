@@ -47,7 +47,7 @@ class DashboardViewModelTest {
     }
 
     @Test
-    fun errorThenSuccessLoadDataWhenFirstRun() {
+    fun successWhenFirstRun() {
         interactor.hasData()
         viewModel.init(firstRun = true, tabPosition = 0)
         runAsync.returnLoadResult()
@@ -56,14 +56,15 @@ class DashboardViewModelTest {
             DashboardUiState.FilmsList(
                 listOf(
                     DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = false),
-                    DashboardUi.Film(filmId = 1, overView = "film1", imageUrl = "film1", releaseDate = "1.0", title = "film1", rate = 1.0, isFavorite = false)
+                    DashboardUi.Film(filmId = 1, overView = "film1", imageUrl = "film1", releaseDate = "1.0", title = "film1", rate = 1.0, isFavorite = false
+                    )
                 )
             )
         )
     }
 
     @Test
-    fun errorLoadDataThenSuccessWhenFirstRun() {
+    fun errorThenSuccessWhenFirstRun() {
         interactor.hasError()
         viewModel.init(firstRun = true, tabPosition = 0)
         runAsync.returnLoadResult()
@@ -80,11 +81,73 @@ class DashboardViewModelTest {
             DashboardUiState.Progress,
             DashboardUiState.FilmsList(
                 listOf(
-                    DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = false),
-                    DashboardUi.Film(filmId = 1, overView = "film1", imageUrl = "film1", releaseDate = "1.0", title = "film1", rate = 1.0, isFavorite = false)
+                    DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = false
+                    ),
+                    DashboardUi.Film(filmId = 1, overView = "film1", imageUrl = "film1", releaseDate = "1.0", title = "film1", rate = 1.0, isFavorite = false
+                    )
                 )
             )
         )
+    }
+
+    @Test
+    fun successLoadBetweenTabsNotFirstRun() {
+        interactor.hasData()
+        viewModel.init(firstRun = false, tabPosition = 1)
+        runAsync.returnLoadResult()
+        viewModel.load(tabPosition = 1)
+        runAsync.returnLoadResult()
+        communication.checkUpdatedState(
+            DashboardUiState.Progress,
+            DashboardUiState.FilmsList(
+                listOf(
+                    DashboardUi.Film(filmId = 2, overView = "film2", imageUrl = "film2", releaseDate = "2.0", title = "film2", rate = 2.0, isFavorite = false
+                    ),
+                    DashboardUi.Film(filmId = 3, overView = "film3", imageUrl = "film3", releaseDate = "3.0", title = "film3", rate = 3.0, isFavorite = false
+                    )
+                )
+            )
+        )
+        viewModel.load(tabPosition = 0)
+        runAsync.returnLoadResult()
+        communication.checkUpdatedState(
+            DashboardUiState.Progress,
+            DashboardUiState.FilmsList(
+                listOf(
+                    DashboardUi.Film(filmId = 2, overView = "film2", imageUrl = "film2", releaseDate = "2.0", title = "film2", rate = 2.0, isFavorite = false
+                    ),
+                    DashboardUi.Film(filmId = 3, overView = "film3", imageUrl = "film3", releaseDate = "3.0", title = "film3", rate = 3.0, isFavorite = false
+                    )
+                )
+            ),
+            DashboardUiState.Progress,
+            DashboardUiState.FilmsList(
+                listOf(
+                    DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = false
+                    ),
+                    DashboardUi.Film(filmId = 1, overView = "film1", imageUrl = "film1", releaseDate = "1.0", title = "film1", rate = 1.0, isFavorite = false
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
+    fun addToFavoriteThenRemove() {
+        viewModel.add(item = DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = false))
+        interactor.checkAddedFilmToFavorite(expectedId = 0)
+    }
+
+    @Test
+    fun removeFromFavorite() {
+        viewModel.remove(item = DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = true))
+        interactor.checkRemovedFilmId(expectedId = 0)
+    }
+
+    @Test
+    fun clearViewModel() {
+        viewModel.clear(this.viewModel.javaClass)
+        clear.checkClearCalled(DashboardViewModel::class.java)
     }
 
 }
@@ -96,18 +159,8 @@ private class FakeDashboardInteractor : DashboardInteractor {
     private var addedFilmId: Int? = null
     private var removedFilmsId: Int? = null
 
-    private val popularFilms = listOf(
-        FilmDomain(id = 0, overview = "film0", posterPath = "film0", releaseDate = "0.0", title = "film0", voteAverage = 0.0),
-        FilmDomain(id = 1, overview = "film1", posterPath = "film1", releaseDate = "1.0", title = "film1", voteAverage = 1.0)
-    )
-
-    private val topRatedFilms = listOf(
-        FilmDomain(id = 2, overview = "film2", posterPath = "film2", releaseDate = "2.0", title = "film2", voteAverage = 2.0),
-        FilmDomain(id = 3, overview = "film3", posterPath = "film3", releaseDate = "3.0", title = "film3", voteAverage = 3.0)
-    )
-
     override suspend fun filmsByCategory(category: String): DashboardResult {
-        return filmsByCategoryResult[category]?:actualDashboardResult
+        return filmsByCategoryResult[category] ?: actualDashboardResult
     }
 
     override suspend fun addToFavorite(filmId: Int) {
@@ -126,8 +179,10 @@ private class FakeDashboardInteractor : DashboardInteractor {
         categoryResult(
             "popular", DashboardResult.Success(
                 items = listOf(
-                    FilmDomain(id = 0, overview = "film0", posterPath = "film0", releaseDate = "0.0", title = "film0", voteAverage = 0.0),
-                    FilmDomain(id = 1, overview = "film1", posterPath = "film1", releaseDate = "1.0", title = "film1", voteAverage = 1.0)
+                    FilmDomain(id = 0, overview = "film0", posterPath = "film0", releaseDate = "0.0", title = "film0", voteAverage = 0.0
+                    ),
+                    FilmDomain(id = 1, overview = "film1", posterPath = "film1", releaseDate = "1.0", title = "film1", voteAverage = 1.0
+                    )
                 ), favoriteFilmIds = setOf()
             )
         )
@@ -135,10 +190,11 @@ private class FakeDashboardInteractor : DashboardInteractor {
             "top_rated",
             DashboardResult.Success(
                 items = listOf(
-                    FilmDomain(id = 2, overview = "film2", posterPath = "film2", releaseDate = "2.0", title = "film2", voteAverage = 2.0),
-                    FilmDomain(id = 3, overview = "film3", posterPath = "film3", releaseDate = "3.0", title = "film3", voteAverage = 3.0)
-                ),
-                favoriteFilmIds = setOf()
+                    FilmDomain(id = 2, overview = "film2", posterPath = "film2", releaseDate = "2.0", title = "film2", voteAverage = 2.0
+                    ),
+                    FilmDomain(id = 3, overview = "film3", posterPath = "film3", releaseDate = "3.0", title = "film3", voteAverage = 3.0
+                    )
+                ), favoriteFilmIds = setOf()
             )
         )
     }
@@ -160,20 +216,23 @@ private class FakeDashboardInteractor : DashboardInteractor {
 private class FakeDashboardCommunication : DashboardCommunication {
 
     private var actualUiStateList: MutableList<DashboardUiState> = mutableListOf()
+    private var latestState: DashboardUiState = DashboardUiState.Empty
 
     override fun liveData(): LiveData<DashboardUiState> {
         throw IllegalStateException("not used in tests")
     }
 
     override fun update(value: DashboardUiState) {
-        println("Updating state to: $value")
+        latestState = value
         actualUiStateList.add(value)
     }
 
     fun checkUpdatedState(vararg expected: DashboardUiState) {
-        println("Expected states: ${expected.toList()}")
-        println("Actual states: $actualUiStateList")
         assertEquals(expected.toList(), actualUiStateList)
+    }
+
+    fun latestState(): DashboardUiState {
+        return latestState
     }
 
 }
