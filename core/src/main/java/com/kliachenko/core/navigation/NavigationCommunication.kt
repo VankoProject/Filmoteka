@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.navigation
+package com.kliachenko.core.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
@@ -23,9 +23,8 @@ interface NavigationCommunication {
             navController.navigate(directions)
         }
 
-        override fun popBackStack(): Boolean {
-            return navController.popBackStack()
-        }
+        override fun popBackStack(): Boolean = navController.popBackStack()
 
     }
+
 }

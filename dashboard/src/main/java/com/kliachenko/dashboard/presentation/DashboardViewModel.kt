@@ -13,7 +13,7 @@ class DashboardViewModel(
     private val interactor: DashboardInteractor,
     private val communication: DashboardCommunication,
     private val clear: Clear,
-    private val mapper: DashboardResult.Mapper<DashboardUiState>,
+    private val uiMapper: DashboardResult.Mapper<DashboardUiState>,
     private val categoryMapper: TabIdToCategoryMapper,
     runAsync: RunAsync,
 ) : BaseViewModel(runAsync), ClickActions {
@@ -24,6 +24,7 @@ class DashboardViewModel(
 
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
+
             load(tabPosition)
         }
     }
@@ -35,7 +36,7 @@ class DashboardViewModel(
         runAsync({
             interactor.filmsByCategory(category)
         }) { films ->
-            val result: DashboardUiState = films.map(mapper)
+            val result: DashboardUiState = films.map(uiMapper)
             communication.update(result)
         }
     }

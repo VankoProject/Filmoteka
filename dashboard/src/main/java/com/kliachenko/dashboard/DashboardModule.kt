@@ -43,7 +43,7 @@ class DashboardModule(
             ),
             communication = DashboardCommunication.Base(),
             clear = clear,
-            mapper = BaseDashboardResultMapper(BaseDashboardUiMapper()),
+            uiMapper = BaseDashboardResultMapper(BaseDashboardUiMapper()),
             categoryMapper = TabIdToCategoryMapper.Base,
             core.provideRunAsync()
         )
