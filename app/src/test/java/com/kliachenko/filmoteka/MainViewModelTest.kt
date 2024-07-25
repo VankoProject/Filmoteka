@@ -6,7 +6,7 @@
 //import com.kliachenko.filmoteka.main.MainCommunication
 //import com.kliachenko.filmoteka.main.MainUiState
 //import com.kliachenko.filmoteka.main.MainViewModel
-//import com.kliachenko.filmoteka.navigation.NavigationCommunication
+//import com.kliachenko.core.navigation.NavigationCommunication
 //import org.junit.Assert
 //import org.junit.Before
 //import org.junit.Test
