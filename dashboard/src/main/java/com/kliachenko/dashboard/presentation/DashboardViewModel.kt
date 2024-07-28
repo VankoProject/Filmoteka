@@ -6,7 +6,7 @@ import com.kliachenko.core.BaseViewModel
 import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.dashboard.domain.DashboardInteractor
-import com.kliachenko.dashboard.domain.DashboardResult
+import com.kliachenko.dashboard.domain.LoadResult
 import com.kliachenko.dashboard.presentation.adapter.ClickActions
 import com.kliachenko.dashboard.presentation.adapter.DashboardUi
 
@@ -14,7 +14,7 @@ class DashboardViewModel(
     private val interactor: DashboardInteractor,
     private val communication: DashboardCommunication,
     private val clear: Clear,
-    private val uiMapper: DashboardResult.Mapper<DashboardUiState>,
+    private val uiMapper: LoadResult.Mapper<DashboardUiState>,
     private val categoryMapper: TabIdToCategoryMapper,
     runAsync: RunAsync,
 ) : BaseViewModel(runAsync), ClickActions, Clear {
@@ -25,7 +25,6 @@ class DashboardViewModel(
 
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
-
             load(tabPosition)
         }
     }
