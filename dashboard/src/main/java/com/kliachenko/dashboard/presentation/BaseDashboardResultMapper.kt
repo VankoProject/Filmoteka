@@ -1,11 +1,11 @@
 package com.kliachenko.dashboard.presentation
 
-import com.kliachenko.dashboard.domain.DashboardResult
+import com.kliachenko.dashboard.domain.LoadResult
 import com.kliachenko.domain.FilmDomain
 
 class BaseDashboardResultMapper(
     private val mapper: BaseDashboardUiMapper,
-) : DashboardResult.Mapper<DashboardUiState> {
+) : LoadResult.Mapper<DashboardUiState> {
 
     override fun mapSuccess(items: List<FilmDomain>, favoriteFilmIds: Set<Int>): DashboardUiState {
        val uiItems = items.map {

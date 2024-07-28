@@ -16,7 +16,7 @@ interface DashboardUi {
 
     fun changeStatus(): DashboardUi = this
 
-    fun id(): String
+    fun id(): String = ""
 
     fun filmId(): Int = -1
 

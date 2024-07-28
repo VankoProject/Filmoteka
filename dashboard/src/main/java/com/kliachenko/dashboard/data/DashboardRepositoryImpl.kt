@@ -4,7 +4,7 @@ import com.kliachenko.core.HandleError
 import com.kliachenko.dashboard.data.cache.CategoryCacheDataSource
 import com.kliachenko.dashboard.data.cache.DashboardCacheDataSource
 import com.kliachenko.dashboard.domain.DashboardRepository
-import com.kliachenko.dashboard.domain.DashboardResult
+import com.kliachenko.dashboard.domain.LoadResult
 import com.kliachenko.data.cache.FavoritesCacheDataSource
 import com.kliachenko.data.cache.entity.CategoryCache
 import com.kliachenko.data.cache.entity.FavoriteCache
@@ -21,7 +21,7 @@ class DashboardRepositoryImpl(
     private val handleError: HandleError<String>,
 ) : DashboardRepository {
 
-    override suspend fun filmsByCategory(category: String): DashboardResult {
+    override suspend fun filmsByCategory(category: String): LoadResult {
         val isEmptyCache = dashboardCacheDataSource.filmsByCategory(category).isEmpty()
         try {
             val films = if (isEmptyCache) {
@@ -38,9 +38,9 @@ class DashboardRepositoryImpl(
                     .map { itemCache -> itemCache.map(mapToDomain) }
             }
             val favoriteFilmIds = favoritesCacheDataSource.favoriteFilmsIds()
-            return DashboardResult.Success(films, favoriteFilmIds)
+            return LoadResult.Success(films, favoriteFilmIds)
         } catch (e: Exception) {
-            return DashboardResult.Error(handleError.handle(e))
+            return LoadResult.Error(handleError.handle(e))
         }
     }
 

@@ -29,5 +29,8 @@
             android:name="filmId"
             app:argType="integer" />
     </fragment>
+    <argument
+        android:name="filmId"
+        app:argType="integer" />
 
 </navigation>

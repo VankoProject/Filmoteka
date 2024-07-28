@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.dashboard.domain.DashboardInteractor
-import com.kliachenko.dashboard.domain.DashboardResult
+import com.kliachenko.dashboard.domain.LoadResult
 import com.kliachenko.dashboard.presentation.DashboardCommunication
 import com.kliachenko.dashboard.presentation.DashboardUiState
 import com.kliachenko.dashboard.presentation.DashboardViewModel
@@ -134,7 +134,8 @@ class DashboardViewModelTest {
 
     @Test
     fun addToFavoriteThenRemove() {
-        viewModel.add(item = DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = false))
+        val favFilm = DashboardUi.Film(filmId = 0, overView = "film0", imageUrl = "film0", releaseDate = "0.0", title = "film0", rate = 0.0, isFavorite = false)
+        viewModel.add(item = favFilm)
         interactor.checkAddedFilmToFavorite(expectedId = 0)
     }
 
@@ -154,13 +155,13 @@ class DashboardViewModelTest {
 
 private class FakeDashboardInteractor : DashboardInteractor {
 
-    private var actualDashboardResult: DashboardResult = DashboardResult.Empty
-    private var filmsByCategoryResult: MutableMap<String, DashboardResult> = mutableMapOf()
+    private var actualLoadResult: LoadResult = LoadResult.Empty
+    private var filmsByCategoryResult: MutableMap<String, LoadResult> = mutableMapOf()
     private var addedFilmId: Int? = null
     private var removedFilmsId: Int? = null
 
-    override suspend fun filmsByCategory(category: String): DashboardResult {
-        return filmsByCategoryResult[category] ?: actualDashboardResult
+    override suspend fun filmsByCategory(category: String): LoadResult {
+        return filmsByCategoryResult[category] ?: actualLoadResult
     }
 
     override suspend fun addToFavorite(filmId: Int) {
@@ -171,13 +172,13 @@ private class FakeDashboardInteractor : DashboardInteractor {
         removedFilmsId = filmId
     }
 
-    fun categoryResult(category: String, result: DashboardResult) {
+    fun categoryResult(category: String, result: LoadResult) {
         filmsByCategoryResult[category] = result
     }
 
     fun hasData() {
         categoryResult(
-            "popular", DashboardResult.Success(
+            "popular", LoadResult.Success(
                 items = listOf(
                     FilmDomain(id = 0, overview = "film0", posterPath = "film0", releaseDate = "0.0", title = "film0", voteAverage = 0.0
                     ),
@@ -188,7 +189,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
         )
         categoryResult(
             "top_rated",
-            DashboardResult.Success(
+            LoadResult.Success(
                 items = listOf(
                     FilmDomain(id = 2, overview = "film2", posterPath = "film2", releaseDate = "2.0", title = "film2", voteAverage = 2.0
                     ),
@@ -200,7 +201,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
     }
 
     fun hasError() {
-        actualDashboardResult = DashboardResult.Error(message = "No internet connection")
+        actualLoadResult = LoadResult.Error(message = "No internet connection")
     }
 
     fun checkAddedFilmToFavorite(expectedId: Int) {
@@ -253,7 +254,7 @@ private class FakeClear : Clear {
 
 private class FakeDashboardResultMapper(
     private val mapper: FakeDashboardItemMapper,
-) : DashboardResult.Mapper<DashboardUiState> {
+) : LoadResult.Mapper<DashboardUiState> {
 
     private var resultUiState: DashboardUiState = DashboardUiState.Empty
 
