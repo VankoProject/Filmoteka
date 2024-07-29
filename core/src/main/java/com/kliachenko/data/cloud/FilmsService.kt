@@ -13,7 +13,7 @@ interface FilmsService {
         @Path("category") category: String,
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_LANGUAGE) language: String = "en-US",
-        @Query(QUERY_PARAM_PAGE) page: Int = 1
+        @Query(QUERY_PARAM_PAGE) page: Int
     ): Call<FilmsResponse>
 
     companion object {

@@ -20,6 +20,10 @@ data class FilmsResponse(
     }
 
     fun results(): List<FilmCloud> = results
+
+    fun totalPages(): Int = totalPages
+
+    fun totalResults(): Int = totalResults
 }
 
 data class FilmCloud(

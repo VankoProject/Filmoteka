@@ -1,8 +1,10 @@
 package com.kliachenko.dashboard.presentation
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.kliachenko.core.BaseViewModel
+import com.kliachenko.core.Observe
 import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.dashboard.domain.DashboardInteractor
@@ -17,11 +19,9 @@ class DashboardViewModel(
     private val uiMapper: LoadResult.Mapper<DashboardUiState>,
     private val categoryMapper: TabIdToCategoryMapper,
     runAsync: RunAsync,
-) : BaseViewModel(runAsync), ClickActions, Clear {
+) : BaseViewModel(runAsync), ClickActions, Clear, Observe<DashboardUiState> {
 
     private var currentTabPosition = 0
-
-    fun liveData(): LiveData<DashboardUiState> = communication.liveData()
 
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
@@ -69,6 +69,10 @@ class DashboardViewModel(
 
     override fun clear(viewModelClass: Class<out ViewModel>) {
         clear.clear(DashboardViewModel::class.java)
+    }
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<DashboardUiState>) {
+        communication.observe(owner, observer)
     }
 
 }
