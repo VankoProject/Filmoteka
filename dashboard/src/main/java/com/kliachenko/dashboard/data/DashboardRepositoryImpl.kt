@@ -21,20 +21,23 @@ class DashboardRepositoryImpl(
     private val handleError: HandleError<String>,
 ) : DashboardRepository {
 
-    override suspend fun filmsByCategory(category: String): LoadResult {
-        val isEmptyCache = dashboardCacheDataSource.filmsByCategory(category).isEmpty()
+    override suspend fun filmsByCategory(category: String, page: Int): LoadResult {
+        val isEmptyCache = dashboardCacheDataSource.filmsByCategory(category, page).isEmpty()
         try {
             val films = if (isEmptyCache) {
-                val cloudFilms = cloudDataSource.loadFilms(category).results()
+                val cloudFilmResponse = cloudDataSource.loadFilms(category, page)
+                val cloudFilms = cloudFilmResponse.results()
+                val totalPages = cloudFilmResponse.totalPages()
+
                 categoryCacheDataSource.save(CategoryCache(categoryName = category))
-                val relationMapper = FilmsMapper.ToRelation.Base(category)
+                val relationMapper = FilmsMapper.ToRelation.Base(category, page)
                 cloudFilms.forEach { itemCloud ->
                     dashboardCacheDataSource.saveRelation(itemCloud.map(relationMapper))
                     dashboardCacheDataSource.save(itemCloud.map(mapToCache))
                 }
                 cloudFilms.map { itemCloud -> itemCloud.map(mapToDomain) }
             } else {
-                dashboardCacheDataSource.filmsByCategory(category)
+                dashboardCacheDataSource.filmsByCategory(category, page)
                     .map { itemCache -> itemCache.map(mapToDomain) }
             }
             val favoriteFilmIds = favoritesCacheDataSource.favoriteFilmsIds()

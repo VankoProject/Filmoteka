@@ -47,7 +47,7 @@ interface FilmsMapper<T : Any> {
                 releaseDate: String,
                 title: String,
                 voteAverage: Double,
-            ) = FilmDomain (
+            ): FilmDomain = FilmDomain (
                 id = id,
                 overview = overview,
                 posterPath = posterPath,
@@ -77,7 +77,7 @@ interface FilmsMapper<T : Any> {
 
     interface ToRelation: FilmsMapper<FilmsAndCategoryRelationCache> {
 
-        class Base(private val categoryName: String): ToRelation {
+        class Base(private val categoryName: String, private val page: Int): ToRelation {
             override fun map(
                 id: Int,
                 overview: String,
@@ -87,7 +87,8 @@ interface FilmsMapper<T : Any> {
                 voteAverage: Double,
             ): FilmsAndCategoryRelationCache = FilmsAndCategoryRelationCache(
                 filmId = id,
-                categoryName = categoryName
+                categoryName = categoryName,
+                pageNumber = page
             )
 
         }

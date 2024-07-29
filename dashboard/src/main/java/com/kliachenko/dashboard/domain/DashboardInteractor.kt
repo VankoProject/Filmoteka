@@ -2,7 +2,7 @@ package com.kliachenko.dashboard.domain
 
 interface DashboardInteractor {
 
-    suspend fun filmsByCategory(category: String): LoadResult
+    suspend fun filmsByCategory(category: String, page: Int): LoadResult
 
     suspend fun addToFavorite(filmId: Int)
 
@@ -12,8 +12,8 @@ interface DashboardInteractor {
         private val repository: DashboardRepository,
     ) : DashboardInteractor {
 
-        override suspend fun filmsByCategory(category: String): LoadResult {
-            return repository.filmsByCategory(category)
+        override suspend fun filmsByCategory(category: String, page: Int): LoadResult {
+            return repository.filmsByCategory(category, page)
         }
 
         override suspend fun addToFavorite(filmId: Int) {

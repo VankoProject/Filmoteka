@@ -4,7 +4,7 @@ import com.kliachenko.domain.FilmDomain
 
 interface DashboardRepository {
 
-    suspend fun filmsByCategory(category: String): LoadResult
+    suspend fun filmsByCategory(category: String, page: Int): LoadResult
 
     suspend fun addToFavorite(filmId: Int)
 

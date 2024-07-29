@@ -19,7 +19,7 @@ interface DashboardCacheDataSource {
     }
 
     interface ReadFilms {
-        suspend fun filmsByCategory(categoryName: String): List<FilmCache>
+        suspend fun filmsByCategory(categoryName: String, page: Int): List<FilmCache>
     }
 
     interface Mutable : SaveFilm, ReadFilms, ReadFilm, SaveRelation
@@ -37,8 +37,8 @@ interface DashboardCacheDataSource {
             filmsDao.saveRelation(relation)
         }
 
-        override suspend fun filmsByCategory(categoryName: String) =
-            filmsDao.filmsByCategory(categoryName)
+        override suspend fun filmsByCategory(categoryName: String, page: Int) =
+            filmsDao.filmsByCategory(categoryName, page)
 
     }
 }
