@@ -24,11 +24,10 @@ class DashboardRepositoryImpl(
     override suspend fun filmsByCategory(category: String, page: Int): LoadResult {
         val isEmptyCache = dashboardCacheDataSource.filmsByCategory(category, page).isEmpty()
         try {
+            val response = cloudDataSource.loadFilms(category, page)
+            val totalPages = response.totalPages()
             val films = if (isEmptyCache) {
-                val cloudFilmResponse = cloudDataSource.loadFilms(category, page)
-                val cloudFilms = cloudFilmResponse.results()
-                val totalPages = cloudFilmResponse.totalPages()
-
+                val cloudFilms = response.results()
                 categoryCacheDataSource.save(CategoryCache(categoryName = category))
                 val relationMapper = FilmsMapper.ToRelation.Base(category, page)
                 cloudFilms.forEach { itemCloud ->
@@ -41,7 +40,7 @@ class DashboardRepositoryImpl(
                     .map { itemCache -> itemCache.map(mapToDomain) }
             }
             val favoriteFilmIds = favoritesCacheDataSource.favoriteFilmsIds()
-            return LoadResult.Success(films, favoriteFilmIds)
+            return LoadResult.Success(films, favoriteFilmIds, totalPages)
         } catch (e: Exception) {
             return LoadResult.Error(handleError.handle(e))
         }

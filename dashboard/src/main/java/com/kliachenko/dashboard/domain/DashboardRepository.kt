@@ -29,7 +29,7 @@ interface LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>): T = mapper.mapEmpty()
     }
 
-    data class Success(private val items: List<FilmDomain>, private val favoriteFilmIds: Set<Int>) :
+    data class Success(private val items: List<FilmDomain>, private val favoriteFilmIds: Set<Int>, private val totalPages: Int) :
         LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>): T =
             mapper.mapSuccess(items = items, favoriteFilmIds = favoriteFilmIds)

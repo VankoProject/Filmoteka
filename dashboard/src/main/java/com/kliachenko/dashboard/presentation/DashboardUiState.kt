@@ -22,6 +22,12 @@ interface DashboardUiState {
         }
     }
 
+    object BottomProgress: DashboardUiState {
+        override fun updateAdapter(adapter: ShowList) {
+            adapter.show(listOf(DashboardUi.BottomProgress))
+        }
+    }
+
     data class FilmsList(private val filmsList: List<DashboardUi>): DashboardUiState {
 
         override fun updateFilmState(filmUi: DashboardUi): DashboardUiState {

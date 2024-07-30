@@ -36,8 +36,17 @@ class DashboardViewModel(
         runAsync({
             interactor.filmsByCategory(category)
         }) { films ->
-            val result: DashboardUiState = films.map(uiMapper)
-            communication.update(result)
+            communication.update(films.map(uiMapper))
+        }
+    }
+
+    fun loadMore() {
+        val category = categoryMapper.map(currentTabPosition)
+        runAsync({
+            interactor.loadMoreFilms(category)
+        }) { films->
+            communication.update(films.map(uiMapper))
+
         }
     }
 

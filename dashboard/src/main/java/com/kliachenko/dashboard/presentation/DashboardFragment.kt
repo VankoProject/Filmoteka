@@ -33,7 +33,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             viewModel.clear(viewModelClass)
         })
 
-        binding.dashboardRecyclerView.adapter = adapter
+        binding.dashboardRecyclerView.apply {
+            this.adapter = adapter
+            onLoadMoreDataListener {
+                viewModel.loadMore()
+            }
+        }
 
         binding.dashboardTabs.setOnTabSelectedListener(this)
 
