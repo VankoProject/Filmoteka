@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kliachenko.dashboard.R
+import com.kliachenko.dashboard.databinding.BottomProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
@@ -62,6 +63,14 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
+    class BottomProgress(private val binding: BottomProgressLayoutBinding) :
+        DashboardViewHolder(binding.root) {
+        override fun bind(item: DashboardUi) {
+            super.bind(item)
+            item.show(binding)
+        }
+    }
+
     class Error(
         private val binding: ErrorLayoutBinding,
         private val clickActions: ClickActions,
@@ -77,13 +86,13 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class Film(
         private val binding: FilmItemLayoutBinding,
         private val clickListener: ClickActions,
-        private val navigate: (Int) -> Unit
+        private val navigate: (Int) -> Unit,
     ) : DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
             item.show(binding)
             binding.root.setOnClickListener {
                 if (itemView.id != R.id.iconImageView) {
-                   navigate(item.filmId())
+                    navigate(item.filmId())
                 }
             }
             binding.iconImageView.setOnClickListener {
