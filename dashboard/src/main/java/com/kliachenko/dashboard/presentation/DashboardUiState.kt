@@ -28,6 +28,13 @@ interface DashboardUiState {
         }
     }
 
+    object NoData: DashboardUiState {
+        override fun updateAdapter(adapter: ShowList) {
+            adapter.show(listOf(DashboardUi.NoData))
+        }
+
+    }
+
     data class FilmsList(private val filmsList: List<DashboardUi>): DashboardUiState {
 
         override fun updateFilmState(filmUi: DashboardUi): DashboardUiState {

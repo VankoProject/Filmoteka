@@ -9,6 +9,7 @@ import com.kliachenko.dashboard.R
 import com.kliachenko.dashboard.databinding.BottomProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
+import com.kliachenko.dashboard.databinding.NodataLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 class DashboardAdapter(
@@ -17,7 +18,9 @@ class DashboardAdapter(
     private val typeList: List<DashboardUiType> = listOf(
         DashboardUiType.Error,
         DashboardUiType.Progress,
-        DashboardUiType.Film
+        DashboardUiType.Film,
+        DashboardUiType.BottomProgress,
+        DashboardUiType.NoData
     ),
 ) : RecyclerView.Adapter<DashboardViewHolder>(), ShowList {
 
@@ -65,6 +68,13 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     class BottomProgress(private val binding: BottomProgressLayoutBinding) :
         DashboardViewHolder(binding.root) {
+        override fun bind(item: DashboardUi) {
+            super.bind(item)
+            item.show(binding)
+        }
+    }
+
+    class NoData(private val binding: NodataLayoutBinding) : DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
             super.bind(item)
             item.show(binding)

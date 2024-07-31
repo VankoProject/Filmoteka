@@ -17,7 +17,7 @@ class DashboardPage {
         parentId = parentId,
         parentClass = parentClass,
         tabs = listOf("Popular", "Top rated", "Upcoming"),
-        tabsIds = listOf(R.id.popular_tab, R.id.top_rated_tab, R.id.upcoming_tab)
+        tabsIds = listOf() //todo fix
     )
     private val errorTextViewUi = ErrorTextViewUi(parentId, parentClass)
     private val progressBarUi = ProgressBarUi(parentId, parentClass)

@@ -11,6 +11,8 @@ data class CategoryCache(
     @PrimaryKey
     @ColumnInfo(name = "category_name")
     val categoryName: String,
+    @ColumnInfo(name = "total_pages")
+    val totalPages: Int
 ) : MapCategory {
 
     override fun <T : Any> map(mapper: CategoryMapper<T>): T = mapper.map(categoryName)

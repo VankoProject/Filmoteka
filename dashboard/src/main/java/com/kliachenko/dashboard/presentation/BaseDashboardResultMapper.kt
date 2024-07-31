@@ -21,4 +21,8 @@ class BaseDashboardResultMapper(
     override fun mapEmpty(): DashboardUiState {
         return DashboardUiState.Empty
     }
+
+    override fun mapNoData(message: String): DashboardUiState {
+        return DashboardUiState.NoData
+    }
 }
