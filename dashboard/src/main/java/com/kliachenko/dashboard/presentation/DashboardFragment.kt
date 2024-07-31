@@ -48,8 +48,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         )
 
         viewModel.observe(viewLifecycleOwner) { state ->
-            state.updateAdapter(adapter)
             (binding.dashboardRecyclerView).updateLayoutManager(state)
+            state.updateAdapter(adapter)
         }
     }
 

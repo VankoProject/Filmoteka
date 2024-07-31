@@ -16,7 +16,7 @@ interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(category: CategoryCache)
 
-    @Query("SELECT category_name FROM category_table WHERE category_name = :tabCategory")
-    suspend fun category(tabCategory: String): String
+    @Query("SELECT total_pages FROM category_table WHERE category_name = :tabCategory")
+    suspend fun category(tabCategory: String): Int
 
 }

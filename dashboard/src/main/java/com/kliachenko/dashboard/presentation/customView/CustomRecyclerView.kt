@@ -21,14 +21,21 @@ class CustomRecyclerView : RecyclerView {
         addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = layoutManager as GridLayoutManager
-                val totalItemCount = layoutManager.itemCount
-                val visibleItemCount = layoutManager.childCount
-                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                    && firstVisibleItemPosition >= 0
-                ) {
-                    onLoadMoreDataListener?.invoke()
+                //todo fix classCastException
+                val layoutManager = recyclerView.layoutManager
+                layoutManager?.let {
+                    val totalItemCount = layoutManager.itemCount
+                    val visibleItemCount = layoutManager.childCount
+                    val firstVisibleItemPosition = when(it) {
+                        is GridLayoutManager -> it.findFirstVisibleItemPosition()
+                        is LinearLayoutManager -> it.findFirstVisibleItemPosition()
+                        else -> return
+                    }
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                    ) {
+                        onLoadMoreDataListener?.invoke()
+                    }
                 }
             }
         })
@@ -39,11 +46,11 @@ class CustomRecyclerView : RecyclerView {
     }
 
     fun updateLayoutManager(state: DashboardUiState) {
+        //todo fix classCastException
         layoutManager = when (state) {
             is DashboardUiState.FilmsList -> GridLayoutManager(context, 2)
             else -> LinearLayoutManager(context)
         }
     }
-
 
 }

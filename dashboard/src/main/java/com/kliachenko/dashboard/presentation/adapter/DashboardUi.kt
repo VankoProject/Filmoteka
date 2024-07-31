@@ -3,6 +3,7 @@ package com.kliachenko.dashboard.presentation.adapter
 import com.kliachenko.dashboard.databinding.BottomProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
+import com.kliachenko.dashboard.databinding.NodataLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 interface DashboardUi {
@@ -14,6 +15,8 @@ interface DashboardUi {
     fun show(binding: ProgressLayoutBinding) = Unit
 
     fun show(binding: BottomProgressLayoutBinding) = Unit
+
+    fun show(binding: NodataLayoutBinding) = Unit
 
     fun isFavorite(): Boolean = false
 
@@ -38,6 +41,11 @@ interface DashboardUi {
         override fun id(): String = javaClass.simpleName
 
         override fun type() = DashboardUiType.BottomProgress
+    }
+
+    object NoData: DashboardUi {
+        override fun type() = DashboardUiType.NoData
+
     }
 
     data class Error(
@@ -84,6 +92,7 @@ interface DashboardUi {
     }
 
     companion object {
+
         private const val URL_POSTER = "https://image.tmdb.org/t/p/w500"
 
         private fun setupRatBar(rate: Double) = rate.toFloat() * 0.5F

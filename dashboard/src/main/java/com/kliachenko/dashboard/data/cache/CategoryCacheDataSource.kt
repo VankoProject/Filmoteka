@@ -10,7 +10,7 @@ interface CategoryCacheDataSource {
     }
 
     interface Read {
-        suspend fun category(category: String): String
+        suspend fun category(category: String): Int
     }
 
     interface Mutable: Save, Read

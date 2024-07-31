@@ -3,7 +3,7 @@ package com.kliachenko.data.cache.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 
-@Entity(tableName = "films_and_category_table", primaryKeys = ["filmId", "categoryName", "pageNumber"])
+@Entity(tableName = "films_and_category_table", primaryKeys = ["film_id", "category_name", "page_number"])
 data class FilmsAndCategoryRelationCache(
 
     @ColumnInfo(name = "film_id")

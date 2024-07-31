@@ -10,6 +10,8 @@ interface DashboardRepository {
 
     suspend fun removeFromFavorites(filmId: Int)
 
+    suspend fun totalPages(category: String): Int
+
 }
 
 interface LoadResult {
@@ -23,13 +25,19 @@ interface LoadResult {
         fun mapError(message: String): T
 
         fun mapEmpty(): T
+
+        fun mapNoData(message: String): T
     }
 
     object Empty : LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>): T = mapper.mapEmpty()
     }
 
-    data class Success(private val items: List<FilmDomain>, private val favoriteFilmIds: Set<Int>, private val totalPages: Int) :
+    data class Success(
+        private val items: List<FilmDomain>,
+        private val favoriteFilmIds: Set<Int>,
+        private val totalPages: Int,
+    ) :
         LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>): T =
             mapper.mapSuccess(items = items, favoriteFilmIds = favoriteFilmIds)
@@ -37,6 +45,11 @@ interface LoadResult {
 
     data class Error(private val message: String) : LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>) = mapper.mapError(message)
+    }
+
+    data class NoData(private val message: String) : LoadResult {
+        override fun <T : Any> map(mapper: Mapper<T>): T =
+            mapper.mapNoData(message)
     }
 
 }

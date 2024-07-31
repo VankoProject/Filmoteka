@@ -5,17 +5,22 @@ import android.view.ViewGroup
 import com.kliachenko.dashboard.databinding.BottomProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
+import com.kliachenko.dashboard.databinding.NodataLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 interface DashboardUiType {
 
-    fun viewHolder(parent: ViewGroup, clickActions: ClickActions, navigate: (Int) -> Unit,): DashboardViewHolder
+    fun viewHolder(
+        parent: ViewGroup,
+        clickActions: ClickActions,
+        navigate: (Int) -> Unit,
+    ): DashboardViewHolder
 
     object Progress : DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
-            navigate: (Int) -> Unit
+            navigate: (Int) -> Unit,
         ) = DashboardViewHolder.Progress(
             ProgressLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -23,7 +28,7 @@ interface DashboardUiType {
         )
     }
 
-    object BottomProgress: DashboardUiType {
+    object BottomProgress : DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
@@ -40,7 +45,7 @@ interface DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
-            navigate: (Int) -> Unit
+            navigate: (Int) -> Unit,
         ) = DashboardViewHolder.Error(
             ErrorLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -52,12 +57,23 @@ interface DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
-            navigate: (Int) -> Unit
+            navigate: (Int) -> Unit,
         ) = DashboardViewHolder.Film(
             FilmItemLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ), clickActions, navigate
         )
+    }
+
+    object NoData : DashboardUiType {
+        override fun viewHolder(
+            parent: ViewGroup,
+            clickActions: ClickActions,
+            navigate: (Int) -> Unit,
+        ) = DashboardViewHolder.NoData(
+            NodataLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+
     }
 
 }

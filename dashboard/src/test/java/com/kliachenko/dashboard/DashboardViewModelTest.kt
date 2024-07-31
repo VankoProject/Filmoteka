@@ -1,6 +1,8 @@
 package com.kliachenko.dashboard
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.dashboard.domain.DashboardInteractor
@@ -172,6 +174,14 @@ private class FakeDashboardInteractor : DashboardInteractor {
         removedFilmsId = filmId
     }
 
+    override fun needToLoadMoreFilms(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun loadMoreFilms(category: String): LoadResult {
+        TODO("Not yet implemented")
+    }
+
     fun categoryResult(category: String, result: LoadResult) {
         filmsByCategoryResult[category] = result
     }
@@ -184,7 +194,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
                     ),
                     FilmDomain(id = 1, overview = "film1", posterPath = "film1", releaseDate = "1.0", title = "film1", voteAverage = 1.0
                     )
-                ), favoriteFilmIds = setOf()
+                ), favoriteFilmIds = setOf(), totalPages = 2
             )
         )
         categoryResult(
@@ -195,7 +205,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
                     ),
                     FilmDomain(id = 3, overview = "film3", posterPath = "film3", releaseDate = "3.0", title = "film3", voteAverage = 3.0
                     )
-                ), favoriteFilmIds = setOf()
+                ), favoriteFilmIds = setOf(), totalPages = 2
             )
         )
     }
@@ -226,6 +236,10 @@ private class FakeDashboardCommunication : DashboardCommunication {
     override fun update(value: DashboardUiState) {
         latestState = value
         actualUiStateList.add(value)
+    }
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<DashboardUiState>) {
+        TODO("Not yet implemented")
     }
 
     fun checkUpdatedState(vararg expected: DashboardUiState) {
@@ -273,6 +287,11 @@ private class FakeDashboardResultMapper(
 
     override fun mapEmpty(): DashboardUiState {
         resultUiState = DashboardUiState.Empty
+        return resultUiState
+    }
+
+    override fun mapNoData(message: String): DashboardUiState {
+        resultUiState = DashboardUiState.NoData
         return resultUiState
     }
 

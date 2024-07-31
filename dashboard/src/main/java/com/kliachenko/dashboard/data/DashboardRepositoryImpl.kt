@@ -25,10 +25,16 @@ class DashboardRepositoryImpl(
         val isEmptyCache = dashboardCacheDataSource.filmsByCategory(category, page).isEmpty()
         try {
             val response = cloudDataSource.loadFilms(category, page)
+
             val totalPages = response.totalPages()
             val films = if (isEmptyCache) {
                 val cloudFilms = response.results()
-                categoryCacheDataSource.save(CategoryCache(categoryName = category))
+                categoryCacheDataSource.save(
+                    CategoryCache(
+                        categoryName = category,
+                        totalPages = totalPages
+                    )
+                )
                 val relationMapper = FilmsMapper.ToRelation.Base(category, page)
                 cloudFilms.forEach { itemCloud ->
                     dashboardCacheDataSource.saveRelation(itemCloud.map(relationMapper))
@@ -52,6 +58,10 @@ class DashboardRepositoryImpl(
 
     override suspend fun removeFromFavorites(filmId: Int) {
         favoritesCacheDataSource.remove(filmId = filmId)
+    }
+
+    override suspend fun totalPages(category: String): Int {
+        return categoryCacheDataSource.category(category)
     }
 
 }

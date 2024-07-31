@@ -46,7 +46,6 @@ class DashboardViewModel(
             interactor.loadMoreFilms(category)
         }) { films->
             communication.update(films.map(uiMapper))
-
         }
     }
 
