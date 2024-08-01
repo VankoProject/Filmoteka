@@ -52,11 +52,11 @@ class DashboardViewModel(
     }
 
     fun loadPrevious() {
-
+        loadInitData(currentTabPosition)
     }
 
     override fun retry() {
-
+        loadMore()
     }
 
     override fun remove(item: DashboardUi) {

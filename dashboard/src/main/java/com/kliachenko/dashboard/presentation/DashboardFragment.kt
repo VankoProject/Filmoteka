@@ -57,7 +57,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     }
 
     override fun onTabSelected(position: Int) {
-        viewModel.load(position)
+        viewModel.loadInitData(position)
     }
 
 
