@@ -1,6 +1,7 @@
 package com.kliachenko.dashboard.presentation.customView
 
 import android.content.Context
+import android.os.Parcelable
 import android.util.AttributeSet
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,28 +16,36 @@ class CustomRecyclerView : RecyclerView {
         context, attrs, defStyleAttr
     )
 
+    private var currentScrollPosition: Int = 0
     private var onLoadMoreDataListener: (() -> Unit)? = null
+    private var onLoadPreviousDataListener: (() -> Unit)? = null
+    private var isGridMode = false
 
     init {
         addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                //todo fix classCastException
+                if (!isGridMode) return
                 val layoutManager = recyclerView.layoutManager
-                layoutManager?.let {
-                    val totalItemCount = layoutManager.itemCount
-                    val visibleItemCount = layoutManager.childCount
-                    val firstVisibleItemPosition = when(it) {
-                        is GridLayoutManager -> it.findFirstVisibleItemPosition()
-                        is LinearLayoutManager -> it.findFirstVisibleItemPosition()
-                        else -> return
-                    }
+                val firstVisibleItemPosition = when (layoutManager) {
+                    is GridLayoutManager -> layoutManager.findFirstVisibleItemPosition()
+                    is LinearLayoutManager -> layoutManager.findFirstVisibleItemPosition()
+                    else -> throw ClassCastException("Unsupported LayoutManager: ${layoutManager?.javaClass?.simpleName}")
+                }
+                val totalItemCount = layoutManager.itemCount
+                val visibleItemCount = layoutManager.childCount
+                if (dy > 0) {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
                     ) {
                         onLoadMoreDataListener?.invoke()
                     }
+                } else if (dy < 0) {
+                    if (firstVisibleItemPosition == 0) {
+                        onLoadPreviousDataListener?.invoke()
+                    }
                 }
+                currentScrollPosition = firstVisibleItemPosition
             }
         })
     }
@@ -45,12 +54,38 @@ class CustomRecyclerView : RecyclerView {
         this.onLoadMoreDataListener = listener
     }
 
+    fun onLoadPreviousDataListener(listener: () -> Unit) {
+        this.onLoadPreviousDataListener = listener
+    }
+
     fun updateLayoutManager(state: DashboardUiState) {
-        //todo fix classCastException
         layoutManager = when (state) {
-            is DashboardUiState.FilmsList -> GridLayoutManager(context, 2)
-            else -> LinearLayoutManager(context)
+            is DashboardUiState.FilmsList -> {
+                isGridMode = true
+                GridLayoutManager(context, 2)
+            }
+
+            else -> {
+                isGridMode = false
+                LinearLayoutManager(context)
+            }
         }
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        return super.onSaveInstanceState()?.let {
+            IdSavedState(it).apply {
+                savedId = currentScrollPosition
+            }
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val restoreState = state as IdSavedState?
+        super.onRestoreInstanceState(restoreState?.superState)
+        currentScrollPosition = restoreState?.savedId ?: 0
+        (layoutManager as? LinearLayoutManager)?.scrollToPosition(currentScrollPosition)
+        (layoutManager as? GridLayoutManager)?.scrollToPosition(currentScrollPosition)
     }
 
 }

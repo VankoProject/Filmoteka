@@ -38,6 +38,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             onLoadMoreDataListener {
                 viewModel.loadMore()
             }
+            onLoadPreviousDataListener {
+                viewModel.loadPrevious()
+            }
         }
 
         binding.dashboardTabs.setOnTabSelectedListener(this)

@@ -162,7 +162,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
     private var addedFilmId: Int? = null
     private var removedFilmsId: Int? = null
 
-    override suspend fun filmsByCategory(category: String): LoadResult {
+    override suspend fun loadInitData(category: String): LoadResult {
         return filmsByCategoryResult[category] ?: actualLoadResult
     }
 
