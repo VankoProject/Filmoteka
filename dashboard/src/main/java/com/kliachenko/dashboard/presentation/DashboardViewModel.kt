@@ -23,18 +23,19 @@ class DashboardViewModel(
 
     private var currentTabPosition = 0
 
+    //init popular category with first page
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
-            load(tabPosition)
+            loadInitData(tabPosition)
         }
     }
 
-    fun load(tabPosition: Int) {
+    fun loadInitData(tabPosition: Int) {
         currentTabPosition = tabPosition
         val category = categoryMapper.map(tabPosition)
         communication.update(DashboardUiState.Progress)
         runAsync({
-            interactor.filmsByCategory(category)
+            interactor.loadInitData(category)
         }) { films ->
             communication.update(films.map(uiMapper))
         }
@@ -42,15 +43,20 @@ class DashboardViewModel(
 
     fun loadMore() {
         val category = categoryMapper.map(currentTabPosition)
+        communication.update(DashboardUiState.BottomProgress)
         runAsync({
             interactor.loadMoreFilms(category)
-        }) { films->
+        }) { films ->
             communication.update(films.map(uiMapper))
         }
     }
 
+    fun loadPrevious() {
+
+    }
+
     override fun retry() {
-        load(currentTabPosition)
+
     }
 
     override fun remove(item: DashboardUi) {

@@ -22,31 +22,32 @@ class DashboardRepositoryImpl(
 ) : DashboardRepository {
 
     override suspend fun filmsByCategory(category: String, page: Int): LoadResult {
-        val isEmptyCache = dashboardCacheDataSource.filmsByCategory(category, page).isEmpty()
         try {
-            val response = cloudDataSource.loadFilms(category, page)
-
-            val totalPages = response.totalPages()
-            val films = if (isEmptyCache) {
+            val cachedData = dashboardCacheDataSource.filmsByCategory(category, page)
+            val favoriteFilmsIds = favoritesCacheDataSource.favoriteFilmsIds()
+            if (cachedData.isEmpty()) {
+                val response = cloudDataSource.loadFilms(category, page)
+                val totalPages = response.totalPages()
                 val cloudFilms = response.results()
+                val relationMapper = FilmsMapper.ToRelation.Base(category, page)
                 categoryCacheDataSource.save(
                     CategoryCache(
                         categoryName = category,
                         totalPages = totalPages
                     )
                 )
-                val relationMapper = FilmsMapper.ToRelation.Base(category, page)
-                cloudFilms.forEach { itemCloud ->
-                    dashboardCacheDataSource.saveRelation(itemCloud.map(relationMapper))
-                    dashboardCacheDataSource.save(itemCloud.map(mapToCache))
+                cloudFilms.forEach { filmItem ->
+                    dashboardCacheDataSource.saveRelation(filmItem.map(relationMapper))
+                    dashboardCacheDataSource.save(filmItem.map(mapToCache))
                 }
-                cloudFilms.map { itemCloud -> itemCloud.map(mapToDomain) }
+                val films = cloudFilms.map { it.map(mapToDomain) }
+
+                return LoadResult.Success(films, favoriteFilmsIds, totalPages)
             } else {
-                dashboardCacheDataSource.filmsByCategory(category, page)
-                    .map { itemCache -> itemCache.map(mapToDomain) }
+                val cached = cachedData.map { itemCache -> itemCache.map(mapToDomain) }
+                val totalPages = categoryCacheDataSource.category(category)
+                return LoadResult.Success(cached, favoriteFilmsIds, totalPages)
             }
-            val favoriteFilmIds = favoritesCacheDataSource.favoriteFilmsIds()
-            return LoadResult.Success(films, favoriteFilmIds, totalPages)
         } catch (e: Exception) {
             return LoadResult.Error(handleError.handle(e))
         }
