@@ -8,10 +8,11 @@ import androidx.navigation.fragment.findNavController
 import com.kliachenko.core.BaseFragment
 import com.kliachenko.dashboard.databinding.FragmentDashboardBinding
 import com.kliachenko.dashboard.presentation.adapter.DashboardAdapter
+import com.kliachenko.dashboard.presentation.customView.TabScrollListener
 import com.kliachenko.dashboard.presentation.customView.TabSelectedListener
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
-    TabSelectedListener {
+    TabSelectedListener, TabScrollListener {
 
     override val viewModelClass: Class<DashboardViewModel>
         get() = DashboardViewModel::class.java
@@ -35,12 +36,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
         binding.dashboardRecyclerView.apply {
             this.adapter = adapter
-            onLoadMoreDataListener {
-                viewModel.loadMore()
-            }
-            onLoadPreviousDataListener {
-                viewModel.loadPrevious()
-            }
+
+            onTabScrollListener(this@DashboardFragment)
         }
 
         binding.dashboardTabs.setOnTabSelectedListener(this)
@@ -57,8 +54,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     }
 
     override fun onTabSelected(position: Int) {
-        viewModel.loadInitData(position)
+        viewModel.loadData(position)
     }
 
+    override fun onTabScrollListener(lastVisibleItemPosition: Int) {
+        viewModel.loadMore(lastVisibleItemPosition, binding.dashboardTabs.selectedTabPosition)
+    }
 
 }

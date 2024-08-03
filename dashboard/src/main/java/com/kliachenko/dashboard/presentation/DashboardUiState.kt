@@ -10,36 +10,36 @@ interface DashboardUiState {
 
     fun updateFilmState(filmUi: DashboardUi): DashboardUiState = this
 
-    data class Error (private val message: String): DashboardUiState {
+    data class Error(private val message: String) : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
             adapter.show(listOf(DashboardUi.Error(message)))
         }
     }
 
-    object Progress: DashboardUiState {
+    object Progress : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
             adapter.show(listOf(DashboardUi.Progress))
         }
     }
 
-    object BottomProgress: DashboardUiState {
+    object BottomProgress : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
             adapter.show(listOf(DashboardUi.BottomProgress))
         }
     }
 
-    object NoData: DashboardUiState {
+    object NoData : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
             adapter.show(listOf(DashboardUi.NoData))
         }
 
     }
 
-    data class FilmsList(private val filmsList: List<DashboardUi>): DashboardUiState {
+    data class FilmsList(private val filmsList: List<DashboardUi>) : DashboardUiState {
 
         override fun updateFilmState(filmUi: DashboardUi): DashboardUiState {
             val newList = filmsList.map {
-                if(it == filmUi) it.changeStatus()
+                if (it == filmUi) it.changeStatus()
                 else it
             }
             return FilmsList(newList)
@@ -48,10 +48,9 @@ interface DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
             adapter.show(filmsList)
         }
-
     }
 
-    object Empty: DashboardUiState {
+    object Empty : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) = Unit
     }
 

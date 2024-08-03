@@ -3,6 +3,7 @@ package com.kliachenko.dashboard.presentation.customView
 import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,65 +17,46 @@ class CustomRecyclerView : RecyclerView {
         context, attrs, defStyleAttr
     )
 
-    private var currentScrollPosition: Int = 0
-    private var onLoadMoreDataListener: (() -> Unit)? = null
-    private var onLoadPreviousDataListener: (() -> Unit)? = null
-    private var isGridMode = false
+    private var tabScrollListener: TabScrollListener? = null
 
     init {
         addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (isGridMode) {
-                    val layoutManager = recyclerView.layoutManager
-                    if (layoutManager is GridLayoutManager) {
-                        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-                        val totalItemCount = layoutManager.itemCount
-                        val visibleItemCount = layoutManager.childCount
-                        if (dy > 0) {
-                            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
-                                onLoadMoreDataListener?.invoke()
-                            }
-                        } else if (dy < 0) {
-                            if (firstVisibleItemPosition == 0 && visibleItemCount > 0) {
-                                onLoadPreviousDataListener?.invoke()
-                            }
-                        }
-                        currentScrollPosition = firstVisibleItemPosition
-                    }
+                val layoutManager = layoutManager
+                if (layoutManager is GridLayoutManager) {
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    tabScrollListener?.onTabScrollListener(lastVisibleItemPosition)
+                    Log.d("Filmateka", "onScrolled $lastVisibleItemPosition")
                 }
             }
         })
     }
 
-    fun onLoadMoreDataListener(listener: () -> Unit) {
-        this.onLoadMoreDataListener = listener
-    }
-
-    fun onLoadPreviousDataListener(listener: () -> Unit) {
-        this.onLoadPreviousDataListener = listener
+    fun onTabScrollListener(listener: TabScrollListener) {
+        tabScrollListener = listener
     }
 
     fun updateLayoutManager(state: DashboardUiState) {
         layoutManager = when (state) {
             is DashboardUiState.FilmsList -> {
-                isGridMode = true
                 GridLayoutManager(context, 2)
             }
 
             else -> {
-                isGridMode = false
                 LinearLayoutManager(context)
             }
         }
     }
 
     override fun onSaveInstanceState(): Parcelable? {
+        Log.d("Filmateka", "onSaveInstanceState Recycler")
         val superState = super.onSaveInstanceState()
         val layoutManager = layoutManager
-        return if (superState != null && isGridMode && layoutManager is GridLayoutManager) {
+        return if (superState != null && layoutManager is GridLayoutManager) {
             IdSavedState(superState).apply {
                 savedId = layoutManager.findFirstVisibleItemPosition()
+                Log.d("Filmateka", "savedId $savedId")
             }
         } else {
             superState
@@ -84,8 +66,20 @@ class CustomRecyclerView : RecyclerView {
     override fun onRestoreInstanceState(state: Parcelable?) {
         val restoreState = state as IdSavedState?
         super.onRestoreInstanceState(restoreState?.superState)
-        currentScrollPosition = restoreState?.savedId ?: 0
-        (layoutManager as? GridLayoutManager)?.scrollToPosition(currentScrollPosition)
+        post {
+            val layoutManager = layoutManager
+            if (layoutManager is GridLayoutManager) {
+                val currentScrollPosition = restoreState?.savedId ?: 0
+                Log.d("Filmateka", "currentScrollPosition $currentScrollPosition")
+                layoutManager.scrollToPosition(currentScrollPosition)
+                Log.d("Filmateka", "layoutManager $currentScrollPosition")
+            }
+        }
     }
 
+}
+
+interface TabScrollListener {
+
+    fun onTabScrollListener(lastVisibleItemPosition: Int)
 }
