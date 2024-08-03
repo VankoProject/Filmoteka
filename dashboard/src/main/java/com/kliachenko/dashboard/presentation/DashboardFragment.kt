@@ -36,7 +36,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
         binding.dashboardRecyclerView.apply {
             this.adapter = adapter
-
+            currentTabPosition(binding.dashboardTabs.selectedTabPosition)
             onTabScrollListener(this@DashboardFragment)
         }
 
@@ -54,6 +54,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
     }
 
     override fun onTabSelected(position: Int) {
+        binding.dashboardRecyclerView.currentTabPosition(position)
         viewModel.loadData(position)
     }
 

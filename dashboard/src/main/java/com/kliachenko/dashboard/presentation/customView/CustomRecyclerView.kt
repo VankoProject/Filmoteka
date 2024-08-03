@@ -1,9 +1,10 @@
 package com.kliachenko.dashboard.presentation.customView
 
 import android.content.Context
+import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,8 @@ class CustomRecyclerView : RecyclerView {
     )
 
     private var tabScrollListener: TabScrollListener? = null
+    private var tabScrollPositions = mutableMapOf<Int, Int>()
+    private var currentTabPosition: Int = 0
 
     init {
         addOnScrollListener(object : OnScrollListener() {
@@ -26,8 +29,8 @@ class CustomRecyclerView : RecyclerView {
                 val layoutManager = layoutManager
                 if (layoutManager is GridLayoutManager) {
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    tabScrollPositions[currentTabPosition] = lastVisibleItemPosition
                     tabScrollListener?.onTabScrollListener(lastVisibleItemPosition)
-                    Log.d("Filmateka", "onScrolled $lastVisibleItemPosition")
                 }
             }
         })
@@ -49,34 +52,78 @@ class CustomRecyclerView : RecyclerView {
         }
     }
 
-    override fun onSaveInstanceState(): Parcelable? {
-        Log.d("Filmateka", "onSaveInstanceState Recycler")
-        val superState = super.onSaveInstanceState()
-        val layoutManager = layoutManager
-        return if (superState != null && layoutManager is GridLayoutManager) {
-            IdSavedState(superState).apply {
-                savedId = layoutManager.findFirstVisibleItemPosition()
-                Log.d("Filmateka", "savedId $savedId")
+    fun currentTabPosition(tabPosition: Int) {
+        currentTabPosition = tabPosition
+        layoutManager?.let {
+            if (it is GridLayoutManager) {
+                val position = tabScrollPositions[tabPosition] ?: 0
+                it.scrollToPosition(position)
             }
-        } else {
-            superState
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        return super.onSaveInstanceState()?.let {
+            if (layoutManager is GridLayoutManager) {
+                TabScrollState(it).apply {
+                    tabPosition = currentTabPosition
+                    scrollPositions = tabScrollPositions
+                }
+            } else {
+                it
+            }
         }
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
-        val restoreState = state as IdSavedState?
+        val restoreState = state as TabScrollState?
         super.onRestoreInstanceState(restoreState?.superState)
         post {
-            val layoutManager = layoutManager
-            if (layoutManager is GridLayoutManager) {
-                val currentScrollPosition = restoreState?.savedId ?: 0
-                Log.d("Filmateka", "currentScrollPosition $currentScrollPosition")
-                layoutManager.scrollToPosition(currentScrollPosition)
-                Log.d("Filmateka", "layoutManager $currentScrollPosition")
+            layoutManager?.let {
+                if (it is GridLayoutManager) {
+                    tabScrollPositions = restoreState?.scrollPositions?.toMutableMap() ?: mutableMapOf()
+                    currentTabPosition = restoreState?.tabPosition ?: 0
+                    val position = tabScrollPositions[currentTabPosition] ?: 0
+                    it.scrollToPosition(position)
+                }
             }
         }
     }
+}
 
+internal class TabScrollState : View.BaseSavedState {
+
+    var scrollPositions: Map<Int, Int> = emptyMap()
+    var tabPosition: Int = 0
+
+    constructor(superState: Parcelable) : super(superState)
+
+    private constructor(parcel: Parcel) : super(parcel) {
+        val size = parcel.readInt()
+        val keys = IntArray(size)
+        val values = IntArray(size)
+        parcel.readIntArray(keys)
+        parcel.readIntArray(values)
+        scrollPositions = keys.zip(values).toMap()
+        tabPosition = parcel.readInt()
+    }
+
+    override fun writeToParcel(out: Parcel, flags: Int) {
+        super.writeToParcel(out, flags)
+        val keys = scrollPositions.keys.toIntArray()
+        val values = scrollPositions.values.toIntArray()
+        out.writeInt(keys.size)
+        out.writeIntArray(keys)
+        out.writeIntArray(values)
+        out.writeInt(tabPosition)
+    }
+
+    override fun describeContents() = 0
+
+    companion object CREATOR : Parcelable.Creator<TabScrollState> {
+        override fun createFromParcel(source: Parcel) = TabScrollState(source)
+        override fun newArray(size: Int): Array<TabScrollState?> = arrayOfNulls(size)
+    }
 }
 
 interface TabScrollListener {
