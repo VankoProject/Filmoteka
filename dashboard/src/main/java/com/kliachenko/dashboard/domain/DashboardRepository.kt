@@ -4,7 +4,9 @@ import com.kliachenko.domain.FilmDomain
 
 interface DashboardRepository {
 
-    suspend fun filmsByCategory(category: String, page: Int): LoadResult
+    suspend fun filmsByCategoryAndPages(category: String, page: Int): LoadResult
+
+    suspend fun allFilmsByCategory(category: String): List<FilmDomain>
 
     suspend fun addToFavorite(filmId: Int)
 
@@ -36,7 +38,6 @@ interface LoadResult {
     data class Success(
         private val items: List<FilmDomain>,
         private val favoriteFilmIds: Set<Int>,
-        private val totalPages: Int,
     ) :
         LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>): T =

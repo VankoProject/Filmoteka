@@ -17,7 +17,10 @@ interface FilmsDao {
     suspend fun saveRelation(relation: FilmsAndCategoryRelationCache)
 
     @Query("SELECT * FROM film_table WHERE id IN (SELECT film_id FROM films_and_category_table WHERE category_name == :categoryName AND page_number == :pageNumber)")
-    suspend fun filmsByCategory(categoryName: String, pageNumber: Int): List<FilmCache>
+    suspend fun byCategoryAndPages(categoryName: String, pageNumber: Int): List<FilmCache>
+
+    @Query("SELECT * FROM film_table WHERE id IN (SELECT film_id FROM films_and_category_table WHERE category_name == :categoryName)")
+    suspend fun byCategory(categoryName: String): List<FilmCache>
 
     @Query("SELECT * FROM film_table WHERE id = :id")
     suspend fun film(id: Int): FilmCache

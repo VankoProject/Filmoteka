@@ -10,6 +10,7 @@ import com.kliachenko.data.cache.entity.CategoryCache
 import com.kliachenko.data.cache.entity.FavoriteCache
 import com.kliachenko.data.cloud.FilmsCloudDataSource
 import com.kliachenko.data.mapper.FilmsMapper
+import com.kliachenko.domain.FilmDomain
 
 class DashboardRepositoryImpl(
     private val cloudDataSource: FilmsCloudDataSource,
@@ -21,11 +22,14 @@ class DashboardRepositoryImpl(
     private val handleError: HandleError<String>,
 ) : DashboardRepository {
 
-    override suspend fun filmsByCategory(category: String, page: Int): LoadResult {
-        try {
-            val cachedData = dashboardCacheDataSource.filmsByCategory(category, page)
+    override suspend fun filmsByCategoryAndPages(category: String, page: Int): LoadResult {
+        return try {
+            val cachedData =
+                dashboardCacheDataSource.filmsByCategoryAndPage(category, page)
             val favoriteFilmsIds = favoritesCacheDataSource.favoriteFilmsIds()
-            if (cachedData.isEmpty()) {
+            if (cachedData.isNotEmpty()) {
+                LoadResult.Success(cachedData.map { it.map(mapToDomain) }, favoriteFilmsIds)
+            } else {
                 val response = cloudDataSource.loadFilms(category, page)
                 val totalPages = response.totalPages()
                 val cloudFilms = response.results()
@@ -42,16 +46,15 @@ class DashboardRepositoryImpl(
                 }
                 val films = cloudFilms.map { it.map(mapToDomain) }
 
-                return LoadResult.Success(films, favoriteFilmsIds, totalPages)
-            } else {
-                val cached = cachedData.map { itemCache -> itemCache.map(mapToDomain) }
-                val totalPages = categoryCacheDataSource.category(category)
-                return LoadResult.Success(cached, favoriteFilmsIds, totalPages)
+                LoadResult.Success(films, favoriteFilmsIds)
             }
         } catch (e: Exception) {
-            return LoadResult.Error(handleError.handle(e))
+            LoadResult.Error(handleError.handle(e))
         }
     }
+
+    override suspend fun allFilmsByCategory(category: String): List<FilmDomain> =
+        dashboardCacheDataSource.filmsByCategory(category).map { it.map(mapToDomain) }
 
     override suspend fun addToFavorite(filmId: Int) {
         favoritesCacheDataSource.save(FavoriteCache(filmId = filmId))

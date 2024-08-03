@@ -22,8 +22,8 @@ class DashboardViewModel(
 ) : BaseViewModel(runAsync), ClickActions, Clear, Observe<DashboardUiState> {
 
     private var currentTabPosition = 0
+    private var lastVisibleScrollPosition = -1
 
-    //init popular category with first page
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
             loadInitData(tabPosition)
@@ -35,28 +35,62 @@ class DashboardViewModel(
         val category = categoryMapper.map(tabPosition)
         communication.update(DashboardUiState.Progress)
         runAsync({
-            interactor.loadInitData(category)
-        }) { films ->
-            communication.update(films.map(uiMapper))
+            interactor.loadDataByPage(category)
+        }) {
+            communication.update(it.map(uiMapper))
         }
     }
 
-    fun loadMore() {
-        val category = categoryMapper.map(currentTabPosition)
-        communication.update(DashboardUiState.BottomProgress)
+    fun loadData(tabPosition: Int) {
+        currentTabPosition = tabPosition
+        val category = categoryMapper.map(tabPosition)
+        communication.update(DashboardUiState.Progress)
         runAsync({
-            interactor.loadMoreFilms(category)
-        }) { films ->
-            communication.update(films.map(uiMapper))
+            interactor.loadDataByPage(category)
+        }) {
+            communication.update(it.map(uiMapper))
         }
     }
 
-    fun loadPrevious() {
-
+    fun loadMore(lastVisibleItemPosition: Int, tabPosition: Int) {
+        val category = categoryMapper.map(tabPosition)
+        if (lastVisibleItemPosition != lastVisibleScrollPosition) {
+            runAsync({
+                interactor.needToLoadMoreData(lastVisibleItemPosition, category)
+            }) { result ->
+                if (result) {
+                    lastVisibleScrollPosition = lastVisibleItemPosition
+                    loadData(currentTabPosition)
+                }
+            }
+        }
+//        val category = categoryMapper.map(currentTabPosition)
+//        communication.update(DashboardUiState.BottomProgress)
+//        runAsync({
+//            interactor.loadMoreFilms(category)
+//        }) {
+//            communication.update(it.map(uiMapper))
+//        }
     }
+
+//    fun loadPrevious() {
+//        val category = categoryMapper.map(currentTabPosition)
+//        communication.update(DashboardUiState.BottomProgress)
+//        runAsync({
+//            interactor.loadDataByCategory(category)
+//        }) {
+//            communication.update(it.map(uiMapper))
+//        }
+//        val category = categoryMapper.map(currentTabPosition)
+//        communication.update(DashboardUiState.BottomProgress)
+//        runAsync({
+//            interactor.loadPreviousFilms(category)
+//        }) {
+//            communication.update(it.map(uiMapper))
+//        }
+//    }
 
     override fun retry() {
-
     }
 
     override fun remove(item: DashboardUi) {
