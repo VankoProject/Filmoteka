@@ -53,8 +53,21 @@ class DashboardRepositoryImpl(
         }
     }
 
-    override suspend fun allFilmsByCategory(category: String): List<FilmDomain> =
-        dashboardCacheDataSource.filmsByCategory(category).map { it.map(mapToDomain) }
+    override suspend fun numbersFilmsByCategory(category: String): Int =
+        dashboardCacheDataSource.filmsByCategory(category).size
+
+    override suspend fun allCachedFilmsByCategory(category: String): List<FilmDomain> {
+        return dashboardCacheDataSource.filmsByCategory(category).map { it.map(mapToDomain) }
+    }
+
+    override suspend fun allFilmsByCategory(category: String): LoadResult {
+        val favoriteFilmsIds = favoritesCacheDataSource.favoriteFilmsIds()
+        return LoadResult.Success(
+            dashboardCacheDataSource.filmsByCategory(category).map { it.map(mapToDomain) },
+            favoriteFilmsIds
+        )
+    }
+
 
     override suspend fun addToFavorite(filmId: Int) {
         favoritesCacheDataSource.save(FavoriteCache(filmId = filmId))

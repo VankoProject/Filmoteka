@@ -6,7 +6,11 @@ interface DashboardRepository {
 
     suspend fun filmsByCategoryAndPages(category: String, page: Int): LoadResult
 
-    suspend fun allFilmsByCategory(category: String): List<FilmDomain>
+    suspend fun numbersFilmsByCategory(category: String): Int
+
+    suspend fun allCachedFilmsByCategory(category: String): List<FilmDomain>
+
+    suspend fun allFilmsByCategory(category: String): LoadResult
 
     suspend fun addToFavorite(filmId: Int)
 

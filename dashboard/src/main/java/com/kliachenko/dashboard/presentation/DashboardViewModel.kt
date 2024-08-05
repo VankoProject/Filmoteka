@@ -22,22 +22,11 @@ class DashboardViewModel(
 ) : BaseViewModel(runAsync), ClickActions, Clear, Observe<DashboardUiState> {
 
     private var currentTabPosition = 0
-    private var lastVisibleScrollPosition = -1
+    private val lastVisibleScrollPositions = mutableMapOf<String, Int>()
 
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
-            loadInitData(tabPosition)
-        }
-    }
-
-    fun loadInitData(tabPosition: Int) {
-        currentTabPosition = tabPosition
-        val category = categoryMapper.map(tabPosition)
-        communication.update(DashboardUiState.Progress)
-        runAsync({
-            interactor.loadDataByPage(category)
-        }) {
-            communication.update(it.map(uiMapper))
+            loadData(tabPosition)
         }
     }
 
@@ -54,41 +43,28 @@ class DashboardViewModel(
 
     fun loadMore(lastVisibleItemPosition: Int, tabPosition: Int) {
         val category = categoryMapper.map(tabPosition)
+        val lastVisibleScrollPosition = lastVisibleScrollPositions[category] ?: -1
         if (lastVisibleItemPosition != lastVisibleScrollPosition) {
             runAsync({
                 interactor.needToLoadMoreData(lastVisibleItemPosition, category)
             }) { result ->
                 if (result) {
-                    lastVisibleScrollPosition = lastVisibleItemPosition
+                    lastVisibleScrollPositions[category] = lastVisibleItemPosition
                     loadData(currentTabPosition)
                 }
             }
         }
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadMoreFilms(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
     }
 
-//    fun loadPrevious() {
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadDataByCategory(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadPreviousFilms(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
-//    }
+    fun loadPrevious() {
+        val category = categoryMapper.map(currentTabPosition)
+        communication.update(DashboardUiState.BottomProgress)
+        runAsync({
+            interactor.loadPreviousFilms(category)
+        }) {
+            communication.update(it.map(uiMapper))
+        }
+    }
 
     override fun retry() {
     }

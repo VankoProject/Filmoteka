@@ -32,7 +32,7 @@ interface DashboardInteractor {
         }
 
         override suspend fun loadDataByCategory(category: String): List<FilmDomain> {
-            return repository.allFilmsByCategory(category)
+            return repository.allCachedFilmsByCategory(category)
         }
 
         override suspend fun loadMoreFilms(category: String): LoadResult {
@@ -72,7 +72,7 @@ interface DashboardInteractor {
             lastVisibleItemPosition: Int,
             category: String,
         ): Boolean =
-            with(repository.allFilmsByCategory(category)) {
+            with(repository.allCachedFilmsByCategory(category)) {
                 return@with isNotEmpty() && size - 1 == lastVisibleItemPosition
             }
 

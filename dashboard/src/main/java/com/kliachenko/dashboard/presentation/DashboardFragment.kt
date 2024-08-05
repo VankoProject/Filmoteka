@@ -40,7 +40,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             onTabScrollListener(this@DashboardFragment)
         }
 
-        binding.dashboardTabs.setOnTabSelectedListener(this)
+        binding.dashboardTabs.onTabSelectedListener(this)
 
         viewModel.init(
             firstRun = savedInstanceState == null,

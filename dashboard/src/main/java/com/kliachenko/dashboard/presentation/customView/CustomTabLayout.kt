@@ -35,7 +35,7 @@ class CustomTabLayout : TabLayout {
         })
     }
 
-    fun setOnTabSelectedListener(listener: TabSelectedListener) {
+    fun onTabSelectedListener(listener: TabSelectedListener) {
         tabSelectedListener = listener
     }
 
