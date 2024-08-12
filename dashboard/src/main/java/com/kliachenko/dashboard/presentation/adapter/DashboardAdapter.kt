@@ -52,6 +52,7 @@ class DashboardAdapter(
         list.addAll(uiState)
         calculation.dispatchUpdatesTo(this)
     }
+
 }
 
 abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -121,5 +122,6 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
 interface ShowList {
+
     fun show(uiState: List<DashboardUi>)
 }

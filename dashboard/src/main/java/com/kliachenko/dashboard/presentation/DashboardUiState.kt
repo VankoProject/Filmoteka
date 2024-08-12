@@ -10,6 +10,8 @@ interface DashboardUiState {
 
     fun updateFilmState(filmUi: DashboardUi): DashboardUiState = this
 
+    fun addFilms(newFilms: FilmsList): DashboardUiState = this
+
     data class Error(private val message: String) : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
             adapter.show(listOf(DashboardUi.Error(message)))
@@ -36,6 +38,13 @@ interface DashboardUiState {
     }
 
     data class FilmsList(private val filmsList: List<DashboardUi>) : DashboardUiState {
+
+        override fun addFilms(newFilms: FilmsList): DashboardUiState {
+            val updateList = filmsList.toMutableList().apply {
+                addAll(newFilms.filmsList.filterNot { it in filmsList })
+            }
+            return FilmsList(updateList)
+        }
 
         override fun updateFilmState(filmUi: DashboardUi): DashboardUiState {
             val newList = filmsList.map {

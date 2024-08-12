@@ -1,5 +1,6 @@
 package com.kliachenko.dashboard.data
 
+import android.util.Log
 import com.kliachenko.core.HandleError
 import com.kliachenko.dashboard.data.cache.CategoryCacheDataSource
 import com.kliachenko.dashboard.data.cache.DashboardCacheDataSource
@@ -45,7 +46,7 @@ class DashboardRepositoryImpl(
                     dashboardCacheDataSource.save(filmItem.map(mapToCache))
                 }
                 val films = cloudFilms.map { it.map(mapToDomain) }
-
+                Log.d("Filmoteka", "repository load: $films and $favoriteFilmsIds")
                 LoadResult.Success(films, favoriteFilmsIds)
             }
         } catch (e: Exception) {

@@ -3,6 +3,7 @@ package com.kliachenko.dashboard.presentation.customView
 import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import com.google.android.material.tabs.TabLayout
 
 class CustomTabLayout : TabLayout {
@@ -43,6 +44,7 @@ class CustomTabLayout : TabLayout {
         return super.onSaveInstanceState()?.let {
             IdSavedState(it).apply {
                 savedId = currentTabPosition
+                Log.d("Filmoteka", "Tab onSaveInstanceState: $currentTabPosition")
             }
         }
     }
@@ -52,7 +54,13 @@ class CustomTabLayout : TabLayout {
         val restoreState = state as IdSavedState?
         super.onRestoreInstanceState(restoreState?.superState)
         currentTabPosition = restoreState?.savedId?: 0
-        getTabAt(currentTabPosition)?.select()
+        getTabAt(currentTabPosition)?.let {
+            it.select()
+            post {
+                tabSelectedListener?.onTabSelected(currentTabPosition)
+            }
+        }
+        Log.d("Filmoteka", "Tab onRestoreInstanceState: $currentTabPosition")
         isRestore = false
     }
 }

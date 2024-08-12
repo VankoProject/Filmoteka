@@ -18,9 +18,11 @@ class CustomRecyclerView : RecyclerView {
         context, attrs, defStyleAttr
     )
 
-    private var tabScrollListener: TabScrollListener? = null
+    private var bottomScrollListener: TabScrollListener? = null
+    private var topScrollListener: TabScrollListener? = null
     private var tabScrollPositions = mutableMapOf<Int, Int>()
     private var currentTabPosition: Int = 0
+
 
     init {
         addOnScrollListener(object : OnScrollListener() {
@@ -28,16 +30,28 @@ class CustomRecyclerView : RecyclerView {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = layoutManager
                 if (layoutManager is GridLayoutManager) {
+                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                    tabScrollPositions[currentTabPosition] = lastVisibleItemPosition
-                    tabScrollListener?.onTabScrollListener(lastVisibleItemPosition)
+                    val itemCount = layoutManager.itemCount
+                    if (dy > 0) {
+                        bottomScrollListener?.let {
+                            tabScrollPositions[currentTabPosition] = firstVisibleItemPosition
+                            if (lastVisibleItemPosition >= itemCount - THRESHOLD) {
+                                it.bottomScrollListener(lastVisibleItemPosition)
+                            }
+                        }
+                    }
                 }
             }
         })
     }
 
-    fun onTabScrollListener(listener: TabScrollListener) {
-        tabScrollListener = listener
+    fun onBottomScrollListener(listener: TabScrollListener) {
+        bottomScrollListener = listener
+    }
+
+    fun onTopScrollListener(listener: TabScrollListener) {
+        topScrollListener = listener
     }
 
     fun updateLayoutManager(state: DashboardUiState) {
@@ -48,6 +62,12 @@ class CustomRecyclerView : RecyclerView {
 
             else -> {
                 LinearLayoutManager(context)
+            }
+        }
+        post {
+            if (layoutManager is GridLayoutManager) {
+                val position = tabScrollPositions[currentTabPosition] ?: 0
+                (layoutManager as GridLayoutManager).scrollToPosition(position)
             }
         }
     }
@@ -78,20 +98,26 @@ class CustomRecyclerView : RecyclerView {
     override fun onRestoreInstanceState(state: Parcelable?) {
         val restoreState = state as TabScrollState?
         super.onRestoreInstanceState(restoreState?.superState)
-        post {
-            layoutManager?.let {
-                if (it is GridLayoutManager) {
-                    tabScrollPositions = restoreState?.scrollPositions?.toMutableMap() ?: mutableMapOf()
-                    currentTabPosition = restoreState?.tabPosition ?: 0
-                    val position = tabScrollPositions[currentTabPosition] ?: 0
-                    it.scrollToPosition(position)
-                }
-            }
-        }
+        tabScrollPositions = restoreState?.scrollPositions?.toMutableMap() ?: mutableMapOf()
+        currentTabPosition = restoreState?.tabPosition ?: 0
+    }
+
+    fun clearListeners() {
+        bottomScrollListener = null
+        topScrollListener = null
+    }
+
+    companion object {
+        private const val THRESHOLD = 1
     }
 }
 
-internal class TabScrollState : View.BaseSavedState {
+data class ScrollPosition(
+    private val position: Int,
+    private val offset: Int
+)
+
+class TabScrollState : View.BaseSavedState {
 
     var scrollPositions: Map<Int, Int> = emptyMap()
     var tabPosition: Int = 0
@@ -128,5 +154,7 @@ internal class TabScrollState : View.BaseSavedState {
 
 interface TabScrollListener {
 
-    fun onTabScrollListener(lastVisibleItemPosition: Int)
+    fun bottomScrollListener(lastVisibleItemPosition: Int)
+
+    fun topScrollListener(firstVisibleItemPosition: Int)
 }

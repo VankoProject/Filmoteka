@@ -26,9 +26,9 @@ interface DashboardInteractor {
 
         override suspend fun loadDataByPage(category: String): LoadResult {
             val currentPage = pageCounter[category] ?: 1
-            return repository.filmsByCategoryAndPages(category, currentPage).also {
-                pageCounter[category] = currentPage
-            }
+            val result = repository.filmsByCategoryAndPages(category, currentPage)
+            pageCounter[category] = currentPage
+            return result
         }
 
         override suspend fun loadDataByCategory(category: String): List<FilmDomain> {
