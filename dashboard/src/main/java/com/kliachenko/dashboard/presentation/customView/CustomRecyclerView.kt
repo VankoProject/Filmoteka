@@ -20,7 +20,7 @@ class CustomRecyclerView : RecyclerView {
 
     private var bottomScrollListener: TabScrollListener? = null
     private var topScrollListener: TabScrollListener? = null
-    private var tabScrollPositions = mutableMapOf<Int, Int>()
+    private var tabScrollPositions = mutableMapOf<Int, ScrollPosition>()
     private var currentTabPosition: Int = 0
 
 
@@ -31,11 +31,15 @@ class CustomRecyclerView : RecyclerView {
                 val layoutManager = layoutManager
                 if (layoutManager is GridLayoutManager) {
                     val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+                    val firstVisibleItem =
+                        layoutManager.findViewByPosition(firstVisibleItemPosition)
+                    val offset = firstVisibleItem?.top ?: 0
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
                     val itemCount = layoutManager.itemCount
                     if (dy > 0) {
                         bottomScrollListener?.let {
-                            tabScrollPositions[currentTabPosition] = firstVisibleItemPosition
+                            tabScrollPositions[currentTabPosition] =
+                                ScrollPosition(firstVisibleItemPosition, offset)
                             if (lastVisibleItemPosition >= itemCount - THRESHOLD) {
                                 it.bottomScrollListener(lastVisibleItemPosition)
                             }
@@ -66,8 +70,13 @@ class CustomRecyclerView : RecyclerView {
         }
         post {
             if (layoutManager is GridLayoutManager) {
-                val position = tabScrollPositions[currentTabPosition] ?: 0
-                (layoutManager as GridLayoutManager).scrollToPosition(position)
+                val position = tabScrollPositions[currentTabPosition]
+                position?.let { position->
+                    (layoutManager as GridLayoutManager).scrollToPositionWithOffset(
+                        position.position(),
+                        position.offset()
+                    )
+                }
             }
         }
     }
@@ -76,8 +85,10 @@ class CustomRecyclerView : RecyclerView {
         currentTabPosition = tabPosition
         layoutManager?.let {
             if (it is GridLayoutManager) {
-                val position = tabScrollPositions[tabPosition] ?: 0
-                it.scrollToPosition(position)
+                val position = tabScrollPositions[tabPosition]
+                position?.let { position ->
+                    it.scrollToPositionWithOffset(position.position(), position.offset())
+                }
             }
         }
     }
@@ -114,12 +125,15 @@ class CustomRecyclerView : RecyclerView {
 
 data class ScrollPosition(
     private val position: Int,
-    private val offset: Int
-)
+    private val offset: Int,
+) {
+    fun position() = position
+    fun offset() = offset
+}
 
 class TabScrollState : View.BaseSavedState {
 
-    var scrollPositions: Map<Int, Int> = emptyMap()
+    var scrollPositions: Map<Int, ScrollPosition> = emptyMap()
     var tabPosition: Int = 0
 
     constructor(superState: Parcelable) : super(superState)
@@ -127,20 +141,26 @@ class TabScrollState : View.BaseSavedState {
     private constructor(parcel: Parcel) : super(parcel) {
         val size = parcel.readInt()
         val keys = IntArray(size)
-        val values = IntArray(size)
+        val positions = IntArray(size)
+        val offsets = IntArray(size)
         parcel.readIntArray(keys)
-        parcel.readIntArray(values)
-        scrollPositions = keys.zip(values).toMap()
+        parcel.readIntArray(positions)
+        parcel.readIntArray(offsets)
+        scrollPositions = keys.zip(positions.zip(offsets).map {
+            ScrollPosition(it.first, it.second)
+        }).toMap()
         tabPosition = parcel.readInt()
     }
 
     override fun writeToParcel(out: Parcel, flags: Int) {
         super.writeToParcel(out, flags)
         val keys = scrollPositions.keys.toIntArray()
-        val values = scrollPositions.values.toIntArray()
+        val positions = scrollPositions.values.map { it.position() }.toIntArray()
+        val offsets = scrollPositions.values.map { it.offset() }.toIntArray()
         out.writeInt(keys.size)
         out.writeIntArray(keys)
-        out.writeIntArray(values)
+        out.writeIntArray(positions)
+        out.writeIntArray(offsets)
         out.writeInt(tabPosition)
     }
 
