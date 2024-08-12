@@ -1,5 +1,6 @@
 package com.kliachenko.dashboard.presentation
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -22,22 +23,12 @@ class DashboardViewModel(
 ) : BaseViewModel(runAsync), ClickActions, Clear, Observe<DashboardUiState> {
 
     private var currentTabPosition = 0
-    private var lastVisibleScrollPosition = -1
+    private val lastVisibleScrollPositions = mutableMapOf<String, Int>()
 
     fun init(firstRun: Boolean, tabPosition: Int) {
+        Log.d("Filmoteka", "bundle $firstRun, tabPosition: $tabPosition")
         if (firstRun) {
-            loadInitData(tabPosition)
-        }
-    }
-
-    fun loadInitData(tabPosition: Int) {
-        currentTabPosition = tabPosition
-        val category = categoryMapper.map(tabPosition)
-        communication.update(DashboardUiState.Progress)
-        runAsync({
-            interactor.loadDataByPage(category)
-        }) {
-            communication.update(it.map(uiMapper))
+            loadData(tabPosition)
         }
     }
 
@@ -54,41 +45,40 @@ class DashboardViewModel(
 
     fun loadMore(lastVisibleItemPosition: Int, tabPosition: Int) {
         val category = categoryMapper.map(tabPosition)
-        if (lastVisibleItemPosition != lastVisibleScrollPosition) {
+        val lastVisibleScrollPosition = lastVisibleScrollPositions[category] ?: -1
+        if (lastVisibleItemPosition >= lastVisibleScrollPosition) {
             runAsync({
                 interactor.needToLoadMoreData(lastVisibleItemPosition, category)
             }) { result ->
                 if (result) {
-                    lastVisibleScrollPosition = lastVisibleItemPosition
-                    loadData(currentTabPosition)
+                    lastVisibleScrollPositions[category] = lastVisibleItemPosition
+                    runAsync({
+                        interactor.loadMoreFilms(category)
+                    }) { result ->
+                        val newState = result.map(uiMapper)
+                        if (newState is DashboardUiState.FilmsList) {
+                            val currentState = communication.liveData().value
+                            val updateState = currentState?.addFilms(newState) ?: newState
+                            communication.update(updateState)
+                            lastVisibleScrollPositions[category] = lastVisibleItemPosition
+                        } else {
+                            communication.update(newState)
+                        }
+                    }
                 }
             }
         }
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadMoreFilms(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
     }
 
-//    fun loadPrevious() {
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadDataByCategory(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadPreviousFilms(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
-//    }
+    fun loadPrevious(firstVisibleItemPosition: Int, tabPosition: Int) {
+        val category = categoryMapper.map(currentTabPosition)
+        communication.update(DashboardUiState.BottomProgress)
+        runAsync({
+            interactor.loadPreviousFilms(category)
+        }) {
+            communication.update(it.map(uiMapper))
+        }
+    }
 
     override fun retry() {
     }

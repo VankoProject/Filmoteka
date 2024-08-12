@@ -34,23 +34,32 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             viewModel.clear(viewModelClass)
         })
 
-        binding.dashboardRecyclerView.apply {
-            this.adapter = adapter
-            currentTabPosition(binding.dashboardTabs.selectedTabPosition)
-            onTabScrollListener(this@DashboardFragment)
+        with(binding) {
+            dashboardRecyclerView.apply {
+                this.adapter = adapter
+                currentTabPosition(binding.dashboardTabs.selectedTabPosition)
+                onBottomScrollListener(this@DashboardFragment)
+                onTopScrollListener(this@DashboardFragment)
+            }
+
+            dashboardTabs.onTabSelectedListener(this@DashboardFragment)
+
+            viewModel.init(
+                firstRun = savedInstanceState == null,
+                tabPosition = dashboardTabs.selectedTabPosition
+            )
+
+            viewModel.observe(viewLifecycleOwner) { state ->
+                (dashboardRecyclerView).updateLayoutManager(state)
+                state.updateAdapter(adapter)
+            }
         }
+    }
 
-        binding.dashboardTabs.setOnTabSelectedListener(this)
 
-        viewModel.init(
-            firstRun = savedInstanceState == null,
-            tabPosition = binding.dashboardTabs.selectedTabPosition
-        )
-
-        viewModel.observe(viewLifecycleOwner) { state ->
-            (binding.dashboardRecyclerView).updateLayoutManager(state)
-            state.updateAdapter(adapter)
-        }
+    override fun onDestroyView() {
+        binding.dashboardRecyclerView.clearListeners()
+        super.onDestroyView()
     }
 
     override fun onTabSelected(position: Int) {
@@ -58,8 +67,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         viewModel.loadData(position)
     }
 
-    override fun onTabScrollListener(lastVisibleItemPosition: Int) {
-        viewModel.loadMore(lastVisibleItemPosition, binding.dashboardTabs.selectedTabPosition)
+    override fun bottomScrollListener(lastVisibleItemPosition: Int) = with(binding) {
+            viewModel.loadMore(lastVisibleItemPosition, dashboardTabs.selectedTabPosition)
     }
+
+    override fun topScrollListener(firstVisibleItemPosition: Int) = Unit
 
 }

@@ -26,13 +26,13 @@ interface DashboardInteractor {
 
         override suspend fun loadDataByPage(category: String): LoadResult {
             val currentPage = pageCounter[category] ?: 1
-            return repository.filmsByCategoryAndPages(category, currentPage).also {
-                pageCounter[category] = currentPage
-            }
+            val result = repository.filmsByCategoryAndPages(category, currentPage)
+            pageCounter[category] = currentPage
+            return result
         }
 
         override suspend fun loadDataByCategory(category: String): List<FilmDomain> {
-            return repository.allFilmsByCategory(category)
+            return repository.allCachedFilmsByCategory(category)
         }
 
         override suspend fun loadMoreFilms(category: String): LoadResult {
@@ -72,7 +72,7 @@ interface DashboardInteractor {
             lastVisibleItemPosition: Int,
             category: String,
         ): Boolean =
-            with(repository.allFilmsByCategory(category)) {
+            with(repository.allCachedFilmsByCategory(category)) {
                 return@with isNotEmpty() && size - 1 == lastVisibleItemPosition
             }
 
