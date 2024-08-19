@@ -23,3 +23,4 @@ rootProject.name = "Filmoteka"
 include(":app")
 include(":core")
 include(":dashboard")
+include(":detail")

@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-kapt")
-    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
-    namespace = "com.kliachenko.dashboard"
+    namespace = "com.kliachenko.detail"
     compileSdk = 34
 
     defaultConfig {
@@ -39,29 +37,20 @@ android {
 }
 
 dependencies {
-
-    api(project(":core"))
-    implementation(project(":core"))
+    implementation(project(":dashboard"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    //ROOM
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-    //noinspection KaptUsageInsteadOfKsp
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
-    testImplementation(libs.androidx.room.testing)
 
     //NAVIGATION COMPONENT
     implementation (libs.androidx.navigation.fragment.ktx)
     implementation (libs.androidx.navigation.ui.ktx)
     androidTestImplementation (libs.androidx.navigation.testing)
+
 }

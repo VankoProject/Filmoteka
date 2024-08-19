@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.fragments
+package com.kliachenko.detail.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.kliachenko.filmoteka.R
+import com.kliachenko.detail.R
 
 class DetailFragment : Fragment() {
 
@@ -25,6 +25,5 @@ class DetailFragment : Fragment() {
         val textView = view.findViewById<TextView>(R.id.textView)
         textView.text = filmId.toString()
     }
-
 
 }

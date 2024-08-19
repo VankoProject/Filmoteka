@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment2"
-        android:name="com.kliachenko.filmoteka.fragments.DetailFragment"
+        android:name="com.kliachenko.detail.presentation.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" />
 </navigation>
