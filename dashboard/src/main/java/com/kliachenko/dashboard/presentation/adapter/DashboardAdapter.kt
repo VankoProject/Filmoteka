@@ -6,25 +6,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.kliachenko.dashboard.R
-import com.kliachenko.dashboard.databinding.BottomProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.NodataLayoutBinding
+import com.kliachenko.dashboard.databinding.PagingProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 class DashboardAdapter(
     private val clickListener: ClickActions,
     private val navigate: (Int) -> Unit,
-    private val typeList: List<DashboardUiType> = listOf(
-        DashboardUiType.Error,
-        DashboardUiType.Progress,
-        DashboardUiType.Film,
-        DashboardUiType.BottomProgress,
-        DashboardUiType.NoData
-    ),
+    private val typeList: List<DashboardUiType> = DashboardUiType.typeList(),
 ) : RecyclerView.Adapter<DashboardViewHolder>(), ShowList {
 
     private val list = mutableListOf<DashboardUi>()
+
+    fun typeList() = typeList
 
     override fun getItemViewType(position: Int): Int {
         val item = list[position]
@@ -67,7 +63,7 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    class BottomProgress(private val binding: BottomProgressLayoutBinding) :
+    class BottomProgress(private val binding: PagingProgressLayoutBinding) :
         DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
             super.bind(item)

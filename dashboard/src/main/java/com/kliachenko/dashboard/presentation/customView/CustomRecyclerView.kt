@@ -4,11 +4,13 @@ import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kliachenko.dashboard.presentation.DashboardUiState
+import com.kliachenko.dashboard.presentation.adapter.DashboardUiType
 
 class CustomRecyclerView : RecyclerView {
 
@@ -22,7 +24,7 @@ class CustomRecyclerView : RecyclerView {
     private var topScrollListener: TabScrollListener? = null
     private var tabScrollPositions = mutableMapOf<Int, ScrollPosition>()
     private var currentTabPosition: Int = 0
-
+    private val typeList: List<DashboardUiType> = DashboardUiType.typeList()
 
     init {
         addOnScrollListener(object : OnScrollListener() {
@@ -35,14 +37,21 @@ class CustomRecyclerView : RecyclerView {
                         layoutManager.findViewByPosition(firstVisibleItemPosition)
                     val offset = firstVisibleItem?.top ?: 0
                     val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-                    val itemCount = layoutManager.itemCount
                     if (dy > 0) {
                         bottomScrollListener?.let {
                             tabScrollPositions[currentTabPosition] =
                                 ScrollPosition(firstVisibleItemPosition, offset)
-                            if (lastVisibleItemPosition >= itemCount - THRESHOLD) {
+                            if (lastVisibleItemPosition >= layoutManager.itemCount - THRESHOLD) {
+                                Log.d("Filmoteka", "RV lastVisiblePos: $lastVisibleItemPosition versus itemCount ${layoutManager.itemCount}")
                                 it.bottomScrollListener(lastVisibleItemPosition)
                             }
+                        }
+                    }
+                    if(dy < 0) {
+                        topScrollListener?.let {
+                            tabScrollPositions[currentTabPosition] =
+                                ScrollPosition(firstVisibleItemPosition, offset)
+                            it.topScrollListener(firstVisibleItemPosition)
                         }
                     }
                 }
@@ -60,22 +69,24 @@ class CustomRecyclerView : RecyclerView {
 
     fun updateLayoutManager(state: DashboardUiState) {
         layoutManager = when (state) {
-            is DashboardUiState.FilmsList -> {
-                GridLayoutManager(context, 2)
-            }
-
-            else -> {
-                LinearLayoutManager(context)
-            }
+            is DashboardUiState.FilmsList -> GridLayoutManager(context, 2)
+            else -> LinearLayoutManager(context)
         }
         post {
-            if (layoutManager is GridLayoutManager) {
+            (layoutManager as? GridLayoutManager)?.let { gridLayoutManager ->
                 val position = tabScrollPositions[currentTabPosition]
-                position?.let { position->
-                    (layoutManager as GridLayoutManager).scrollToPositionWithOffset(
-                        position.position(),
-                        position.offset()
-                    )
+                position?.let {
+                    gridLayoutManager.scrollToPositionWithOffset(it.position(), it.offset())
+                }
+                gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        val viewType = adapter?.getItemViewType(position)
+                        return if (viewType == typeList.indexOf(DashboardUiType.PagingProgress)) {
+                            gridLayoutManager.spanCount
+                        } else {
+                            1
+                        }
+                    }
                 }
             }
         }

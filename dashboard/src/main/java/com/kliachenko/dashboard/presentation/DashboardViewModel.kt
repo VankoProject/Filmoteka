@@ -1,6 +1,5 @@
 package com.kliachenko.dashboard.presentation
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import com.kliachenko.dashboard.domain.DashboardInteractor
 import com.kliachenko.dashboard.domain.LoadResult
 import com.kliachenko.dashboard.presentation.adapter.ClickActions
 import com.kliachenko.dashboard.presentation.adapter.DashboardUi
+import kotlinx.coroutines.delay
 
 class DashboardViewModel(
     private val interactor: DashboardInteractor,
@@ -26,8 +26,16 @@ class DashboardViewModel(
     private val lastVisibleScrollPositions = mutableMapOf<String, Int>()
 
     fun init(firstRun: Boolean, tabPosition: Int) {
-        Log.d("Filmoteka", "bundle $firstRun, tabPosition: $tabPosition")
         if (firstRun) {
+            currentTabPosition = tabPosition
+            val category = categoryMapper.map(tabPosition)
+            communication.update(DashboardUiState.Progress)
+            runAsync({
+                interactor.loadDataByPage(category)
+            }) {
+                communication.update(it.map(uiMapper))
+            }
+        } else {
             loadData(tabPosition)
         }
     }
@@ -37,9 +45,21 @@ class DashboardViewModel(
         val category = categoryMapper.map(tabPosition)
         communication.update(DashboardUiState.Progress)
         runAsync({
-            interactor.loadDataByPage(category)
-        }) {
-            communication.update(it.map(uiMapper))
+            interactor.loadDataByCategory(category)
+        }) { result ->
+            if(result.isEmpty()) {
+                runAsync({
+                    interactor.loadDataByPage(category)
+                }) {
+                    communication.update(it.map(uiMapper))
+                }
+            } else {
+                runAsync({
+                    interactor.loadCacheByCategory(category)
+                }) {
+                    communication.update(it.map(uiMapper))
+                }
+            }
         }
     }
 
@@ -49,16 +69,22 @@ class DashboardViewModel(
         if (lastVisibleItemPosition >= lastVisibleScrollPosition) {
             runAsync({
                 interactor.needToLoadMoreData(lastVisibleItemPosition, category)
-            }) { result ->
-                if (result) {
+            }) { loadMore ->
+                if (loadMore) {
                     lastVisibleScrollPositions[category] = lastVisibleItemPosition
+                    val currentState = communication.liveData().value
+                    communication.update(
+                        currentState?.showProgress() ?: DashboardUiState.BottomProgress
+                    )
                     runAsync({
-                        interactor.loadMoreFilms(category)
+                        interactor.loadMoreFilms(category).also {
+                            delay(3000)
+                        }
                     }) { result ->
                         val newState = result.map(uiMapper)
+                        val currentState = communication.liveData().value
                         if (newState is DashboardUiState.FilmsList) {
-                            val currentState = communication.liveData().value
-                            val updateState = currentState?.addFilms(newState) ?: newState
+                            val updateState = currentState?.hideProgress()?.addFilms(newState)?: newState
                             communication.update(updateState)
                             lastVisibleScrollPositions[category] = lastVisibleItemPosition
                         } else {
@@ -81,6 +107,7 @@ class DashboardViewModel(
     }
 
     override fun retry() {
+        loadData(currentTabPosition)
     }
 
     override fun remove(item: DashboardUi) {

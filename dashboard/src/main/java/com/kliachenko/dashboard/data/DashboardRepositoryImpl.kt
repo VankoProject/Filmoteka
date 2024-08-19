@@ -54,9 +54,6 @@ class DashboardRepositoryImpl(
         }
     }
 
-    override suspend fun numbersFilmsByCategory(category: String): Int =
-        dashboardCacheDataSource.filmsByCategory(category).size
-
     override suspend fun allCachedFilmsByCategory(category: String): List<FilmDomain> {
         return dashboardCacheDataSource.filmsByCategory(category).map { it.map(mapToDomain) }
     }
@@ -68,7 +65,6 @@ class DashboardRepositoryImpl(
             favoriteFilmsIds
         )
     }
-
 
     override suspend fun addToFavorite(filmId: Int) {
         favoritesCacheDataSource.save(FavoriteCache(filmId = filmId))
