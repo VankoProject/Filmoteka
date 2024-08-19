@@ -8,6 +8,8 @@ interface DashboardInteractor {
 
     suspend fun loadDataByCategory(category: String): List<FilmDomain>
 
+    suspend fun loadCacheByCategory(category: String): LoadResult
+
     suspend fun loadMoreFilms(category: String): LoadResult
 
     suspend fun loadPreviousFilms(category: String): LoadResult
@@ -33,6 +35,10 @@ interface DashboardInteractor {
 
         override suspend fun loadDataByCategory(category: String): List<FilmDomain> {
             return repository.allCachedFilmsByCategory(category)
+        }
+
+        override suspend fun loadCacheByCategory(category: String): LoadResult {
+            return repository.allFilmsByCategory(category)
         }
 
         override suspend fun loadMoreFilms(category: String): LoadResult {
@@ -73,7 +79,9 @@ interface DashboardInteractor {
             category: String,
         ): Boolean =
             with(repository.allCachedFilmsByCategory(category)) {
-                return@with isNotEmpty() && size - 1 == lastVisibleItemPosition
+                val cachedItemCount = size
+                val threshold = 5
+                return@with isNotEmpty() && (cachedItemCount - lastVisibleItemPosition <= threshold)
             }
 
     }

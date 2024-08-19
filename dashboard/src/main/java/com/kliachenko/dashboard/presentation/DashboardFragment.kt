@@ -24,7 +24,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val adapter = DashboardAdapter(clickListener = viewModel, navigate = { filmId ->
             findNavController().navigate(
                 DashboardFragmentDirections.actionDashBoardFragmentToDetailFragment(
@@ -56,9 +55,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
         }
     }
 
-
     override fun onDestroyView() {
         binding.dashboardRecyclerView.clearListeners()
+        binding.dashboardTabs.clearListener()
         super.onDestroyView()
     }
 
