@@ -48,6 +48,7 @@ dependencies {
 
     implementation(project(":core"))
     implementation(project(":dashboard"))
+    implementation(project(":detail"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -57,6 +58,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.6.1")
 
     //Navigation component
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")

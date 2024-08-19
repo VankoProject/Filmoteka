@@ -6,9 +6,9 @@ import com.kliachenko.filmoteka.main.MainActivity
 import com.kliachenko.filmoteka.pageobject.dashboard.DashboardPage
 import com.kliachenko.filmoteka.pageobject.dashboard.FilmItem
 import com.kliachenko.filmoteka.pageobject.main.MainPage
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -20,11 +20,19 @@ class ScenarioTest {
 
     private lateinit var mainPage: MainPage
     private lateinit var dashboardPage: DashboardPage
+    private lateinit var detailPage: DetailPage
 
     @Before
     fun setup() {
+        androidx.test.espresso.intent.Intents.init()
         dashboardPage = DashboardPage()
         mainPage = MainPage()
+        detailPage = DetailPage()
+    }
+
+    @After
+    fun tearDown() {
+        androidx.test.espresso.intent.Intents.release()
     }
 
     @Test
@@ -93,7 +101,8 @@ class ScenarioTest {
                 FilmItem(title = "Film#2", rate = "2.0", isFavorite = false),
                 FilmItem(title = "Film#3", rate = "3.0", isFavorite = false),
                 FilmItem(title = "Film#4", rate = "4.0", isFavorite = false),
-                ))
+            )
+        )
         tapTab(tabName = "Upcoming")
         checkDashboardProgressState(message = "loading...", tabName = "Upcoming")
         waitUntilDashboardProgressStateIsNotVisible()
@@ -152,6 +161,75 @@ class ScenarioTest {
         )
         tapFilm(position = 1)
         checkDashboardIsNotVisible()
+    }
+
+    @Test
+    fun load_detailScreen_from_dashboard() {
+        detailPage.checkProgresState(message = "loading...")
+        detailPage.waitUntilDashboardProgressStateIsNotVisible()
+        detailPage.checkErrorState(
+            errorMessage = "Error loading information.\n" +
+                    "Please, try again..."
+        )
+        activityScenarioRule.scenario.recreate()
+        detailPage.checkErrorState(
+            errorMessage = "Error loading information.\n" +
+                    "Please, try again..."
+        )
+        detailPage.tapRetryButton()
+        detailPage.checkProgresState(message = "loading...")
+        activityScenarioRule.scenario.recreate()
+        detailPage.checkProgresState(message = "loading...")
+        detailPage.waitUntilDashboardProgressStateIsNotVisible()
+        detailPage.checkSuccessfulState(
+            title = "Film#1",
+            tagline = "Tagline Film#1",
+            geners = listOf("Action", "Comedy"),
+            releaseDate = "2022",
+            runtime = "107",
+            adult = false,
+            score = "6,5",
+            status = false,
+            likeCount = 10,
+            overView = "OverView",
+            originalLanguage = "Eng",
+            countyProduction = "USA",
+            homePage = "http://film#1"
+        )
+        detailPage.tapFilmBookmarkIcon()
+        detailPage.checkSuccessfulState(
+            title = "Film#1",
+            tagline = "Tagline Film#1",
+            geners = listOf("Action", "Comedy"),
+            releaseDate = "2022",
+            runtime = "107",
+            adult = false,
+            score = "6,5",
+            status = true,
+            likeCount = 10,
+            overView = "OverView",
+            originalLanguage = "Eng",
+            countyProduction = "USA",
+            homePage = "http://film#1"
+        )
+        detailPage.tapFilmBookmarkIcon()
+        detailPage.checkSuccessfulState(
+            title = "Film#1",
+            tagline = "Tagline Film#1",
+            geners = listOf("Action", "Comedy"),
+            releaseDate = "2022",
+            runtime = "107",
+            adult = false,
+            score = "6,5",
+            status = false,
+            likeCount = 10,
+            overView = "OverView",
+            originalLanguage = "Eng",
+            countyProduction = "USA",
+            homePage = "http://film#1"
+        )
+        detailPage.clickFilmHomePage()
+
     }
 
 }
