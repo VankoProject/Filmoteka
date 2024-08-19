@@ -1,9 +1,9 @@
 package com.kliachenko.dashboard.presentation.adapter
 
-import com.kliachenko.dashboard.databinding.BottomProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.NodataLayoutBinding
+import com.kliachenko.dashboard.databinding.PagingProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 interface DashboardUi {
@@ -14,7 +14,7 @@ interface DashboardUi {
 
     fun show(binding: ProgressLayoutBinding) = Unit
 
-    fun show(binding: BottomProgressLayoutBinding) = Unit
+    fun show(binding: PagingProgressLayoutBinding) = Unit
 
     fun show(binding: NodataLayoutBinding) = Unit
 
@@ -36,11 +36,11 @@ interface DashboardUi {
 
     }
 
-    object BottomProgress: DashboardUi {
+    object PagingProgress: DashboardUi {
 
         override fun id(): String = javaClass.simpleName
 
-        override fun type() = DashboardUiType.BottomProgress
+        override fun type() = DashboardUiType.PagingProgress
     }
 
     object NoData: DashboardUi {

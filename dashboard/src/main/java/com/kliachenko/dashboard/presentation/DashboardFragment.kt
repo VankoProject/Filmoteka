@@ -24,7 +24,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val adapter = DashboardAdapter(clickListener = viewModel, navigate = { filmId ->
             findNavController().navigate(
                 DashboardFragmentDirections.actionDashBoardFragmentToDetailFragment(
@@ -34,31 +33,43 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
             viewModel.clear(viewModelClass)
         })
 
-        binding.dashboardRecyclerView.apply {
-            this.adapter = adapter
+        with(binding) {
+            dashboardRecyclerView.apply {
+                this.adapter = adapter
+                currentTabPosition(binding.dashboardTabs.selectedTabPosition)
+                onBottomScrollListener(this@DashboardFragment)
+                onTopScrollListener(this@DashboardFragment)
+            }
 
-            onTabScrollListener(this@DashboardFragment)
+            dashboardTabs.onTabSelectedListener(this@DashboardFragment)
+
+            viewModel.init(
+                firstRun = savedInstanceState == null,
+                tabPosition = dashboardTabs.selectedTabPosition
+            )
+
+            viewModel.observe(viewLifecycleOwner) { state ->
+                (dashboardRecyclerView).updateLayoutManager(state)
+                state.updateAdapter(adapter)
+            }
         }
+    }
 
-        binding.dashboardTabs.setOnTabSelectedListener(this)
-
-        viewModel.init(
-            firstRun = savedInstanceState == null,
-            tabPosition = binding.dashboardTabs.selectedTabPosition
-        )
-
-        viewModel.observe(viewLifecycleOwner) { state ->
-            (binding.dashboardRecyclerView).updateLayoutManager(state)
-            state.updateAdapter(adapter)
-        }
+    override fun onDestroyView() {
+        binding.dashboardRecyclerView.clearListeners()
+        binding.dashboardTabs.clearListener()
+        super.onDestroyView()
     }
 
     override fun onTabSelected(position: Int) {
+        binding.dashboardRecyclerView.currentTabPosition(position)
         viewModel.loadData(position)
     }
 
-    override fun onTabScrollListener(lastVisibleItemPosition: Int) {
-        viewModel.loadMore(lastVisibleItemPosition, binding.dashboardTabs.selectedTabPosition)
+    override fun bottomScrollListener(lastVisibleItemPosition: Int) = with(binding) {
+            viewModel.loadMore(lastVisibleItemPosition, dashboardTabs.selectedTabPosition)
     }
+
+    override fun topScrollListener(firstVisibleItemPosition: Int) = Unit
 
 }

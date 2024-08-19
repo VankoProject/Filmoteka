@@ -2,10 +2,10 @@ package com.kliachenko.dashboard.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.kliachenko.dashboard.databinding.BottomProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.NodataLayoutBinding
+import com.kliachenko.dashboard.databinding.PagingProgressLayoutBinding
 import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 interface DashboardUiType {
@@ -28,13 +28,13 @@ interface DashboardUiType {
         )
     }
 
-    object BottomProgress : DashboardUiType {
+    object PagingProgress : DashboardUiType {
         override fun viewHolder(
             parent: ViewGroup,
             clickActions: ClickActions,
             navigate: (Int) -> Unit,
         ) = DashboardViewHolder.BottomProgress(
-            BottomProgressLayoutBinding.inflate(
+            PagingProgressLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -73,7 +73,18 @@ interface DashboardUiType {
         ) = DashboardViewHolder.NoData(
             NodataLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
+    }
 
+    companion object {
+        fun typeList(): List<DashboardUiType> {
+            return listOf(
+                Progress,
+                PagingProgress,
+                Error,
+                Film,
+                NoData
+            )
+        }
     }
 
 }

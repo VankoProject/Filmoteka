@@ -10,6 +10,12 @@ interface DashboardUiState {
 
     fun updateFilmState(filmUi: DashboardUi): DashboardUiState = this
 
+    fun addFilms(newFilms: FilmsList): DashboardUiState = this
+
+    fun showProgress(): DashboardUiState = this
+
+    fun hideProgress(): DashboardUiState = this
+
     data class Error(private val message: String) : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
             adapter.show(listOf(DashboardUi.Error(message)))
@@ -24,7 +30,7 @@ interface DashboardUiState {
 
     object BottomProgress : DashboardUiState {
         override fun updateAdapter(adapter: ShowList) {
-            adapter.show(listOf(DashboardUi.BottomProgress))
+            adapter.show(listOf(DashboardUi.PagingProgress))
         }
     }
 
@@ -36,6 +42,27 @@ interface DashboardUiState {
     }
 
     data class FilmsList(private val filmsList: List<DashboardUi>) : DashboardUiState {
+
+        override fun showProgress(): DashboardUiState {
+            if (filmsList.lastOrNull() !is DashboardUi.PagingProgress) {
+                val updateList = filmsList.toMutableList()
+                updateList.add(DashboardUi.PagingProgress)
+                return FilmsList(updateList)
+            }
+            return this
+        }
+
+        override fun hideProgress(): DashboardUiState {
+            val updateList = filmsList.filterNot { it is DashboardUi.PagingProgress }
+            return FilmsList(updateList)
+        }
+
+        override fun addFilms(newFilms: FilmsList): DashboardUiState {
+            val updateList = filmsList.toMutableList().apply {
+                addAll(newFilms.filmsList.filterNot { it in filmsList })
+            }
+            return FilmsList(updateList)
+        }
 
         override fun updateFilmState(filmUi: DashboardUi): DashboardUiState {
             val newList = filmsList.map {

@@ -11,6 +11,7 @@ import com.kliachenko.dashboard.domain.DashboardInteractor
 import com.kliachenko.dashboard.domain.LoadResult
 import com.kliachenko.dashboard.presentation.adapter.ClickActions
 import com.kliachenko.dashboard.presentation.adapter.DashboardUi
+import kotlinx.coroutines.delay
 
 class DashboardViewModel(
     private val interactor: DashboardInteractor,
@@ -22,22 +23,20 @@ class DashboardViewModel(
 ) : BaseViewModel(runAsync), ClickActions, Clear, Observe<DashboardUiState> {
 
     private var currentTabPosition = 0
-    private var lastVisibleScrollPosition = -1
+    private val lastVisibleScrollPositions = mutableMapOf<String, Int>()
 
     fun init(firstRun: Boolean, tabPosition: Int) {
         if (firstRun) {
-            loadInitData(tabPosition)
-        }
-    }
-
-    fun loadInitData(tabPosition: Int) {
-        currentTabPosition = tabPosition
-        val category = categoryMapper.map(tabPosition)
-        communication.update(DashboardUiState.Progress)
-        runAsync({
-            interactor.loadDataByPage(category)
-        }) {
-            communication.update(it.map(uiMapper))
+            currentTabPosition = tabPosition
+            val category = categoryMapper.map(tabPosition)
+            communication.update(DashboardUiState.Progress)
+            runAsync({
+                interactor.loadDataByPage(category)
+            }) {
+                communication.update(it.map(uiMapper))
+            }
+        } else {
+            loadData(tabPosition)
         }
     }
 
@@ -46,51 +45,69 @@ class DashboardViewModel(
         val category = categoryMapper.map(tabPosition)
         communication.update(DashboardUiState.Progress)
         runAsync({
-            interactor.loadDataByPage(category)
-        }) {
-            communication.update(it.map(uiMapper))
+            interactor.loadDataByCategory(category)
+        }) { result ->
+            if(result.isEmpty()) {
+                runAsync({
+                    interactor.loadDataByPage(category)
+                }) {
+                    communication.update(it.map(uiMapper))
+                }
+            } else {
+                runAsync({
+                    interactor.loadCacheByCategory(category)
+                }) {
+                    communication.update(it.map(uiMapper))
+                }
+            }
         }
     }
 
     fun loadMore(lastVisibleItemPosition: Int, tabPosition: Int) {
         val category = categoryMapper.map(tabPosition)
-        if (lastVisibleItemPosition != lastVisibleScrollPosition) {
+        val lastVisibleScrollPosition = lastVisibleScrollPositions[category] ?: -1
+        if (lastVisibleItemPosition >= lastVisibleScrollPosition) {
             runAsync({
                 interactor.needToLoadMoreData(lastVisibleItemPosition, category)
-            }) { result ->
-                if (result) {
-                    lastVisibleScrollPosition = lastVisibleItemPosition
-                    loadData(currentTabPosition)
+            }) { loadMore ->
+                if (loadMore) {
+                    lastVisibleScrollPositions[category] = lastVisibleItemPosition
+                    val currentState = communication.liveData().value
+                    communication.update(
+                        currentState?.showProgress() ?: DashboardUiState.BottomProgress
+                    )
+                    runAsync({
+                        interactor.loadMoreFilms(category).also {
+                            delay(3000)
+                        }
+                    }) { result ->
+                        val newState = result.map(uiMapper)
+                        val currentState = communication.liveData().value
+                        if (newState is DashboardUiState.FilmsList) {
+                            val updateState = currentState?.hideProgress()?.addFilms(newState)?: newState
+                            communication.update(updateState)
+                            lastVisibleScrollPositions[category] = lastVisibleItemPosition
+                        } else {
+                            communication.update(newState)
+                        }
+                    }
                 }
             }
         }
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadMoreFilms(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
     }
 
-//    fun loadPrevious() {
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadDataByCategory(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
-//        val category = categoryMapper.map(currentTabPosition)
-//        communication.update(DashboardUiState.BottomProgress)
-//        runAsync({
-//            interactor.loadPreviousFilms(category)
-//        }) {
-//            communication.update(it.map(uiMapper))
-//        }
-//    }
+    fun loadPrevious(firstVisibleItemPosition: Int, tabPosition: Int) {
+        val category = categoryMapper.map(currentTabPosition)
+        communication.update(DashboardUiState.BottomProgress)
+        runAsync({
+            interactor.loadPreviousFilms(category)
+        }) {
+            communication.update(it.map(uiMapper))
+        }
+    }
 
     override fun retry() {
+        loadData(currentTabPosition)
     }
 
     override fun remove(item: DashboardUi) {

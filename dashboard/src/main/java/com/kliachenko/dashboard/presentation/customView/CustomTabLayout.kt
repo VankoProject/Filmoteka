@@ -35,7 +35,7 @@ class CustomTabLayout : TabLayout {
         })
     }
 
-    fun setOnTabSelectedListener(listener: TabSelectedListener) {
+    fun onTabSelectedListener(listener: TabSelectedListener) {
         tabSelectedListener = listener
     }
 
@@ -52,8 +52,17 @@ class CustomTabLayout : TabLayout {
         val restoreState = state as IdSavedState?
         super.onRestoreInstanceState(restoreState?.superState)
         currentTabPosition = restoreState?.savedId?: 0
-        getTabAt(currentTabPosition)?.select()
+        getTabAt(currentTabPosition)?.let {
+            it.select()
+            post {
+                tabSelectedListener?.onTabSelected(currentTabPosition)
+            }
+        }
         isRestore = false
+    }
+
+    fun clearListener() {
+        tabSelectedListener = null
     }
 }
 
