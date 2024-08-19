@@ -20,8 +20,6 @@ class DashboardAdapter(
 
     private val list = mutableListOf<DashboardUi>()
 
-    fun typeList() = typeList
-
     override fun getItemViewType(position: Int): Int {
         val item = list[position]
         val type = item.type()
