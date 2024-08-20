@@ -2,6 +2,7 @@ package com.kliachenko.filmoteka.pageobject.detail.success
 
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -14,14 +15,14 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
-class SuccessStateUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
+class SuccessStateUi() {
 
     private val parentSuccessId: Matcher<View> = withParent(withId(R.id.successStateLayout))
     private val parentSuccessClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
     private val interaction: ViewInteraction = onView(
         allOf(
-            parentId,
-            parentClass
+            withParent(isAssignableFrom(ScrollView::class.java)),
+            withParent(withId(R.id.scrollSuccessLayout))
         )
     )
     private val imagePosterView = ImagePosterView(parentSuccessId, parentSuccessClass)
@@ -33,7 +34,7 @@ class SuccessStateUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
     private val originalLanguageTextView = OriginalLanguageTextView(parentSuccessId, parentSuccessClass)
     private val countryProductionTextView = CountryProductionTextView(parentSuccessId, parentSuccessClass)
     private val homePageTextView = HomePageTextView(parentSuccessId, parentSuccessClass)
-    private val snackBarUi = SnackBarUi(parentSuccessId, parentSuccessClass)
+    private val snackBarUi = SnackBarUi
 
     fun checkVisible(
         title: String,
@@ -53,7 +54,7 @@ class SuccessStateUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         interaction.check(matches(isDisplayed()))
         imagePosterView.checkSuccess()
         filmNameTextView.checkSuccess(filmName = title)
-        taglineTextView.checkSuccess(text = tagline)
+        taglineTextView.checkSuccess(tagline = tagline)
         characteristicsTextView.checkSuccess(
             genres = genres,
             releaseDate = releaseDate,
@@ -62,14 +63,14 @@ class SuccessStateUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         )
         statisticsUi.checkSuccess(score = score, status = status, likeCount = likeCount)
         overViewTextView.checkSuccess(overView = overView)
-        originalLanguageTextView.checkSuccess(originalLanguage = originalLanguage)
+        originalLanguageTextView.checkSuccess(text = originalLanguage)
         countryProductionTextView.checkSuccess(countryProduction = countryProduction)
         homePageTextView.checkSuccess(homePage = homePage)
     }
 
     fun tap(status: Boolean) {
         statisticsUi.tap(expectedSelected = status)
-        snackBarUi.checkSnackBarDisplayedWithText()
+        snackBarUi.checkSnackBarDisplayedWithText(expectedSelected = status)
     }
 
     fun isNotVisible() {

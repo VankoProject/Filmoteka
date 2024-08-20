@@ -27,10 +27,10 @@ class TaglineTextView(parentSuccessId: Matcher<View>, parentSuccessClass: Matche
         )
     )
 
-    fun checkSuccess(filmName: String) {
+    fun checkSuccess(tagline: String) {
         interaction.apply {
             check(matches(isDisplayed()))
-            check(matches(withText(filmName)))
+            check(matches(withText(tagline)))
             check(matches(ColorMatcher(textColor)))
         }
     }

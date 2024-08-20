@@ -7,22 +7,18 @@ import com.google.android.material.textview.MaterialTextView
 import org.hamcrest.Description
 
 class CombineTextMatcher(
-    private val genres: List<String>,
-    private val releaseDate: String,
-    private val runtime: String,
-    private val adult: Boolean,
-) : BoundedMatcher<View, TextView>(MaterialTextView::class.java) {
+    private val firstText: String,
+    private val secondText: String
+): BoundedMatcher<View, TextView>(MaterialTextView::class.java) {
 
     override fun describeTo(description: Description) {
         description.appendText(
-            "with combined text matching the format:" +
-                    " 'GENRES | RELEASE_DATE | RUNTIME min | AGE_RATING'"
+            "with combined text matching the format: '$firstText: $secondText'"
         )
     }
 
     override fun matchesSafely(item: TextView): Boolean {
-        val expectedText = genres.joinToString(", ")
-            .plus(" | $releaseDate | $runtime min | ${if (adult) "18+" else "All ages"}")
+        val expectedText =  "$firstText: $secondText"
         return item.text.toString() == expectedText
     }
 }

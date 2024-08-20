@@ -9,8 +9,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.google.android.material.textview.MaterialTextView
 import com.kliachenko.filmoteka.R
+import com.kliachenko.filmoteka.core.CharacteristicsTextMatcher
 import com.kliachenko.filmoteka.core.ColorMatcher
-import com.kliachenko.filmoteka.core.CombineTextMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -31,7 +31,7 @@ class CharacteristicsTextView(parentSuccessId: Matcher<View>, parentSuccessClass
         interaction.apply {
             check(matches(isDisplayed()))
             check(matches(ColorMatcher(textColor)))
-            check(matches(CombineTextMatcher(genres, releaseDate, runtime, adult)))
+            check(matches(CharacteristicsTextMatcher(genres, releaseDate, runtime, adult)))
         }
     }
 

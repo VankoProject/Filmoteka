@@ -1,5 +1,6 @@
 package com.kliachenko.filmoteka
 
+import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kliachenko.filmoteka.main.MainActivity
@@ -25,7 +26,7 @@ class ScenarioTest {
 
     @Before
     fun setup() {
-        androidx.test.espresso.intent.Intents.init()
+        Intents.init()
         dashboardPage = DashboardPage()
         mainPage = MainPage()
         detailPage = DetailPage()
@@ -33,7 +34,7 @@ class ScenarioTest {
 
     @After
     fun tearDown() {
-        androidx.test.espresso.intent.Intents.release()
+        Intents.release()
     }
 
     @Test
