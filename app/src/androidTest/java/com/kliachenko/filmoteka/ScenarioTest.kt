@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kliachenko.filmoteka.main.MainActivity
 import com.kliachenko.filmoteka.pageobject.dashboard.DashboardPage
 import com.kliachenko.filmoteka.pageobject.dashboard.FilmItem
+import com.kliachenko.filmoteka.pageobject.detail.DetailPage
 import com.kliachenko.filmoteka.pageobject.main.MainPage
 import org.junit.After
 import org.junit.Before
@@ -165,7 +166,7 @@ class ScenarioTest {
 
     @Test
     fun load_detailScreen_from_dashboard() {
-        detailPage.checkProgresState(message = "loading...")
+        detailPage.checkProgressState(message = "loading...")
         detailPage.waitUntilDashboardProgressStateIsNotVisible()
         detailPage.checkErrorState(
             errorMessage = "Error loading information.\n" +
@@ -177,14 +178,14 @@ class ScenarioTest {
                     "Please, try again..."
         )
         detailPage.tapRetryButton()
-        detailPage.checkProgresState(message = "loading...")
+        detailPage.checkProgressState(message = "loading...")
         activityScenarioRule.scenario.recreate()
-        detailPage.checkProgresState(message = "loading...")
+        detailPage.checkProgressState(message = "loading...")
         detailPage.waitUntilDashboardProgressStateIsNotVisible()
         detailPage.checkSuccessfulState(
             title = "Film#1",
             tagline = "Tagline Film#1",
-            geners = listOf("Action", "Comedy"),
+            genres = listOf("Action", "Comedy"),
             releaseDate = "2022",
             runtime = "107",
             adult = false,
@@ -193,14 +194,14 @@ class ScenarioTest {
             likeCount = 10,
             overView = "OverView",
             originalLanguage = "Eng",
-            countyProduction = "USA",
+            countryProduction = "USA",
             homePage = "http://film#1"
         )
-        detailPage.tapFilmBookmarkIcon()
+        detailPage.tapFilmBookmarkIcon(status = false)
         detailPage.checkSuccessfulState(
             title = "Film#1",
             tagline = "Tagline Film#1",
-            geners = listOf("Action", "Comedy"),
+            genres = listOf("Action", "Comedy"),
             releaseDate = "2022",
             runtime = "107",
             adult = false,
@@ -209,14 +210,14 @@ class ScenarioTest {
             likeCount = 10,
             overView = "OverView",
             originalLanguage = "Eng",
-            countyProduction = "USA",
+            countryProduction = "USA",
             homePage = "http://film#1"
         )
-        detailPage.tapFilmBookmarkIcon()
+        detailPage.tapFilmBookmarkIcon(status = true)
         detailPage.checkSuccessfulState(
             title = "Film#1",
             tagline = "Tagline Film#1",
-            geners = listOf("Action", "Comedy"),
+            genres = listOf("Action", "Comedy"),
             releaseDate = "2022",
             runtime = "107",
             adult = false,
@@ -225,10 +226,12 @@ class ScenarioTest {
             likeCount = 10,
             overView = "OverView",
             originalLanguage = "Eng",
-            countyProduction = "USA",
+            countryProduction = "USA",
             homePage = "http://film#1"
         )
+
         detailPage.clickFilmHomePage()
+        detailPage.tapBack()
 
     }
 
