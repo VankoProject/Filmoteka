@@ -5,12 +5,16 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.Matchers.allOf
 
 object SnackBarUi {
 
-    private const val textForAdded = "Added to favorites"
-    private const val textForRemoved = "Removed from favorites"
+    private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
+    private val textForAdded =
+        uiContext.getText(com.kliachenko.detail.R.string.added_to_favorites).toString()
+    private val textForRemoved =
+        uiContext.getText(com.kliachenko.detail.R.string.removed_from_favorites).toString()
 
     fun checkSnackBarDisplayedWithText(expectedSelected: Boolean) {
         val expectedText = if (expectedSelected)

@@ -7,8 +7,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.core.ClickableSpanTextActionMatcher
 import com.kliachenko.filmoteka.core.ClickableSpanTextMatcher
 import com.kliachenko.filmoteka.core.CombineTextMatcher
@@ -18,9 +18,10 @@ import org.hamcrest.Matchers.not
 
 class HomePageTextView(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<View>) {
 
-    private val homePageTextId: Int = R.id.homePageTextId
-    private val textPlug = "Visit Official Website"
-    private val category = "Home page"
+    private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
+    private val category = uiContext.getText(com.kliachenko.detail.R.string.home_page).toString()
+    private val textPlug = uiContext.getText(com.kliachenko.detail.R.string.visit_official_website).toString()
+    private val homePageTextId: Int = com.kliachenko.detail.R.id.homePageTextId
     private val interaction: ViewInteraction = onView(
         allOf(
             parentSuccessId, parentSuccessClass,

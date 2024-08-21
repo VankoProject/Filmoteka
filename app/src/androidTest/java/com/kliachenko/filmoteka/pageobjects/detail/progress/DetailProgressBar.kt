@@ -9,7 +9,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.core.waitUntilProgressIsNotDisplayed
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -17,7 +16,7 @@ import org.hamcrest.Matchers.not
 
 class DetailProgressBar(parentProgressId: Matcher<View>, parentProgressClass: Matcher<View>) {
 
-    private val progressBarId: Int = R.id.detailProgressBar
+    private val progressBarId: Int = com.kliachenko.detail.R.id.detailProgressBar
     private val interaction: ViewInteraction = onView(
         allOf(
             parentProgressId,

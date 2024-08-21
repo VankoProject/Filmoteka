@@ -11,7 +11,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.core.ColorMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -20,9 +19,9 @@ import org.hamcrest.Matchers.not
 class ScoreTextUi(statisticsId: Matcher<View>, statisticsRootLayout: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
     private val scoreText = uiContext.getText(com.kliachenko.detail.R.string.tmdb).toString()
-    private val scoreTextId: Int = R.id.scoreTextViewId
+    private val scoreTextId: Int = com.kliachenko.detail.R.id.scoreTextViewId
     private val interaction: ViewInteraction = onView(
         allOf(
             statisticsId, statisticsRootLayout,
