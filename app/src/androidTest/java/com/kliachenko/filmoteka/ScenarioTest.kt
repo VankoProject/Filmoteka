@@ -1,13 +1,18 @@
 package com.kliachenko.filmoteka
 
+import android.content.Intent
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kliachenko.filmoteka.main.MainActivity
-import com.kliachenko.filmoteka.pageobject.dashboard.DashboardPage
-import com.kliachenko.filmoteka.pageobject.dashboard.FilmItem
-import com.kliachenko.filmoteka.pageobject.detail.DetailPage
-import com.kliachenko.filmoteka.pageobject.main.MainPage
+import com.kliachenko.filmoteka.pageobjects.dashboard.DashboardPage
+import com.kliachenko.filmoteka.pageobjects.dashboard.FilmItem
+import com.kliachenko.filmoteka.pageobjects.detail.DetailPage
+import com.kliachenko.filmoteka.pageobjects.main.MainPage
+import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -196,7 +201,7 @@ class ScenarioTest {
             overView = "OverView",
             originalLanguage = "Eng",
             countryProduction = "USA",
-            homePage = "http://film#1"
+            homePage = "https://www.google.com/"
         )
         detailPage.tapFilmBookmarkIcon(status = false)
         detailPage.checkSuccessfulState(
@@ -212,7 +217,23 @@ class ScenarioTest {
             overView = "OverView",
             originalLanguage = "Eng",
             countryProduction = "USA",
-            homePage = "http://film#1"
+            homePage = "https://www.google.com/"
+        )
+        activityScenarioRule.scenario.recreate()
+        detailPage.checkSuccessfulState(
+            title = "Film#1",
+            tagline = "Tagline Film#1",
+            genres = listOf("Action", "Comedy"),
+            releaseDate = "2022",
+            runtime = "107",
+            adult = false,
+            score = "6,5",
+            status = true,
+            likeCount = 10,
+            overView = "OverView",
+            originalLanguage = "Eng",
+            countryProduction = "USA",
+            homePage = "https://www.google.com/"
         )
         detailPage.tapFilmBookmarkIcon(status = true)
         detailPage.checkSuccessfulState(
@@ -228,10 +249,17 @@ class ScenarioTest {
             overView = "OverView",
             originalLanguage = "Eng",
             countryProduction = "USA",
-            homePage = "http://film#1"
+            homePage = "https://www.google.com/"
         )
 
         detailPage.clickFilmHomePage()
+
+        intended(
+            allOf(
+                hasAction(Intent.ACTION_VIEW),
+                hasData("https://www.google.com/")
+            )
+        )
         detailPage.tapBack()
 
     }
