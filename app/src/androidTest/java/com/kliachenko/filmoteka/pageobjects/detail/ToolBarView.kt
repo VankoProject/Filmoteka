@@ -13,6 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.platform.app.InstrumentationRegistry
 import com.kliachenko.filmoteka.R
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -20,8 +21,9 @@ import org.hamcrest.Matchers.not
 
 class ToolBarView(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
-    private val textPlug = "Film's detail info"
-    private val toolBarId: Int = R.id.toolBar
+    private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
+    private val textPlug = uiContext.getText(com.kliachenko.detail.R.string.film_detail_info)
+    private val toolBarId: Int = com.kliachenko.detail.R.id.toolBar
     private val interaction: ViewInteraction = onView(
         allOf(
             parentId, parentClass,

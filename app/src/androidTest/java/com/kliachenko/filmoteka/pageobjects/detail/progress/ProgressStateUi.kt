@@ -9,14 +9,13 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.kliachenko.filmoteka.R
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 class ProgressStateUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
-    private val parentProgressId: Matcher<View> = withParent(withId(R.id.progressDetailLayout))
+    private val parentProgressId: Matcher<View> = withParent(withId(com.kliachenko.detail.R.id.progressDetailLayout))
     private val parentProgressClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
     private val rootInteraction: ViewInteraction = onView(allOf(parentId, parentClass))

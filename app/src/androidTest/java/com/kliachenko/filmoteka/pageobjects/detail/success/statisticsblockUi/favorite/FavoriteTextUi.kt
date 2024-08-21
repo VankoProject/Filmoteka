@@ -11,7 +11,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.core.ColorMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -20,11 +19,9 @@ import org.hamcrest.Matchers.not
 class FavoriteTextUi(statisticsId: Matcher<View>, statisticsRootLayout: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val text: String =
-        uiContext.getText(R.string.favorite_icon_text)
-            .toString()
-    private val textColor = ContextCompat.getColor(uiContext, R.color.white)
-    private val favoriteTextId: Int = R.id.favoriteTextViewId
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
+    private val text = uiContext.getText(com.kliachenko.detail.R.string.favorite_icon_text).toString()
+    private val favoriteTextId: Int = com.kliachenko.detail.R.id.favoriteTextViewId
     private val interaction: ViewInteraction = onView(
         allOf(
             statisticsId, statisticsRootLayout,
