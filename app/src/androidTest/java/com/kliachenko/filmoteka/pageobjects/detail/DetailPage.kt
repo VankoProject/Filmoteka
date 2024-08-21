@@ -20,7 +20,7 @@ class DetailPage {
     private val toolBarView = ToolBarView(parentId, parentClass)
     private val errorStateUi = ErrorStateUi(parentId, parentClass)
     private val progressStateUi = ProgressStateUi(parentId, parentClass)
-    private val successStateUi = SuccessStateUi()
+    private val successStateUi = SuccessStateUi
 
     fun checkProgressState(message: String) {
         toolBarView.checkInitial()
@@ -84,10 +84,11 @@ class DetailPage {
     }
 
     fun clickFilmHomePage() {
-        toolBarView.tapBack()
+        successStateUi.tapFilmHomePage()
     }
 
     fun tapBack() {
+        toolBarView.tapBack()
         toolBarView.isNotVisible()
         errorStateUi.isNotVisible()
         progressStateUi.isNotVisible()

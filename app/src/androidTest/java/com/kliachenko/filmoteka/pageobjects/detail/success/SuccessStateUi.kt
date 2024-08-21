@@ -16,7 +16,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
-class SuccessStateUi() {
+object SuccessStateUi {
 
     private val parentSuccessId: Matcher<View> = withParent(withId(R.id.successStateLayout))
     private val parentSuccessClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
@@ -76,6 +76,19 @@ class SuccessStateUi() {
 
     fun isNotVisible() {
         interaction.check(matches(not(isDisplayed())))
+        imagePosterView.isNotVisible()
+        filmNameTextView.isNotVisible()
+        taglineTextView.isNotVisible()
+        characteristicsTextView.isNotVisible()
+        statisticsUi.isNotVisible()
+        overViewTextView.isNotVisible()
+        originalLanguageTextView.isNotVisible()
+        countryProductionTextView.isNotVisible()
+        homePageTextView.isNotVisible()
+    }
+
+    fun tapFilmHomePage() {
+        homePageTextView.click()
     }
 
 }
