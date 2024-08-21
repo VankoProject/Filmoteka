@@ -8,14 +8,13 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import com.kliachenko.filmoteka.R
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
 class ScoreIcon(scoreUiId: Matcher<View>, scoreLayout: Matcher<View>) {
 
-    private val scoreIconId: Int = R.id.scoreIconId
+    private val scoreIconId: Int = com.kliachenko.detail.R.id.scoreIconId
     private val interaction: ViewInteraction = onView(
         allOf(
             scoreUiId, scoreLayout,
