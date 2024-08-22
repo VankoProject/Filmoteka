@@ -103,7 +103,7 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.iconImageView.setOnClickListener {
                 val message = if (item.isFavorite()) {
                     clickListener.remove(item)
-                    R.string.removes_from_favorites
+                    R.string.removed_from_favorites
                 } else {
                     clickListener.add(item)
                     R.string.added_to_favorites

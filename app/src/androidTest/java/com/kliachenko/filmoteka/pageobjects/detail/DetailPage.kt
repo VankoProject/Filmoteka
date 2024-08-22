@@ -5,7 +5,6 @@ import android.widget.LinearLayout
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.pageobjects.detail.error.ErrorStateUi
 import com.kliachenko.filmoteka.pageobjects.detail.progress.ProgressStateUi
 import com.kliachenko.filmoteka.pageobjects.detail.success.SuccessStateUi
@@ -13,7 +12,7 @@ import org.hamcrest.Matcher
 
 class DetailPage {
 
-    private val parentId: Matcher<View> = withParent(withId(R.id.rootDetailLayout))
+    private val parentId: Matcher<View> = withParent(withId(com.kliachenko.detail.R.id.rootDetailLayout))
     private val parentClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
 

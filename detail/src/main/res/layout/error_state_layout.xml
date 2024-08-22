@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/errorStateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/errorTextView"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/errorDetailTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/x_medium_margin"
@@ -16,7 +17,7 @@
         android:textSize="@dimen/xx_medium_text" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/retryButton"
+        android:id="@+id/retryDetailButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/retry_button"
