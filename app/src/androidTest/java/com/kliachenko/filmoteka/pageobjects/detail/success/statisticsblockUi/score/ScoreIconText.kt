@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class ScoreIconText(scoreUiId: Matcher<View>, scoreLayout: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val scoreIconTextId: Int = com.kliachenko.detail.R.id.scoreIconTextId
     private val interaction: ViewInteraction = onView(
         allOf(

@@ -2,11 +2,11 @@ package com.kliachenko.dashboard.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
+import com.kliachenko.dashboard.databinding.DashboardErrorStateLayoutBinding
+import com.kliachenko.dashboard.databinding.DashboardProgressStateLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.NodataLayoutBinding
 import com.kliachenko.dashboard.databinding.PagingProgressLayoutBinding
-import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 interface DashboardUiType {
 
@@ -22,7 +22,7 @@ interface DashboardUiType {
             clickActions: ClickActions,
             navigate: (Int) -> Unit,
         ) = DashboardViewHolder.Progress(
-            ProgressLayoutBinding.inflate(
+            DashboardProgressStateLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -47,7 +47,7 @@ interface DashboardUiType {
             clickActions: ClickActions,
             navigate: (Int) -> Unit,
         ) = DashboardViewHolder.Error(
-            ErrorLayoutBinding.inflate(
+            DashboardErrorStateLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ), clickActions
         )

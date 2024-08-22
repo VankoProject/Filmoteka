@@ -5,12 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.kliachenko.dashboard.R
-import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
+import com.kliachenko.dashboard.databinding.DashboardErrorStateLayoutBinding
+import com.kliachenko.dashboard.databinding.DashboardProgressStateLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.NodataLayoutBinding
 import com.kliachenko.dashboard.databinding.PagingProgressLayoutBinding
-import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 class DashboardAdapter(
     private val clickListener: ClickActions,
@@ -53,7 +52,7 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     open fun bind(item: DashboardUi) = Unit
 
-    class Progress(private val binding: ProgressLayoutBinding) :
+    class Progress(private val binding: DashboardProgressStateLayoutBinding) :
         DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
             super.bind(item)
@@ -77,7 +76,7 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     class Error(
-        private val binding: ErrorLayoutBinding,
+        private val binding: DashboardErrorStateLayoutBinding,
         private val clickActions: ClickActions,
     ) : DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
@@ -96,17 +95,17 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         override fun bind(item: DashboardUi) {
             item.show(binding)
             binding.root.setOnClickListener {
-                if (itemView.id != R.id.iconImageView) {
+                if (itemView.id != com.kliachenko.dashboard.R.id.iconImageView) {
                     navigate(item.filmId())
                 }
             }
             binding.iconImageView.setOnClickListener {
                 val message = if (item.isFavorite()) {
                     clickListener.remove(item)
-                    R.string.removed_from_favorites
+                    com.kliachenko.core.R.string.removed_from_favorites
                 } else {
                     clickListener.add(item)
-                    R.string.added_to_favorites
+                    com.kliachenko.core.R.string.added_to_favorites
                 }
                 Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
             }

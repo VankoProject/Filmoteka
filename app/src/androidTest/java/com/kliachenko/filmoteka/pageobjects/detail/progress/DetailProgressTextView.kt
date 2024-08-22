@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class DetailProgressTextView(parentProgressId: Matcher<View>, parentProgressClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val detailProgressTextViewId: Int = com.kliachenko.detail.R.id.detailProgressTextView
     private val interaction: ViewInteraction = onView(
         allOf(

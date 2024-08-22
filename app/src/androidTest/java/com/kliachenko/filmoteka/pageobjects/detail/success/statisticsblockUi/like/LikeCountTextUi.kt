@@ -20,7 +20,7 @@ import org.hamcrest.Matchers.not
 class LikeCountTextUi(statisticsId: Matcher<View>, statisticsRootLayout: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val plugText = uiContext.getText(com.kliachenko.detail.R.string.like_count).toString()
     private val likeCountTextId: Int = R.id.likeCountTextViewId
     private val interaction: ViewInteraction = onView(

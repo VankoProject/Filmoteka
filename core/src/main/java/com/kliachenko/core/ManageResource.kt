@@ -14,7 +14,7 @@ interface ManageResource {
 
         override fun message(id: Int) = context.getString(id)
 
-        override fun noInternetConnection() = context.resources.getString(R.string.no_internet)
+        override fun noInternetConnection() = context.resources.getString(R.string.no_internet_connection)
 
         override fun serviceUnavailable() =
             context.resources.getString(R.string.service_unavailable)

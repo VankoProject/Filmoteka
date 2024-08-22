@@ -1,14 +1,11 @@
 <resources>
+
     <string name="app_name">Filmoteka</string>
-    <string name="error_text_internet">No internet connection</string>
-    <string name="retry_button">Retry</string>
-    <string name="loading_text">loading…</string>
     <string name="popular_tab">Popular</string>
     <string name="top_rated_tab">Top rated</string>
     <string name="upcoming_tab">Upcoming</string>
-    <string name="film_s_poster_description">film\'s poster</string>
     <string name="dashboard_item">Dashboard</string>
     <string name="search_item">Search</string>
     <string name="favorites_item">Favorites</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

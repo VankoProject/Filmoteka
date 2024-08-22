@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class CountryProductionTextView(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val category = uiContext.getText(com.kliachenko.detail.R.string.country_production).toString()
     private val countryProductionTextViewId: Int = com.kliachenko.detail.R.id.countryProductionTextView
     private val interaction: ViewInteraction = onView(
