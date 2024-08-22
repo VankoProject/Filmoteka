@@ -8,19 +8,11 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/errorDetailTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/x_medium_margin"
-        android:gravity="center"
-        android:text="@string/error_text_internet"
-        android:textColor="@color/error"
-        android:textSize="@dimen/xx_medium_text" />
+        style="@style/ErrorTextViewStyle"
+        android:gravity="center" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/retryDetailButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/retry_button"
-        android:textSize="@dimen/medium_text" />
+        style="@style/RetryButtonStyle" />
 
 </LinearLayout>

@@ -9,19 +9,11 @@
 
     <ProgressBar
         android:id="@+id/detailProgressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:layout_marginTop="@dimen/common_progress_margin" />
+        style="@style/LoadingProgressBarStyle" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/detailProgressTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="@dimen/medium_text"
-        android:textColor="@color/white"
-        android:text="@string/loading"
-        tools:text="loading..."/>
+        style="@style/ProgressMaterialTextViewStyle"/>
 
 </LinearLayout>

@@ -12,9 +12,9 @@ object SnackBarUi {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val textForAdded =
-        uiContext.getText(com.kliachenko.detail.R.string.added_to_favorites).toString()
+        uiContext.getText(com.kliachenko.core.R.string.added_to_favorites).toString()
     private val textForRemoved =
-        uiContext.getText(com.kliachenko.detail.R.string.removed_from_favorites).toString()
+        uiContext.getText(com.kliachenko.core.R.string.removed_from_favorites).toString()
 
     fun checkSnackBarDisplayedWithText(expectedSelected: Boolean) {
         val expectedText = if (expectedSelected)

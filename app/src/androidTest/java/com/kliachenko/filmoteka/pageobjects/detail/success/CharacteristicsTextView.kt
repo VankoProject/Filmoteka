@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class CharacteristicsTextView(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val characteristicsId: Int = com.kliachenko.detail.R.id.characteristicsTextView
     private val interaction: ViewInteraction = onView(
         allOf(

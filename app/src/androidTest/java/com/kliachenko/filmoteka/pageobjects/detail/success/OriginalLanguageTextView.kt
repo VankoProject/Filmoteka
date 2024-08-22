@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class OriginalLanguageTextView(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val category = uiContext.getText(com.kliachenko.detail.R.string.original_language).toString()
     private val originalLanguageId: Int = com.kliachenko.detail.R.id.originalLanguageTextView
     private val interaction: ViewInteraction = onView(

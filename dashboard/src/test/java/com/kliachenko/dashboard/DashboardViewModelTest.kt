@@ -97,7 +97,7 @@ class DashboardViewModelTest {
         interactor.hasData()
         viewModel.init(firstRun = false, tabPosition = 1)
         runAsync.returnLoadResult()
-        viewModel.load(tabPosition = 1)
+        viewModel.loadData(tabPosition = 1)
         runAsync.returnLoadResult()
         communication.checkUpdatedState(
             DashboardUiState.Progress,
@@ -110,7 +110,7 @@ class DashboardViewModelTest {
                 )
             )
         )
-        viewModel.load(tabPosition = 0)
+        viewModel.loadData(tabPosition = 0)
         runAsync.returnLoadResult()
         communication.checkUpdatedState(
             DashboardUiState.Progress,
@@ -162,10 +162,6 @@ private class FakeDashboardInteractor : DashboardInteractor {
     private var addedFilmId: Int? = null
     private var removedFilmsId: Int? = null
 
-    override suspend fun loadInitData(category: String): LoadResult {
-        return filmsByCategoryResult[category] ?: actualLoadResult
-    }
-
     override suspend fun addToFavorite(filmId: Int) {
         addedFilmId = filmId
     }
@@ -174,11 +170,30 @@ private class FakeDashboardInteractor : DashboardInteractor {
         removedFilmsId = filmId
     }
 
-    override fun needToLoadMoreFilms(): Boolean {
+    override suspend fun needToLoadMoreData(
+        lastVisibleItemPosition: Int,
+        category: String,
+    ): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun loadDataByPage(category: String): LoadResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun loadDataByCategory(category: String): List<FilmDomain> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun loadCacheByCategory(category: String): LoadResult {
         TODO("Not yet implemented")
     }
 
     override suspend fun loadMoreFilms(category: String): LoadResult {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun loadPreviousFilms(category: String): LoadResult {
         TODO("Not yet implemented")
     }
 
@@ -194,7 +209,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
                     ),
                     FilmDomain(id = 1, overview = "film1", posterPath = "film1", releaseDate = "1.0", title = "film1", voteAverage = 1.0
                     )
-                ), favoriteFilmIds = setOf(), totalPages = 2
+                ), favoriteFilmIds = setOf()
             )
         )
         categoryResult(
@@ -205,7 +220,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
                     ),
                     FilmDomain(id = 3, overview = "film3", posterPath = "film3", releaseDate = "3.0", title = "film3", voteAverage = 3.0
                     )
-                ), favoriteFilmIds = setOf(), totalPages = 2
+                ), favoriteFilmIds = setOf()
             )
         )
     }

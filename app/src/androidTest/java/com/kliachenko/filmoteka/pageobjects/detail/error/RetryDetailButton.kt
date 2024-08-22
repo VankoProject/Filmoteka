@@ -12,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.material.button.MaterialButton
+import com.kliachenko.filmoteka.core.ButtonColorMatcher
 import com.kliachenko.filmoteka.core.ColorMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -20,8 +21,9 @@ import org.hamcrest.Matchers.not
 class RetryDetailButton(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
-    private val buttonText = uiContext.getText(com.kliachenko.detail.R.string.retry_button).toString()
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
+    private val backGround = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.royalBlue)
+    private val buttonText = uiContext.getText(com.kliachenko.core.R.string.retry_button).toString()
     private val retryDetailButtonId: Int = com.kliachenko.detail.R.id.retryDetailButton
     private val interaction: ViewInteraction = onView(
         allOf(
@@ -37,6 +39,7 @@ class RetryDetailButton(parentId: Matcher<View>, parentClass: Matcher<View>) {
             check(matches(isDisplayed()))
             check(matches(withText(buttonText)))
             check(matches(ColorMatcher(textColor)))
+            check(matches(ButtonColorMatcher(backGround)))
         }
     }
 

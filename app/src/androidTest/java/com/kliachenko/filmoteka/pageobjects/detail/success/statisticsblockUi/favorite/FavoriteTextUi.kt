@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class FavoriteTextUi(statisticsId: Matcher<View>, statisticsRootLayout: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.white)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val text = uiContext.getText(com.kliachenko.detail.R.string.favorite_icon_text).toString()
     private val favoriteTextId: Int = com.kliachenko.detail.R.id.favoriteTextViewId
     private val interaction: ViewInteraction = onView(
