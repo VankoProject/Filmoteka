@@ -2,7 +2,6 @@ package com.kliachenko.filmoteka.pageobjects.detail
 
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
@@ -14,7 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
-import com.kliachenko.filmoteka.R
+import com.google.android.material.appbar.MaterialToolbar
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -22,12 +21,12 @@ import org.hamcrest.Matchers.not
 class ToolBarView(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textPlug = uiContext.getText(com.kliachenko.detail.R.string.film_detail_info)
+    private val textPlug = uiContext.getText(com.kliachenko.detail.R.string.film_detail_info).toString()
     private val toolBarId: Int = com.kliachenko.detail.R.id.toolBar
     private val interaction: ViewInteraction = onView(
         allOf(
             parentId, parentClass,
-            isAssignableFrom(Toolbar::class.java),
+            isAssignableFrom(MaterialToolbar::class.java),
             withId(toolBarId)
         )
     )
@@ -52,7 +51,6 @@ class ToolBarView(parentId: Matcher<View>, parentClass: Matcher<View>) {
                 isAssignableFrom(TextView::class.java)
             )
         ).check(matches(withText(title)))
-
     }
 
     fun isNotVisible() {
@@ -60,7 +58,7 @@ class ToolBarView(parentId: Matcher<View>, parentClass: Matcher<View>) {
     }
 
     fun tapBack() {
-        onView(withContentDescription(R.string.tool_bar_description))
+        onView(withContentDescription(com.kliachenko.detail.R.string.tool_bar_description))
             .perform(click())
     }
 
