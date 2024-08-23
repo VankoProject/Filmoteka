@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class TaglineTextView(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.liteLimeGreen)
+    private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.liteLimeGreen)
     private val taglineId: Int = com.kliachenko.detail.R.id.taglineTextView
     private val interaction: ViewInteraction = onView(
         allOf(

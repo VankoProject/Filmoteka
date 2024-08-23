@@ -21,4 +21,8 @@
 
     <include layout="@layout/detail_error_state_layout" />
 
+    <include layout="@layout/detail_error_state_layout"/>
+
+    <include layout="@layout/statistics_layout"/>
+
 </LinearLayout>

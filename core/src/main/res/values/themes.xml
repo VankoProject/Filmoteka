@@ -29,6 +29,7 @@
     <style name="RetryButtonStyle" parent="Widget.AppCompat.Button">
         <item name="android:text">@string/retry_button</item>
         <item name="android:textSize">@dimen/medium_text</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/rounded_button</item>
