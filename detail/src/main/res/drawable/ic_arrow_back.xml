@@ -7,5 +7,5 @@
     android:autoMirrored="true">
     <path
         android:fillColor="@android:color/white"
-        android:pathData="M274,510L522,758L480,800L160,480L480,160L522,202L274,450L800,450L800,510L274,510Z"/>
+        android:pathData="M400,880L0,480L400,80L456,137L113,480L456,823L400,880Z"/>
 </vector>

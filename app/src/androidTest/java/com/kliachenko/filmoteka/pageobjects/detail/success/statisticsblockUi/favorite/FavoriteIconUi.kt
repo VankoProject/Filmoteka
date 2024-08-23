@@ -16,7 +16,7 @@ import org.hamcrest.Matchers.not
 
 class FavoriteIconUi(statisticsId: Matcher<View>, statisticsRootLayout: Matcher<View>) {
 
-    private val favoriteDrawable = com.kliachenko.detail.R.drawable.ic_like_bookmark
+    private val favoriteDrawable = com.kliachenko.detail.R.drawable.ic_unlike_bookmark
     private val notFavoriteDrawable = com.kliachenko.detail.R.drawable.ic_unlike_bookmark
     private val favoriteIconId: Int = com.kliachenko.detail.R.id.favoriteIconId
     private val interaction: ViewInteraction = onView(

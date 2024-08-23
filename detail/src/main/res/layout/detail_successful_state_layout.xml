@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootSuccessStateLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/lightBlue">
+
+    <LinearLayout
+        android:id="@+id/successStateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/medium_margin">
+
+        <ImageView
+            android:id="@+id/filmPosterView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:contentDescription="@string/poster_of_the_film"
+            android:background="@drawable/rounded_image"
+            tools:src="@drawable/ic_launcher_background"
+            android:layout_marginBottom="@dimen/medium_margin"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filmNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/medium_margin"
+            tools:text="Bourne Supremacy"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/taglineTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/liteLimeGreen"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/medium_margin"
+            tools:text="Ready. Steady. Go."/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/characteristicsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginBottom="@dimen/x_medium_margin"
+            tools:text="ACTION | DRAMA | 2002 | 107 min | All ages"
+            android:gravity="center"/>
+
+        <include layout="@layout/statistics_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/medium_margin"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/overviewFilmId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginBottom="@dimen/x_medium_margin"
+            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..."/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/originalLanguageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Original language: Eng"
+            android:layout_marginBottom="@dimen/medium_margin"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/countryProductionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Country production: USA"
+            android:layout_marginBottom="@dimen/medium_margin"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/homePageTextId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Home page: Visit Official Website"/>
+
+    </LinearLayout>
+
+</ScrollView>

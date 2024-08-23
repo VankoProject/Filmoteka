@@ -58,7 +58,7 @@ class FilmItem(
         ).check(
             matches(
                 ImageViewDrawableMatcher(
-                    if (isFavorite) R.drawable.ic_like_bookmark
+                    if (isFavorite) R.drawable.ic_unlike_bookmark
                     else R.drawable.ic_unlike_bookmark
                 )
             )
