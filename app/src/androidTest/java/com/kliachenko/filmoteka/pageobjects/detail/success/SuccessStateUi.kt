@@ -17,12 +17,12 @@ import org.hamcrest.Matchers.not
 
 object SuccessStateUi {
 
-    private val parentSuccessId: Matcher<View> = withParent(withId(com.kliachenko.detail.R.id.rootSuccessStateLayout))
-    private val parentSuccessClass: Matcher<View> = withParent(isAssignableFrom(ScrollView::class.java))
+    private val parentSuccessId: Matcher<View> = withParent(withId(com.kliachenko.detail.R.id.successStateLayout))
+    private val parentSuccessClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
     private val interaction: ViewInteraction = onView(
         allOf(
-            withParent(isAssignableFrom(LinearLayout::class.java)),
-            withParent(withId(com.kliachenko.detail.R.id.successStateLayout))
+            withParent(isAssignableFrom(ScrollView::class.java)),
+            withParent(withId(com.kliachenko.detail.R.id.rootSuccessStateLayout))
         )
     )
     private val imagePosterView = ImagePosterView(parentSuccessId, parentSuccessClass)
