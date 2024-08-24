@@ -14,11 +14,11 @@ import org.hamcrest.Matchers.not
 
 class ScoreIcon(scoreUiId: Matcher<View>, scoreLayout: Matcher<View>) {
 
-    private val scoreIconId: Int = com.kliachenko.detail.R.id.scoreIconId
+    private val scoreProgressIconId: Int = com.kliachenko.detail.R.id.scoreProgressIconId
     private val interaction: ViewInteraction = onView(
         allOf(
             scoreUiId, scoreLayout,
-            withId(scoreIconId),
+            withId(scoreProgressIconId),
             isAssignableFrom(ProgressBar::class.java)
         )
     )

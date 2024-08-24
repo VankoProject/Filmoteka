@@ -42,7 +42,7 @@ class StatisticsUi(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<V
         scoreTextUi.checkSuccess()
         favoriteIconUi.checkSuccess(status = status)
         favoriteTextUi.checkSuccess()
-        likeIconUi.checkSuccess()
+        likeIconUi.checkSuccess(status = status)
         likeCountTextUi.checkSuccess(likeCount = likeCount)
     }
 
