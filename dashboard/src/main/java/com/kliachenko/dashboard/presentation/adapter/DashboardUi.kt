@@ -1,18 +1,18 @@
 package com.kliachenko.dashboard.presentation.adapter
 
-import com.kliachenko.dashboard.databinding.ErrorLayoutBinding
+import com.kliachenko.dashboard.databinding.DashboardErrorStateLayoutBinding
+import com.kliachenko.dashboard.databinding.DashboardProgressStateLayoutBinding
 import com.kliachenko.dashboard.databinding.FilmItemLayoutBinding
 import com.kliachenko.dashboard.databinding.NodataLayoutBinding
 import com.kliachenko.dashboard.databinding.PagingProgressLayoutBinding
-import com.kliachenko.dashboard.databinding.ProgressLayoutBinding
 
 interface DashboardUi {
 
     fun show(binding: FilmItemLayoutBinding) = Unit
 
-    fun show(binding: ErrorLayoutBinding) = Unit
+    fun show(binding: DashboardErrorStateLayoutBinding) = Unit
 
-    fun show(binding: ProgressLayoutBinding) = Unit
+    fun show(binding: DashboardProgressStateLayoutBinding) = Unit
 
     fun show(binding: PagingProgressLayoutBinding) = Unit
 
@@ -56,7 +56,7 @@ interface DashboardUi {
 
         override fun type() = DashboardUiType.Error
 
-        override fun show(binding: ErrorLayoutBinding) {
+        override fun show(binding: DashboardErrorStateLayoutBinding) {
             binding.errorTextView.text = errorMessage
         }
 

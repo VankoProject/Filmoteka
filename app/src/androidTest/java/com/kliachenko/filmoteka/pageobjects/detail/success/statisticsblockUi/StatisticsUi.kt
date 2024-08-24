@@ -8,7 +8,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.pageobjects.detail.success.statisticsblockUi.favorite.FavoriteIconUi
 import com.kliachenko.filmoteka.pageobjects.detail.success.statisticsblockUi.favorite.FavoriteTextUi
 import com.kliachenko.filmoteka.pageobjects.detail.success.statisticsblockUi.like.LikeCountTextUi
@@ -21,7 +20,7 @@ import org.hamcrest.Matchers.not
 
 class StatisticsUi(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<View>) {
 
-    private val statisticsId: Matcher<View> = withId(R.id.statisticsLayout)
+    private val statisticsId: Matcher<View> = withId(com.kliachenko.detail.R.id.statisticsLayout)
     private val statisticsRootLayout: Matcher<View> = isAssignableFrom(ConstraintLayout::class.java)
     private val interaction: ViewInteraction = onView(
         allOf(
@@ -43,7 +42,7 @@ class StatisticsUi(parentSuccessId: Matcher<View>, parentSuccessClass: Matcher<V
         scoreTextUi.checkSuccess()
         favoriteIconUi.checkSuccess(status = status)
         favoriteTextUi.checkSuccess()
-        likeIconUi.checkSuccess()
+        likeIconUi.checkSuccess(status = status)
         likeCountTextUi.checkSuccess(likeCount = likeCount)
     }
 

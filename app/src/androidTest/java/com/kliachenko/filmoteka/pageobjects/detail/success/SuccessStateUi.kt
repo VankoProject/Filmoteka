@@ -10,7 +10,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.pageobjects.detail.success.statisticsblockUi.StatisticsUi
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -18,12 +17,12 @@ import org.hamcrest.Matchers.not
 
 object SuccessStateUi {
 
-    private val parentSuccessId: Matcher<View> = withParent(withId(R.id.successStateLayout))
+    private val parentSuccessId: Matcher<View> = withParent(withId(com.kliachenko.detail.R.id.successStateLayout))
     private val parentSuccessClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
     private val interaction: ViewInteraction = onView(
         allOf(
             withParent(isAssignableFrom(ScrollView::class.java)),
-            withParent(withId(R.id.scrollSuccessLayout))
+            withParent(withId(com.kliachenko.detail.R.id.rootSuccessStateLayout))
         )
     )
     private val imagePosterView = ImagePosterView(parentSuccessId, parentSuccessClass)

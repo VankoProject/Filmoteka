@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootSuccessStateLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/lightBlue">
+
+    <LinearLayout
+        android:id="@+id/successStateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/x_medium_margin"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/filmPosterView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:background="@drawable/rounded_image"
+            android:contentDescription="@string/poster_of_the_film"
+            tools:src="@drawable/ic_launcher_background" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filmNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:text="Bourne Supremacy" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/taglineTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:gravity="center"
+            android:textColor="@color/liteLimeGreen"
+            tools:text="Ready. Steady. Go." />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/characteristicsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x_medium_margin"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:text="ACTION | DRAMA | 2002 | 107 min | All ages" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/statisticsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x_medium_margin">
+
+            <FrameLayout
+                android:id="@+id/scoreIconLayoutId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@+id/favoriteIconLayoutId"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/backgroundIconImageViewId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle_border_shape_icon"
+                    android:contentDescription="@string/tmdb_scores_of_the_film" />
+
+                <ProgressBar
+                    android:id="@+id/scoreProgressIconId"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="65"
+                    android:progressDrawable="@drawable/custom_circular_progress" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/scoreIconTextId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/x_small_text"
+                    tools:text="6.5" />
+
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/scoreTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tmdb"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_text"
+                app:layout_constraintEnd_toEndOf="@+id/scoreIconLayoutId"
+                app:layout_constraintStart_toStartOf="@+id/scoreIconLayoutId"
+                app:layout_constraintTop_toBottomOf="@+id/scoreIconLayoutId" />
+
+            <FrameLayout
+                android:id="@+id/favoriteIconLayoutId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/scoreIconLayoutId"
+                app:layout_constraintEnd_toStartOf="@+id/likeIconLayoutId"
+                app:layout_constraintStart_toEndOf="@+id/scoreIconLayoutId"
+                app:layout_constraintTop_toTopOf="@+id/scoreIconLayoutId">
+
+                <ImageView
+                    android:id="@+id/favoriteIconBackgroundId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_border_shape_icon" />
+
+                <ImageButton
+                    android:id="@+id/favoriteIconId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    tools:src="@drawable/ic_bookmark" />
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/favoriteTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorite_icon_text"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_text"
+                app:layout_constraintEnd_toEndOf="@+id/favoriteIconLayoutId"
+                app:layout_constraintStart_toStartOf="@+id/favoriteIconLayoutId"
+                app:layout_constraintTop_toTopOf="@+id/scoreTextViewId" />
+
+            <FrameLayout
+                android:id="@+id/likeIconLayoutId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/favoriteIconLayoutId"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/favoriteIconLayoutId"
+                app:layout_constraintTop_toTopOf="@+id/favoriteIconLayoutId">
+
+                <ImageView
+                    android:id="@+id/likeIconBackgroundId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circle_border_shape_icon" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    tools:src="@drawable/ic_like" />
+            </FrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/likeCountTextViewId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_text"
+                app:layout_constraintEnd_toEndOf="@+id/likeIconLayoutId"
+                app:layout_constraintStart_toStartOf="@+id/likeIconLayoutId"
+                app:layout_constraintTop_toTopOf="@+id/favoriteTextViewId"
+                android:text="@string/like_count" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/overviewFilmId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x_medium_margin"
+            android:textColor="@color/white"
+            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..." />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/originalLanguageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:textColor="@color/white"
+            tools:text="Original language: Eng" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/countryProductionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:textColor="@color/white"
+            tools:text="Country production: USA" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/homePageTextId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Home page: Visit Official Website" />
+
+    </LinearLayout>
+
+</ScrollView>

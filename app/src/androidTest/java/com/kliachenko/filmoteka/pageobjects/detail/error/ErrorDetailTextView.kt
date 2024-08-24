@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class ErrorDetailTextView(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val errorTextColor = ContextCompat.getColor(uiContext, com.kliachenko.detail.R.color.error)
+    private val errorTextColor = ContextCompat.getColor(uiContext,com.kliachenko.core.R.color.error )
     private val errorDetailTextViewId: Int = com.kliachenko.detail.R.id.errorDetailTextView
     private val interaction: ViewInteraction = onView(
         allOf(
