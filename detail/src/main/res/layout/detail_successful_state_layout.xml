@@ -14,7 +14,7 @@
         android:layout_margin="@dimen/x_medium_margin"
         android:orientation="vertical">
 
-        <ImageView
+        <com.kliachenko.core.customViews.CustomPictureImageView
             android:id="@+id/filmPosterView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/medium_margin"
             android:gravity="center"
+            android:freezesText="true"
             android:textColor="@color/white"
             tools:text="Bourne Supremacy" />
 
@@ -37,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/medium_margin"
+            android:freezesText="true"
             android:gravity="center"
             android:textColor="@color/liteLimeGreen"
             tools:text="Ready. Steady. Go." />
@@ -47,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x_medium_margin"
             android:gravity="center"
+            android:freezesText="true"
             android:textColor="@color/white"
             tools:text="ACTION | DRAMA | 2002 | 107 min | All ages" />
 
@@ -64,12 +67,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
+                <com.kliachenko.detail.presentation.customViews.CustomIconBackgroundImageView
                     android:id="@+id/backgroundIconImageViewId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/circle_border_shape_icon"
+                    tools:backgroundTint="@color/stillBlue"
+                    tools:background="@drawable/circle_border_shape_icon"
                     android:contentDescription="@string/tmdb_scores_of_the_film" />
 
                 <ProgressBar
@@ -88,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/white"
+                    android:freezesText="true"
                     android:textSize="@dimen/x_small_text"
                     tools:text="6.5" />
 
@@ -113,11 +118,12 @@
                 app:layout_constraintStart_toEndOf="@+id/scoreIconLayoutId"
                 app:layout_constraintTop_toTopOf="@+id/scoreIconLayoutId">
 
-                <ImageView
+                <com.kliachenko.detail.presentation.customViews.CustomIconBackgroundImageView
                     android:id="@+id/favoriteIconBackgroundId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/circle_border_shape_icon" />
+                    tools:backgroundTint="@color/stillBlue"
+                    tools:background="@drawable/circle_border_shape_icon" />
 
                 <ImageButton
                     android:id="@+id/favoriteIconId"
@@ -148,13 +154,15 @@
                 app:layout_constraintStart_toEndOf="@+id/favoriteIconLayoutId"
                 app:layout_constraintTop_toTopOf="@+id/favoriteIconLayoutId">
 
-                <ImageView
+                <com.kliachenko.detail.presentation.customViews.CustomIconBackgroundImageView
                     android:id="@+id/likeIconBackgroundId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/circle_border_shape_icon" />
+                    tools:backgroundTint="@color/stillBlue"
+                    tools:background="@drawable/circle_border_shape_icon" />
 
                 <ImageButton
+                    android:id="@+id/likeIconId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -180,6 +188,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x_medium_margin"
+            android:freezesText="true"
             android:textColor="@color/white"
             tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..." />
 
@@ -188,6 +197,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/medium_margin"
+            android:freezesText="true"
             android:textColor="@color/white"
             tools:text="Original language: Eng" />
 
@@ -196,6 +206,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/medium_margin"
+            android:freezesText="true"
             android:textColor="@color/white"
             tools:text="Country production: USA" />
 
@@ -203,6 +214,7 @@
             android:id="@+id/homePageTextId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:freezesText="true"
             android:textColor="@color/white"
             tools:text="Home page: Visit Official Website" />
 

@@ -1,12 +1,13 @@
-package com.kliachenko.dashboard.presentation.customView
+package com.kliachenko.core.customViews
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.kliachenko.core.LoadPicEngine
 import com.kliachenko.core.ProvideLoadPicEngine
+import com.kliachenko.core.ShowPicture
 
-class CustomImageView : AppCompatImageView, ShowPicture {
+class CustomPictureImageView : AppCompatImageView, ShowPicture {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
@@ -26,8 +27,4 @@ class CustomImageView : AppCompatImageView, ShowPicture {
         picEngine.show(this, url)
         this.imageUrl = url
     }
-}
-
-interface ShowPicture {
-    fun show(url: String)
 }

@@ -38,6 +38,7 @@ android {
 
 dependencies {
     implementation(project(":dashboard"))
+    implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

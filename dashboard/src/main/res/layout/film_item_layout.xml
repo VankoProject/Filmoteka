@@ -10,7 +10,7 @@
     android:layout_marginTop="@dimen/medium_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.kliachenko.dashboard.presentation.customView.CustomImageView
+    <com.kliachenko.core.customViews.CustomPictureImageView
         android:id="@+id/posterImageView"
         android:layout_width="140dp"
         android:layout_height="192dp"
