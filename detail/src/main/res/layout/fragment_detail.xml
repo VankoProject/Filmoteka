@@ -19,10 +19,16 @@
         android:contentDescription="@string/tool_bar_description"
         tools:background="@color/royalBlue"/>
 
-<!--    <include layout="@layout/detail_error_state_layout" />-->
+    <include
+        android:id="@+id/errorState"
+        layout="@layout/detail_error_state_layout" />
 
-<!--    <include layout="@layout/detail_error_state_layout"/>-->
+    <include
+        android:id="@+id/progressState"
+        layout="@layout/detail_progress_state_layout"/>
 
-    <include layout="@layout/detail_successful_state_layout"/>
+    <include
+        android:id="@+id/successState"
+        layout="@layout/detail_successful_state_layout"/>
 
 </LinearLayout>
