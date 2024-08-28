@@ -12,6 +12,7 @@ import com.kliachenko.detail.presentation.DetailViewModel
 import com.kliachenko.domain.FilmDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -178,6 +179,7 @@ private class FakeClear: Clear {
 private class FakeDetailInteractor: DetailInteractor {
 
     private var actual: LoadResult = LoadResult.Empty
+    private var addedFilm: FilmDetailUi? = null
     private var addFavoriteCalled: Boolean = false
     private var removeFavoriteCalled: Boolean = false
 
@@ -185,7 +187,8 @@ private class FakeDetailInteractor: DetailInteractor {
         return actual
     }
 
-    override suspend fun addToFavorite(filmId: Int) {
+    override suspend fun addToFavorite(filmDetail: FilmDetailUi) {
+        addedFilm = filmDetail
         addFavoriteCalled = true
     }
 
@@ -197,7 +200,8 @@ private class FakeDetailInteractor: DetailInteractor {
         actual = result
     }
 
-    fun checkAddToFavoriteCalled() {
+    fun checkAddToFavoriteCalled(expected: FilmDetailUi) {
+        Assert.assertTrue(expected == addedFilm)
         assertTrue(addFavoriteCalled)
     }
 
