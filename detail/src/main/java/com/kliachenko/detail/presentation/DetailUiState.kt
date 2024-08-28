@@ -31,6 +31,10 @@ interface DetailUiState {
             successState.successStateLayout.visibility = View.VISIBLE
             // TODO: continue after creating uiModel
         }
+    }
+
+    object Empty: DetailUiState {
+        override fun update(binding: FragmentDetailBinding) = Unit
 
     }
 }
