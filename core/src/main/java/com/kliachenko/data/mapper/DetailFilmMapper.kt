@@ -1,5 +1,7 @@
 package com.kliachenko.data.mapper
 
+import com.kliachenko.data.cache.entity.FilmDetailCache
+
 interface DetailFilmMapper<T : Any> {
 
     fun map(
@@ -9,11 +11,11 @@ interface DetailFilmMapper<T : Any> {
         homePage: String,
         originalLanguage: String,
         title: String,
-        overView: String,
+        overview: String,
         posterPath: String,
         releaseDate: String,
         runtime: Int,
-        tagLine: String,
+        tagline: String,
         voteAverage: Int,
         voteCount: Int,
     ): T
@@ -28,34 +30,68 @@ interface DetailFilmMapper<T : Any> {
                 homePage: String,
                 originalLanguage: String,
                 title: String,
-                overView: String,
+                overview: String,
                 posterPath: String,
                 releaseDate: String,
                 runtime: Int,
-                tagLine: String,
+                tagline: String,
                 voteAverage: Int,
                 voteCount: Int,
             ) = FilmDetailCache(
-                id = filmId,
+                filmId = filmId,
                 adult = adult,
                 genres = genres,
                 homePage = homePage,
                 originalLanguage = originalLanguage,
                 title = title,
-                overView = overView,
+                overview = overview,
                 posterPath = posterPath,
                 releaseDate = releaseDate,
                 runtime = runtime,
-                tagLine = tagLine,
+                tagline = tagline,
                 voteAverage = voteAverage,
                 voteCount = voteCount
             )
         }
     }
 
-    interface ToDomain : DetailFilmMapper<FilmDetailDomain>
+    interface ToDomain : DetailFilmMapper<FilmDetailDomain> {
+
+        object Base : ToDomain {
+            override fun map(
+                filmId: Int,
+                adult: Boolean,
+                genres: List<String>,
+                homePage: String,
+                originalLanguage: String,
+                title: String,
+                overview: String,
+                posterPath: String,
+                releaseDate: String,
+                runtime: Int,
+                tagline: String,
+                voteAverage: Int,
+                voteCount: Int,
+            ) = FilmDetailDomain(
+                filmId = filmId,
+                adult = adult,
+                genres = genres,
+                homePage = homePage,
+                originalLanguage = originalLanguage,
+                title = title,
+                overview = overview,
+                posterPath = posterPath,
+                releaseDate = releaseDate,
+                runtime = runtime,
+                tagline = tagline,
+                voteAverage = voteAverage,
+                voteCount = voteCount
+            )
+        }
+    }
 
     interface ToFavorite : DetailFilmMapper<FilmDetailDomain> {
+
         object Base : ToFavorite {
             override fun map(
                 filmId: Int,
@@ -64,28 +100,14 @@ interface DetailFilmMapper<T : Any> {
                 homePage: String,
                 originalLanguage: String,
                 title: String,
-                overView: String,
+                overview: String,
                 posterPath: String,
                 releaseDate: String,
                 runtime: Int,
-                tagLine: String,
+                tagline: String,
                 voteAverage: Int,
                 voteCount: Int,
-            ) = FilmDetailDomain(
-                id = filmId,
-                adult = adult,
-                genres = genres,
-                homePage = homePage,
-                originalLanguage = originalLanguage,
-                title = title,
-                overView = overView,
-                posterPath = posterPath,
-                releaseDate = releaseDate,
-                runtime = runtime,
-                tagLine = tagLine,
-                voteAverage = voteAverage,
-                voteCount = voteCount
-            )
+            ) = filmId
         }
     }
 }

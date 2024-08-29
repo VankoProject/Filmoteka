@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kliachenko.data.cache.entity.FavoriteCache
 import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmDetailCache
 
 @Dao
 interface FavoriteDao {
