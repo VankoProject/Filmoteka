@@ -23,7 +23,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         val args = DetailFragmentArgs.fromBundle(requireArguments())
         val filmId = args.filmId
 
-        viewModel.init(filmId)
+        viewModel.init(filmId = filmId)
 
         binding.toolBar.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -31,6 +31,10 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
         binding.errorState.retryDetailButton.setOnClickListener {
             viewModel.retry()
+        }
+
+        binding.successState.favoriteIconId.setOnClickListener {
+            viewModel.changeStatus(filmId = filmId)
         }
 
     }
