@@ -57,7 +57,7 @@
 //            releaseDate = "2020",
 //            runtime = 100,
 //            tagLine = "Tagline#0",
-//            voteAvarage = 5,
+//            voteAverage = 5,
 //            voteCount = 10,
 //        )
 //        interactor.expectedResult(LoadResult.Error("No internet connection"))
@@ -104,7 +104,7 @@
 //        releaseDate = "2020",
 //        runtime = 100,
 //        tagLine = "Tagline#0",
-//        voteAvarage = 5,
+//        voteAverage = 5,
 //        voteCount = 10,
 //    )
 //
