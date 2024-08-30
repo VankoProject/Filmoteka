@@ -16,7 +16,7 @@ interface DetailFilmMapper<T : Any> {
         releaseDate: String,
         runtime: Int,
         tagline: String,
-        voteAverage: Int,
+        voteAverage: Double,
         voteCount: Int,
     ): T
 
@@ -35,7 +35,7 @@ interface DetailFilmMapper<T : Any> {
                 releaseDate: String,
                 runtime: Int,
                 tagline: String,
-                voteAverage: Int,
+                voteAverage: Double,
                 voteCount: Int,
             ) = FilmDetailCache(
                 filmId = filmId,
@@ -70,7 +70,7 @@ interface DetailFilmMapper<T : Any> {
                 releaseDate: String,
                 runtime: Int,
                 tagline: String,
-                voteAverage: Int,
+                voteAverage: Double,
                 voteCount: Int,
             ) = FilmDetailDomain(
                 filmId = filmId,
@@ -105,7 +105,7 @@ interface DetailFilmMapper<T : Any> {
                 releaseDate: String,
                 runtime: Int,
                 tagline: String,
-                voteAverage: Int,
+                voteAverage: Double,
                 voteCount: Int,
             ) = filmId
         }

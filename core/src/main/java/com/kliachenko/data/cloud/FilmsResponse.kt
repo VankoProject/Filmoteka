@@ -21,8 +21,6 @@ data class FilmsResponse(
 
     fun results(): List<FilmCloud> = results
 
-    fun currentPage(): Int = page
-
     fun totalPages(): Int = totalPages
 }
 
