@@ -2,6 +2,7 @@ package com.kliachenko.detail.data
 
 import com.kliachenko.data.cache.dao.FavoriteDao
 import com.kliachenko.data.cache.entity.FavoriteCache
+import com.kliachenko.data.cache.entity.FilmDetailCache
 
 interface DetailCacheDataSource {
 
