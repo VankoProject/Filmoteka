@@ -7,7 +7,7 @@ interface DetailRepository {
 
     suspend fun filmDetail(filmId: Int): LoadResult
 
-    suspend fun addToFavorite(film: FilmDetailCache, filmId: Int)
+    suspend fun addToFavorite(film: FilmDetailCache)
 
     suspend fun removeFromFavorite(filmId: Int)
 
