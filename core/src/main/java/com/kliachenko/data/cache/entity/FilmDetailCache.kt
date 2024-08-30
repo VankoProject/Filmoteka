@@ -33,7 +33,7 @@ data class FilmDetailCache(
     @ColumnInfo(name = "tagline")
     val tagline: String,
     @ColumnInfo(name = "vote_average")
-    val voteAverage: Int,
+    val voteAverage: Double,
     @ColumnInfo(name = "vote_count")
     val voteCount: Int,
 ) : MapDetailFilm {
