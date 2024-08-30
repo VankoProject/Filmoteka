@@ -34,8 +34,8 @@ class DetailRepositoryImpl(
 
     }
 
-    override suspend fun addToFavorite(film: FilmDetailCache, filmId: Int) {
-        favoritesCacheDataSource.save(FavoriteCache(filmId))
+    override suspend fun addToFavorite(film: FilmDetailCache) {
+        favoritesCacheDataSource.save(FavoriteCache(film.filmId))
         detailCacheDataSource.save(film)
     }
 
