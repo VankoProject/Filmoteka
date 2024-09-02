@@ -2,7 +2,7 @@ package com.kliachenko.domain
 
 interface DetailItem {
 
-    fun <T : Any> map(mapper: Mapper<T>, isFavorite: Boolean): T
+    fun <T : Any> map(mapper: Mapper<T>): T
 
     interface Mapper<T : Any> {
         fun mapItem(
@@ -10,6 +10,7 @@ interface DetailItem {
             adult: Boolean,
             genres: List<String>,
             homePage: String,
+            productionCountries: List<String>,
             originalLanguage: String,
             title: String,
             overview: String,
@@ -17,7 +18,7 @@ interface DetailItem {
             releaseDate: String,
             runtime: Int,
             tagline: String,
-            voteAverage: Int,
+            voteAverage: Double,
             voteCount: Int,
         ): T
     }
@@ -29,6 +30,7 @@ data class FilmDetailDomain(
     val adult: Boolean,
     val genres: List<String>,
     val homePage: String,
+    val productionCountries: List<String>,
     val originalLanguage: String,
     val title: String,
     val overview: String,
@@ -36,18 +38,19 @@ data class FilmDetailDomain(
     val releaseDate: String,
     val runtime: Int,
     val tagline: String,
-    val voteAverage: Int,
+    val voteAverage: Double,
     val voteCount: Int,
 ) : DetailItem {
 
     fun id() = filmId
 
-    override fun <T : Any> map(mapper: DetailItem.Mapper<T>, isFavorite: Boolean): T {
+    override fun <T : Any> map(mapper: DetailItem.Mapper<T>): T {
         return mapper.mapItem(
             filmId,
             adult,
             genres,
             homePage,
+            productionCountries,
             originalLanguage,
             title,
             overview,

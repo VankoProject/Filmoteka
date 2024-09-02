@@ -18,6 +18,8 @@ data class FilmDetailCache(
     val genres: List<String>,
     @ColumnInfo(name = "home_page")
     val homePage: String,
+    @ColumnInfo(name = "production_countries")
+    val productionCountries: List<String>,
     @ColumnInfo(name = "original_language")
     val originalLanguage: String,
     @ColumnInfo(name = "title")
@@ -39,20 +41,20 @@ data class FilmDetailCache(
 ) : MapDetailFilm {
     override fun <T : Any> map(mapper: DetailFilmMapper<T>): T {
         return mapper.map(
-            filmId,
-            adult,
-            genres,
-            homePage,
-            originalLanguage,
-            title,
-            overview,
-            posterPath,
-            releaseDate,
-            runtime,
-            tagline,
-            voteAverage,
-            voteCount
-        )
+            filmId = filmId,
+            adult = adult,
+            genres = genres,
+            homePage = homePage,
+            productionCountries = productionCountries,
+            originalLanguage = originalLanguage,
+            title = title,
+            overview = overview,
+            posterPath = posterPath,
+            releaseDate = releaseDate,
+            runtime = runtime,
+            tagline = tagline,
+            voteAverage = voteAverage,
+            voteCount = voteCount,)
     }
 
 }

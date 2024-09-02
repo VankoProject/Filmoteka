@@ -1,6 +1,7 @@
 package com.kliachenko.data.mapper
 
 import com.kliachenko.data.cache.entity.FilmDetailCache
+import com.kliachenko.domain.FilmDetailDomain
 
 interface DetailFilmMapper<T : Any> {
 
@@ -9,6 +10,7 @@ interface DetailFilmMapper<T : Any> {
         adult: Boolean,
         genres: List<String>,
         homePage: String,
+        productionCountries: List<String>,
         originalLanguage: String,
         title: String,
         overview: String,
@@ -28,6 +30,7 @@ interface DetailFilmMapper<T : Any> {
                 adult: Boolean,
                 genres: List<String>,
                 homePage: String,
+                productionCountries: List<String>,
                 originalLanguage: String,
                 title: String,
                 overview: String,
@@ -42,6 +45,7 @@ interface DetailFilmMapper<T : Any> {
                 adult = adult,
                 genres = genres,
                 homePage = homePage,
+                productionCountries = productionCountries,
                 originalLanguage = originalLanguage,
                 title = title,
                 overview = overview,
@@ -63,6 +67,7 @@ interface DetailFilmMapper<T : Any> {
                 adult: Boolean,
                 genres: List<String>,
                 homePage: String,
+                productionCountries: List<String>,
                 originalLanguage: String,
                 title: String,
                 overview: String,
@@ -77,6 +82,7 @@ interface DetailFilmMapper<T : Any> {
                 adult = adult,
                 genres = genres,
                 homePage = homePage,
+                productionCountries = productionCountries,
                 originalLanguage = originalLanguage,
                 title = title,
                 overview = overview,
@@ -90,14 +96,15 @@ interface DetailFilmMapper<T : Any> {
         }
     }
 
-    interface ToFavorite : DetailFilmMapper<FilmDetailDomain> {
+    interface DetailFilmId : DetailFilmMapper<Int> {
 
-        object Base : ToFavorite {
+        object Base : DetailFilmId {
             override fun map(
                 filmId: Int,
                 adult: Boolean,
                 genres: List<String>,
                 homePage: String,
+                productionCountries: List<String>,
                 originalLanguage: String,
                 title: String,
                 overview: String,
@@ -108,6 +115,7 @@ interface DetailFilmMapper<T : Any> {
                 voteAverage: Double,
                 voteCount: Int,
             ) = filmId
+
         }
     }
 }

@@ -13,6 +13,8 @@ data class FilmDetailCloud(
     val genres: List<Genre>,
     @SerializedName("homepage")
     val homepage: String,
+    @SerializedName("production_countries")
+    val productionCountries: List<Countries>,
     @SerializedName("original_language")
     val originalLanguage: String,
     @SerializedName("title")
@@ -38,6 +40,7 @@ data class FilmDetailCloud(
             adult,
             genres.map { it.name },
             homepage,
+            productionCountries.map { it.name },
             originalLanguage,
             title,
             overview,
@@ -54,6 +57,13 @@ data class FilmDetailCloud(
 data class Genre(
     @SerializedName("id")
     val id: Int,
+    @SerializedName("name")
+    val name: String,
+)
+
+data class Countries(
+    @SerializedName("iso_3166_1")
+    val iso: String,
     @SerializedName("name")
     val name: String,
 )
