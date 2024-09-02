@@ -30,7 +30,7 @@
             app:argType="integer" />
         <argument
             android:name="filmTitle"
-            app:argType="String" />
+            app:argType="string" />
     </fragment>
 
 </navigation>
