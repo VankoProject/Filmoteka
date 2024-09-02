@@ -24,10 +24,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = DashboardAdapter(clickListener = viewModel, navigate = { filmId ->
+        val adapter = DashboardAdapter(clickListener = viewModel, navigate = { filmId, filmTitle ->
             findNavController().navigate(
                 DashboardFragmentDirections.actionDashBoardFragmentToDetailFragment(
-                    filmId
+                    filmId, filmTitle
                 )
             )
             viewModel.clear(viewModelClass)

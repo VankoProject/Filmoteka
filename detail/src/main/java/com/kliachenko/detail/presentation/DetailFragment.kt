@@ -22,6 +22,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         val args = DetailFragmentArgs.fromBundle(requireArguments())
         val filmId = args.filmId
+        val filmTitle = args.filmTitle
+
+        binding.toolBar.title = filmTitle
 
         viewModel.init(filmId = filmId)
 

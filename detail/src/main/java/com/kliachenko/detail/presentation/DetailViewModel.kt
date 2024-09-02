@@ -40,7 +40,7 @@ class DetailViewModel(
     }
 
     fun changeStatus(filmId: Int) {
-        TODO("Not yet implemented")
+
     }
 
 }
