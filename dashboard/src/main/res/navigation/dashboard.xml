@@ -28,6 +28,9 @@
         <argument
             android:name="filmId"
             app:argType="integer" />
+        <argument
+            android:name="filmTitle"
+            app:argType="String" />
     </fragment>
 
 </navigation>
