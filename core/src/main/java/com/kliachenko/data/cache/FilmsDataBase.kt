@@ -2,6 +2,8 @@ package com.kliachenko.data.cache
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.kliachenko.core.TypeConverter
 import com.kliachenko.data.cache.dao.CategoryDao
 import com.kliachenko.data.cache.dao.FavoriteDao
 import com.kliachenko.data.cache.dao.FilmsDao
@@ -21,6 +23,7 @@ import com.kliachenko.data.cache.entity.FilmsAndCategoryRelationCache
     version = 1,
     exportSchema = false
 )
+@TypeConverters(value = [TypeConverter::class])
 abstract class FilmsDataBase : RoomDatabase() {
 
     abstract fun categoryDao(): CategoryDao
