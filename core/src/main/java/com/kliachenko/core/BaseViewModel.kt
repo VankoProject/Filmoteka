@@ -17,6 +17,7 @@ abstract class BaseViewModel(private val runAsync: RunAsync): ViewModel() {
     ) {
         runAsync.start(viewModelScope, background, uiBlock)
     }
+
 }
 
 interface RunAsync {
