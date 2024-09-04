@@ -2,7 +2,7 @@ package com.kliachenko.data.cache
 
 import com.kliachenko.data.cache.dao.FavoriteDao
 import com.kliachenko.data.cache.entity.FavoriteCache
-import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmDashboardCache
 
 interface FavoritesCacheDataSource {
 
@@ -11,7 +11,7 @@ interface FavoritesCacheDataSource {
     }
 
     interface Read {
-        suspend fun favorites(): List<FilmCache>
+        suspend fun favorites(): List<FilmDashboardCache>
     }
 
     interface Remove {

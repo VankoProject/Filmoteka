@@ -23,7 +23,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         val args = DetailFragmentArgs.fromBundle(requireArguments())
         val filmId = args.filmId
         val filmTitle: String = args.filmTitle
-
         binding.toolBar.title = filmTitle
 
         viewModel.init(filmId = filmId)
@@ -40,6 +39,9 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
             viewModel.changeStatus(filmId = filmId)
         }
 
+        viewModel.observe(viewLifecycleOwner) { state ->
+            state.update(binding)
+        }
     }
 
 }

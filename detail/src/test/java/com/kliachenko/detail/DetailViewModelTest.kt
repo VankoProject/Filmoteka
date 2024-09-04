@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
-import com.kliachenko.data.cache.entity.FilmDetailCache
 import com.kliachenko.detail.domain.DetailInteractor
 import com.kliachenko.detail.domain.LoadResult
 import com.kliachenko.detail.presentation.DetailCommunication
@@ -106,7 +105,6 @@ class DetailViewModelTest {
         viewModel.changeStatus(filmId = 0)
         interactor.checkRemoveFromFavoritesCalled()
 
-        viewModel.goBack()
         clear.checkClearCalled(this.viewModel.javaClass)
     }
 }
@@ -210,12 +208,16 @@ private class FakeDetailInteractor : DetailInteractor {
         return actual
     }
 
-    override suspend fun addToFavorite(film: FilmDetailCache) {
+    override suspend fun addToFavorite(filmId: Int) {
         addFavoriteCalled = true
     }
 
     override suspend fun removeFromFavorite(filmId: Int) {
         removeFavoriteCalled = true
+    }
+
+    override suspend fun isFavorite(filmId: Int): Boolean {
+        // TODO: add code
     }
 
     fun expectedResult(result: LoadResult) {

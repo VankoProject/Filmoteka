@@ -1,12 +1,12 @@
 package com.kliachenko.dashboard.domain
 
-import com.kliachenko.domain.FilmDomain
+import com.kliachenko.domain.FilmDashboardDomain
 
 interface DashboardRepository {
 
     suspend fun filmsByCategoryAndPages(category: String, page: Int): LoadResult
 
-    suspend fun allCachedFilmsByCategory(category: String): List<FilmDomain>
+    suspend fun allCachedFilmsByCategory(category: String): List<FilmDashboardDomain>
 
     suspend fun allFilmsByCategory(category: String): LoadResult
 
@@ -24,7 +24,7 @@ interface LoadResult {
 
     interface Mapper<T : Any> {
 
-        fun mapSuccess(items: List<FilmDomain>, favoriteFilmIds: Set<Int>): T
+        fun mapSuccess(items: List<FilmDashboardDomain>, favoriteFilmIds: Set<Int>): T
 
         fun mapError(message: String): T
 
@@ -38,10 +38,9 @@ interface LoadResult {
     }
 
     data class Success(
-        private val items: List<FilmDomain>,
+        private val items: List<FilmDashboardDomain>,
         private val favoriteFilmIds: Set<Int>,
-    ) :
-        LoadResult {
+    ) : LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>): T =
             mapper.mapSuccess(items = items, favoriteFilmIds = favoriteFilmIds)
     }
