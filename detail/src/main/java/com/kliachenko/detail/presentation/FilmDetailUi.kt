@@ -1,12 +1,17 @@
 package com.kliachenko.detail.presentation
 
+import com.kliachenko.core.ConvertStringUiDetailItems
 import com.kliachenko.data.mapper.FilmDetailMapper
 import com.kliachenko.detail.R
 import com.kliachenko.detail.databinding.DetailSuccessfulStateLayoutBinding
 
 interface FilmDetailUi {
 
-    fun show(binding: DetailSuccessfulStateLayoutBinding, isFavorite: Boolean)
+    fun show(
+        binding: DetailSuccessfulStateLayoutBinding,
+        isFavorite: Boolean,
+        convertStringUiDetailItems: ConvertStringUiDetailItems,
+    )
 
     fun filmId(): Int = -1
 
@@ -49,20 +54,29 @@ interface FilmDetailUi {
             )
         }
 
-        override fun show(binding: DetailSuccessfulStateLayoutBinding, isFavorite: Boolean) {
+        override fun show(
+            binding: DetailSuccessfulStateLayoutBinding,
+            isFavorite: Boolean,
+            convertStringUiDetailItems: ConvertStringUiDetailItems,
+        ) {
             binding.filmNameTextView.text = title
             binding.filmPosterView.show(URL_POSTER + posterPath)
             binding.taglineTextView.text = tagline
             binding.overviewFilmId.text = overview
-            binding.originalLanguageTextView.text = originalLanguage
-            binding.homePageTextId.text = homePage
-            binding.countryProductionTextView.text = productionCountries.toString()
+            binding.originalLanguageTextView.text =
+                convertStringUiDetailItems.originalLanguage(originalLanguage)
+            binding.homePageTextId.text = convertStringUiDetailItems.homePage(homePage)
+            binding.countryProductionTextView.text =
+                convertStringUiDetailItems.countryProduction(productionCountries)
             binding.likeCountTextViewId.text = voteCount.toString()
             binding.scoreIconTextId.text = voteAverage.toString()
             binding.favoriteIconBackgroundId.favoriteStatus(isFavorite)
             val iconRes =
                 if (isFavorite) R.drawable.ic_favorite_bookmark else R.drawable.ic_unfavorite_bookmark
             binding.favoriteIconId.setImageResource(iconRes)
+            binding.characteristicsTextView.text = convertStringUiDetailItems.statistics(
+                adult, genres, releaseDate, runtime
+            )
         }
 
     }

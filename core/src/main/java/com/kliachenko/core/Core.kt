@@ -16,6 +16,8 @@ interface Core {
 
     fun provideDataBase(): FilmsDataBase
 
+    fun provideConvertStringUiDetailItem(): ConvertStringUiDetailItems
+
     class Base(
         context: Context,
         debug: Boolean,
@@ -30,6 +32,8 @@ interface Core {
 
         private val manageResource = ManageResource.Base(context)
 
+        private val convertStringUiDetailItems = ConvertStringUiDetailItems.Base(context)
+
         override fun provideRunAsync() = runAsync
 
         override fun provideMakeService() = makeService
@@ -37,6 +41,8 @@ interface Core {
         override fun provideManageResources() = manageResource
 
         override fun provideDataBase() = filmsDatabaseModule.database()
+
+        override fun provideConvertStringUiDetailItem() = convertStringUiDetailItems
 
     }
 }

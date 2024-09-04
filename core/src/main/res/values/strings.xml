@@ -8,4 +8,12 @@
     <string name="added_to_favorites">Added to favorites</string>
     <string name="removed_from_favorites">Removes from favorites</string>
 
+    <string name="country_production">Country production:</string>
+    <string name="home_page">Home page:</string>
+    <string name="visit_official_website">Visit Official Website:</string>
+    <string name="original_language">Original language</string>
+    <string name="adult_age">18+</string>
+    <string name="all_ages">All ages</string>
+    <string name="minutes_label">min</string>
+
 </resources>

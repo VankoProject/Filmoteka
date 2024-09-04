@@ -34,7 +34,10 @@ class DetailModule(
                 )
             ),
             communication = DetailCommunication.Base(),
-            uiMapper = BaseDetailResultMapper(DetailUiMapper()),
+            uiMapper = BaseDetailResultMapper(
+                DetailUiMapper(),
+                core.provideConvertStringUiDetailItem()
+            ),
             clear = clear,
             runAsync = core.provideRunAsync()
         )
