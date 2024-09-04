@@ -3,8 +3,8 @@ package com.kliachenko.data.cache.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.kliachenko.data.mapper.DetailFilmMapper
-import com.kliachenko.data.mapper.MapDetailFilm
+import com.kliachenko.data.mapper.FilmDetailMapper
+import com.kliachenko.data.mapper.MapFilmDetail
 
 @Entity(tableName = "detail_film_table")
 data class FilmDetailCache(
@@ -38,8 +38,8 @@ data class FilmDetailCache(
     val voteAverage: Double,
     @ColumnInfo(name = "vote_count")
     val voteCount: Int,
-) : MapDetailFilm {
-    override fun <T : Any> map(mapper: DetailFilmMapper<T>): T {
+) : MapFilmDetail {
+    override fun <T : Any> map(mapper: FilmDetailMapper<T>): T {
         return mapper.map(
             filmId = filmId,
             adult = adult,

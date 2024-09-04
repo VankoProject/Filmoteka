@@ -7,6 +7,8 @@ interface DetailUiState {
 
     fun update(binding: FragmentDetailBinding)
 
+    fun updateFilmStatus(isFavorite: Boolean): DetailUiState = this
+
     data class Error(private val errorMessage: String) : DetailUiState {
         override fun update(binding: FragmentDetailBinding) = with(binding) {
             errorState.errorStateLayout.visibility = View.VISIBLE
@@ -16,25 +18,32 @@ interface DetailUiState {
         }
     }
 
-    object Progress: DetailUiState {
-        override fun update(binding: FragmentDetailBinding) = with(binding){
+    object Progress : DetailUiState {
+        override fun update(binding: FragmentDetailBinding) = with(binding) {
             errorState.errorStateLayout.visibility = View.GONE
             progressState.progressDetailLayout.visibility = View.VISIBLE
             successState.successStateLayout.visibility = View.GONE
         }
     }
 
-    data class Success(private val detailFilmContent: FilmDetailUi): DetailUiState {
-        override fun update(binding: FragmentDetailBinding) = with(binding){
+    data class Success(
+        private val detailFilmContent: FilmDetailUi,
+        private val isFavorite: Boolean,
+    ) : DetailUiState {
+        override fun update(binding: FragmentDetailBinding) = with(binding) {
             errorState.errorStateLayout.visibility = View.GONE
             progressState.progressDetailLayout.visibility = View.GONE
             successState.successStateLayout.visibility = View.VISIBLE
-            // TODO: continue after creating uiModel
+            detailFilmContent.show(binding.successState, isFavorite)
         }
+
+        override fun updateFilmStatus(status: Boolean): DetailUiState {
+            return Success(detailFilmContent, status)
+        }
+
     }
 
-    object Empty: DetailUiState {
+    object Empty : DetailUiState {
         override fun update(binding: FragmentDetailBinding) = Unit
-
     }
 }

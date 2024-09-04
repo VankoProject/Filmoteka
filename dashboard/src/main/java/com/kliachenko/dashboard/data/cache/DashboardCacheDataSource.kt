@@ -1,17 +1,17 @@
 package com.kliachenko.dashboard.data.cache
 
 import com.kliachenko.data.cache.dao.FilmsDao
-import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmDashboardCache
 import com.kliachenko.data.cache.entity.FilmsAndCategoryRelationCache
 
 interface DashboardCacheDataSource {
 
     interface SaveFilm {
-        suspend fun save(film: FilmCache)
+        suspend fun save(film: FilmDashboardCache)
     }
 
     interface ReadFilm {
-        suspend fun read(filmId: Int): FilmCache
+        suspend fun read(filmId: Int): FilmDashboardCache
     }
 
     interface SaveRelation {
@@ -19,16 +19,16 @@ interface DashboardCacheDataSource {
     }
 
     interface ReadFilms {
-        suspend fun filmsByCategoryAndPage(categoryName: String, page: Int): List<FilmCache>
+        suspend fun filmsByCategoryAndPage(categoryName: String, page: Int): List<FilmDashboardCache>
 
-        suspend fun filmsByCategory(categoryName: String): List<FilmCache>
+        suspend fun filmsByCategory(categoryName: String): List<FilmDashboardCache>
     }
 
     interface Mutable : SaveFilm, ReadFilms, ReadFilm, SaveRelation
 
     class Base(private val filmsDao: FilmsDao) : Mutable {
 
-        override suspend fun save(film: FilmCache) {
+        override suspend fun save(film: FilmDashboardCache) {
             filmsDao.saveFilm(film)
         }
 

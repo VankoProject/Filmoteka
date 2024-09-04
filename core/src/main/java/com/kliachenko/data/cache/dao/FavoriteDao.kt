@@ -5,13 +5,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.kliachenko.data.cache.entity.FavoriteCache
-import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmDashboardCache
 
 @Dao
 interface FavoriteDao {
 
     @Query("SELECT * FROM film_table WHERE id IN (SELECT film_id FROM favorite_films_table)")
-    suspend fun favorites(): List<FilmCache>
+    suspend fun favorites(): List<FilmDashboardCache>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addToFavorite(filmId: FavoriteCache)

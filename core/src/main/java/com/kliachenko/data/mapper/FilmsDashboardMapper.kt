@@ -1,11 +1,11 @@
 package com.kliachenko.data.mapper
 
 import com.kliachenko.data.cache.entity.FavoriteCache
-import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmDashboardCache
 import com.kliachenko.data.cache.entity.FilmsAndCategoryRelationCache
-import com.kliachenko.domain.FilmDomain
+import com.kliachenko.domain.FilmDashboardDomain
 
-interface FilmsMapper<T : Any> {
+interface FilmsDashboardMapper<T : Any> {
 
     fun map(
         id: Int,
@@ -16,7 +16,7 @@ interface FilmsMapper<T : Any> {
         voteAverage: Double,
     ): T
 
-    interface ToCache : FilmsMapper<FilmCache> {
+    interface ToCache : FilmsDashboardMapper<FilmDashboardCache> {
 
         object Base : ToCache {
             override fun map(
@@ -26,7 +26,7 @@ interface FilmsMapper<T : Any> {
                 releaseDate: String,
                 title: String,
                 voteAverage: Double,
-            ) = FilmCache(
+            ) = FilmDashboardCache(
                 id = id,
                 overview = overview,
                 posterPath = posterPath,
@@ -37,7 +37,7 @@ interface FilmsMapper<T : Any> {
         }
     }
 
-    interface ToDomain: FilmsMapper<FilmDomain> {
+    interface ToDomain: FilmsDashboardMapper<FilmDashboardDomain> {
 
         object Base: ToDomain {
             override fun map(
@@ -47,7 +47,7 @@ interface FilmsMapper<T : Any> {
                 releaseDate: String,
                 title: String,
                 voteAverage: Double,
-            ): FilmDomain = FilmDomain (
+            ): FilmDashboardDomain = FilmDashboardDomain (
                 id = id,
                 overview = overview,
                 posterPath = posterPath,
@@ -58,7 +58,7 @@ interface FilmsMapper<T : Any> {
         }
     }
 
-    interface ToFavorite: FilmsMapper<FavoriteCache> {
+    interface ToFavorite: FilmsDashboardMapper<FavoriteCache> {
 
         object Base: ToFavorite {
             override fun map(
@@ -71,11 +71,10 @@ interface FilmsMapper<T : Any> {
             ) : FavoriteCache = FavoriteCache(
                 filmId = id
             )
-
         }
     }
 
-    interface ToRelation: FilmsMapper<FilmsAndCategoryRelationCache> {
+    interface ToRelation: FilmsDashboardMapper<FilmsAndCategoryRelationCache> {
 
         class Base(private val categoryName: String, private val page: Int): ToRelation {
             override fun map(
@@ -90,12 +89,11 @@ interface FilmsMapper<T : Any> {
                 categoryName = categoryName,
                 pageNumber = page
             )
-
         }
     }
 }
 
-interface MapFilms {
+interface MapDashboardFilms {
 
-    fun <T: Any> map(mapper: FilmsMapper<T>): T
+    fun <T: Any> map(mapper: FilmsDashboardMapper<T>): T
 }

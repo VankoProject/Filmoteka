@@ -3,7 +3,7 @@ package com.kliachenko.data.mapper
 import com.kliachenko.data.cache.entity.FilmDetailCache
 import com.kliachenko.domain.FilmDetailDomain
 
-interface DetailFilmMapper<T : Any> {
+interface FilmDetailMapper<T : Any> {
 
     fun map(
         filmId: Int,
@@ -22,7 +22,7 @@ interface DetailFilmMapper<T : Any> {
         voteCount: Int,
     ): T
 
-    interface ToCache : DetailFilmMapper<FilmDetailCache> {
+    interface ToCache : FilmDetailMapper<FilmDetailCache> {
 
         object Base : ToCache {
             override fun map(
@@ -59,7 +59,7 @@ interface DetailFilmMapper<T : Any> {
         }
     }
 
-    interface ToDomain : DetailFilmMapper<FilmDetailDomain> {
+    interface ToDomain : FilmDetailMapper<FilmDetailDomain> {
 
         object Base : ToDomain {
             override fun map(
@@ -96,9 +96,9 @@ interface DetailFilmMapper<T : Any> {
         }
     }
 
-    interface DetailFilmId : DetailFilmMapper<Int> {
+    interface FilmDetailId : FilmDetailMapper<Int> {
 
-        object Base : DetailFilmId {
+        object Base : FilmDetailId {
             override fun map(
                 filmId: Int,
                 adult: Boolean,
@@ -120,7 +120,7 @@ interface DetailFilmMapper<T : Any> {
     }
 }
 
-interface MapDetailFilm {
+interface MapFilmDetail {
 
-    fun <T : Any> map(mapper: DetailFilmMapper<T>): T
+    fun <T : Any> map(mapper: FilmDetailMapper<T>): T
 }

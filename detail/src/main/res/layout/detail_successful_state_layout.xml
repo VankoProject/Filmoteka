@@ -114,7 +114,7 @@
                 app:layout_constraintStart_toEndOf="@+id/scoreIconLayoutId"
                 app:layout_constraintTop_toTopOf="@+id/scoreIconLayoutId">
 
-                <ImageView
+                <com.kliachenko.detail.presentation.CustomFavoriteImageButton
                     android:id="@+id/favoriteIconBackgroundId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    tools:src="@drawable/ic_bookmark" />
+                    android:src="@drawable/ic_unfavorite_bookmark" />
             </FrameLayout>
 
             <com.google.android.material.textview.MaterialTextView
@@ -158,11 +158,12 @@
                     android:background="@drawable/circle_border_shape_icon" />
 
                 <ImageButton
+                    android:id="@+id/likeIconId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    tools:src="@drawable/ic_like" />
+                    android:src="@drawable/ic_like" />
             </FrameLayout>
 
             <com.google.android.material.textview.MaterialTextView

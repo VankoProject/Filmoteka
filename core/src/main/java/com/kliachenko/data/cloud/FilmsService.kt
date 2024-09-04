@@ -19,6 +19,7 @@ interface FilmsService {
     @GET("3/movie/{movie_id}")
     fun filmDetail(
         @Path("movie_id") filmId: Int,
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_LANGUAGE) language: String = "en-US"
     ): Call<FilmDetailCloud>
 

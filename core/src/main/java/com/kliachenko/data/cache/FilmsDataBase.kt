@@ -9,13 +9,13 @@ import com.kliachenko.data.cache.dao.FavoriteDao
 import com.kliachenko.data.cache.dao.FilmsDao
 import com.kliachenko.data.cache.entity.CategoryCache
 import com.kliachenko.data.cache.entity.FavoriteCache
-import com.kliachenko.data.cache.entity.FilmCache
+import com.kliachenko.data.cache.entity.FilmDashboardCache
 import com.kliachenko.data.cache.entity.FilmDetailCache
 import com.kliachenko.data.cache.entity.FilmsAndCategoryRelationCache
 
 @Database(
     entities = [
-        FilmCache::class,
+        FilmDashboardCache::class,
         CategoryCache::class,
         FavoriteCache::class,
         FilmsAndCategoryRelationCache::class,

@@ -7,7 +7,6 @@ import com.kliachenko.core.modules.Module
 import com.kliachenko.data.cache.FavoritesCacheDataSource
 import com.kliachenko.data.cloud.FilmsCloudDataSource
 import com.kliachenko.data.cloud.FilmsService
-import com.kliachenko.detail.data.DetailCacheDataSource
 import com.kliachenko.detail.data.DetailRepositoryImpl
 import com.kliachenko.detail.domain.DetailInteractor
 import com.kliachenko.detail.presentation.BaseDetailResultMapper
@@ -27,9 +26,6 @@ class DetailModule(
                         core.provideMakeService().create(
                             FilmsService::class.java
                         )
-                    ),
-                    detailCacheDataSource = DetailCacheDataSource.Base(
-                        core.provideDataBase().filmsDao()
                     ),
                     favoritesCacheDataSource = FavoritesCacheDataSource.Base(
                         core.provideDataBase().favoriteDao()

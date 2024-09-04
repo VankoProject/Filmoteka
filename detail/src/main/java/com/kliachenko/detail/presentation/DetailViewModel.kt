@@ -1,7 +1,10 @@
 package com.kliachenko.detail.presentation
 
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.kliachenko.core.BaseViewModel
+import com.kliachenko.core.Observe
 import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.detail.domain.DetailInteractor
@@ -12,35 +15,53 @@ class DetailViewModel(
     private val communication: DetailCommunication,
     private val uiMapper: LoadResult.Mapper<DetailUiState>,
     private val clear: Clear,
-    runAsync: RunAsync
-): BaseViewModel(runAsync), Clear {
+    runAsync: RunAsync,
+) : BaseViewModel(runAsync), Clear, Observe<DetailUiState> {
+
+    private var currentFilmId: Int = -1
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<DetailUiState>) {
+        communication.observe(owner, observer)
+    }
 
     fun init(filmId: Int) {
-
+        currentFilmId = filmId
+        communication.update(DetailUiState.Progress)
+        runAsync({
+            interactor.filmDetail(filmId)
+        }) { result ->
+            communication.update(result.map(uiMapper))
+        }
     }
 
     fun retry() {
-
+        init(filmId = currentFilmId)
     }
 
-    fun add(filmDetail: FilmDetailUi) {
-
-    }
-
-    fun remove(filmId: Int) {
-
-    }
-
-    fun goBack() {
-
+    fun changeStatus(filmId: Int) {
+        runAsync({
+            interactor.isFavorite(filmId)
+        }) { isFavorite ->
+            if(isFavorite) {
+                runAsync({
+                    interactor.removeFromFavorite(filmId)
+                }) {
+                    val currentState = communication.liveData().value!!
+                    communication.update(currentState.updateFilmStatus(false))
+                }
+            } else {
+                runAsync({
+                    interactor.addToFavorite(filmId)
+                }) {
+                    val currentState = communication.liveData().value!!
+                    communication.update(currentState.updateFilmStatus(true))
+                }
+            }
+        }
     }
 
     override fun clear(viewModelClass: Class<out ViewModel>) {
         clear.clear(viewModelClass)
-    }
-
-    fun changeStatus(filmId: Int) {
-
     }
 
 }
