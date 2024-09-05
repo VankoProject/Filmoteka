@@ -60,7 +60,6 @@ class CustomDetailUiTextView : MaterialTextView {
     }
 
     fun characteristics(
-        adult: Boolean,
         genres: List<String>,
         releaseDate: String,
         runtime: Int,
@@ -94,35 +93,38 @@ class CustomDetailUiTextView : MaterialTextView {
     }
 
     fun homePage(homePage: String) {
-        val startString = context.getString(R.string.home_page)
-        val linkHolder = context.getString(R.string.hyper_link)
-        val result = "$startString: $linkHolder"
+        if(homePage.isNotEmpty()) {
+            val startString = context.getString(R.string.home_page)
+            val linkHolder = context.getString(R.string.hyper_link)
+            val result = "$startString: $linkHolder"
 
-        val spannableString = SpannableString(result)
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(homePage))
-                context.startActivity(intent)
+            val spannableString = SpannableString(result)
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(homePage))
+                    context.startActivity(intent)
+                }
+
+                override fun updateDrawState(ds: TextPaint) {
+                    super.updateDrawState(ds)
+                    ds.isUnderlineText = true
+                    ds.color = ContextCompat.getColor(context, com.kliachenko.core.R.color.liteLimeGreen)
+                }
             }
 
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.isUnderlineText = true
-                ds.color = ContextCompat.getColor(context, com.kliachenko.core.R.color.liteLimeGreen)
-            }
-        }
+            val startIndex = result.indexOf(linkHolder)
+            val endIndex = startIndex + linkHolder.length
+            spannableString.setSpan(
+                clickableSpan,
+                startIndex,
+                endIndex,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
 
-        val startIndex = result.indexOf(linkHolder)
-        val endIndex = startIndex + linkHolder.length
-        spannableString.setSpan(
-            clickableSpan,
-            startIndex,
-            endIndex,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+            text = spannableString
+            movementMethod = LinkMovementMethod.getInstance()
+        } else visibility = View.GONE
 
-        text = spannableString
-        movementMethod = LinkMovementMethod.getInstance()
     }
 
     fun likesCount(voteCount: Int) {

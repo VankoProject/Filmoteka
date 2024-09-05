@@ -74,7 +74,7 @@ interface FilmDetailUi {
             val iconRes =
                 if (isFavorite) R.drawable.ic_favorite_bookmark else R.drawable.ic_unfavorite_bookmark
             favoriteIconId.setImageResource(iconRes)
-            characteristicsTextView.characteristics(adult, genres, releaseDate, runtime)
+            characteristicsTextView.characteristics(genres, releaseDate, runtime)
         }
 
     }
