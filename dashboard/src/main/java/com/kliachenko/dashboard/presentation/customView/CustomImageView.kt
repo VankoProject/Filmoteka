@@ -26,8 +26,10 @@ class CustomImageView : AppCompatImageView, ShowPicture {
         picEngine.show(this, url)
         this.imageUrl = url
     }
+
 }
 
 interface ShowPicture {
+
     fun show(url: String)
 }

@@ -1,5 +1,6 @@
 package com.kliachenko.detail.presentation
 
+import android.view.View
 import com.kliachenko.data.mapper.FilmDetailMapper
 import com.kliachenko.detail.R
 import com.kliachenko.detail.databinding.DetailSuccessfulStateLayoutBinding
@@ -58,13 +59,16 @@ interface FilmDetailUi {
         ) = with(binding) {
             filmNameTextView.text = title
             filmPosterView.show(URL_POSTER + posterPath)
-            taglineTextView.text = tagline
+            if (tagline.isNotEmpty()) taglineTextView.text =
+                tagline else taglineTextView.visibility = View.GONE
             overviewFilmId.text = overview
+            ageRatingTextViewId.ageRating(adult)
             originalLanguageTextView.originalLanguage(originalLanguage)
             homePageTextId.homePage(homePage)
             countryProductionTextView.countryProduction(productionCountries)
             likeCountTextViewId.text = voteCount.toString()
-            scoreIconTextId.text = voteAverage.toString()
+            scoreIconTextId.voteAverage(voteAverage)
+            scoreProgressIconId.progress = (voteAverage * 10).toInt()
             favoriteIconBackgroundId.favoriteStatus(isFavorite)
             likeCountTextViewId.likesCount(voteCount)
             val iconRes =

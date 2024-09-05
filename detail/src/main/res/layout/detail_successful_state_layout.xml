@@ -17,8 +17,9 @@
 
         <com.kliachenko.dashboard.presentation.customView.CustomImageView
             android:id="@+id/filmPosterView"
-            android:layout_width="match_parent"
+            android:layout_width="600dp"
             android:layout_height="300dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/medium_margin"
             android:background="@drawable/rounded_image"
             android:contentDescription="@string/poster_of_the_film"
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/medium_margin"
             android:gravity="center"
+            android:textSize="@dimen/medium_text"
             android:textColor="@color/white"
             tools:text="Bourne Supremacy" />
 
@@ -46,10 +48,19 @@
             android:id="@+id/characteristicsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x_small_margin"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:text="ACTION | DRAMA | 2002 | 107 min" />
+
+        <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
+            android:id="@+id/ageRatingTextViewId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x_medium_margin"
             android:gravity="center"
             android:textColor="@color/white"
-            tools:text="ACTION | DRAMA | 2002 | 107 min | All ages" />
+            tools:text="Age Rating: All ages" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/statisticsLayout"
@@ -84,7 +95,7 @@
                     android:progress="65"
                     android:progressDrawable="@drawable/custom_circular_progress" />
 
-                <com.google.android.material.textview.MaterialTextView
+                <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
                     android:id="@+id/scoreIconTextId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -173,6 +184,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/small_text"
+                tools:text="Likes: 200"
                 app:layout_constraintEnd_toEndOf="@+id/likeIconLayoutId"
                 app:layout_constraintStart_toStartOf="@+id/likeIconLayoutId"
                 app:layout_constraintTop_toTopOf="@+id/favoriteTextViewId" />
