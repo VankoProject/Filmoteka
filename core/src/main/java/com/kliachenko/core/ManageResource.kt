@@ -4,7 +4,7 @@ import android.content.Context
 
 interface ManageResource {
 
-    fun message(id: Int): String
+    fun stringResource(id: Int): String
 
     fun noInternetConnection(): String
 
@@ -12,7 +12,7 @@ interface ManageResource {
 
     class Base(private val context: Context) : ManageResource {
 
-        override fun message(id: Int) = context.getString(id)
+        override fun stringResource(id: Int) = context.getString(id)
 
         override fun noInternetConnection() = context.resources.getString(R.string.no_internet_connection)
 

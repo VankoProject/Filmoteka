@@ -1,5 +1,6 @@
 package com.kliachenko.detail.presentation
 
+import android.view.View
 import com.kliachenko.data.mapper.FilmDetailMapper
 import com.kliachenko.detail.R
 import com.kliachenko.detail.databinding.DetailSuccessfulStateLayoutBinding
@@ -55,21 +56,25 @@ interface FilmDetailUi {
         override fun show(
             binding: DetailSuccessfulStateLayoutBinding,
             isFavorite: Boolean,
-        ) {
-            binding.filmNameTextView.text = title
-            binding.filmPosterView.show(URL_POSTER + posterPath)
-            binding.taglineTextView.text = tagline
-            binding.overviewFilmId.text = overview
-            binding.originalLanguageTextView.originalLanguage(originalLanguage)
-            binding.homePageTextId.homePage(homePage)
-            binding.countryProductionTextView.countryProduction(productionCountries)
-            binding.likeCountTextViewId.text = voteCount.toString()
-            binding.scoreIconTextId.text = voteAverage.toString()
-            binding.favoriteIconBackgroundId.favoriteStatus(isFavorite)
+        ) = with(binding) {
+            filmNameTextView.text = title
+            filmPosterView.show(URL_POSTER + posterPath)
+            if (tagline.isNotEmpty()) taglineTextView.text =
+                tagline else taglineTextView.visibility = View.GONE
+            overviewFilmId.text = overview
+            ageRatingTextViewId.ageRating(adult)
+            originalLanguageTextView.originalLanguage(originalLanguage)
+            homePageTextId.homePage(homePage)
+            countryProductionTextView.countryProduction(productionCountries)
+            likeCountTextViewId.text = voteCount.toString()
+            scoreIconTextId.voteAverage(voteAverage)
+            scoreProgressIconId.progress = (voteAverage * 10).toInt()
+            favoriteIconBackgroundId.favoriteStatus(isFavorite)
+            likeCountTextViewId.likesCount(voteCount)
             val iconRes =
                 if (isFavorite) R.drawable.ic_favorite_bookmark else R.drawable.ic_unfavorite_bookmark
-            binding.favoriteIconId.setImageResource(iconRes)
-            binding.characteristicsTextView.characteristics(adult, genres, releaseDate, runtime)
+            favoriteIconId.setImageResource(iconRes)
+            characteristicsTextView.characteristics(adult, genres, releaseDate, runtime)
         }
 
     }
