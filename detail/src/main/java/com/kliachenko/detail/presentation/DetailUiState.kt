@@ -37,8 +37,8 @@ interface DetailUiState {
             detailFilmContent.show(binding.successState, isFavorite)
         }
 
-        override fun updateFilmStatus(status: Boolean): DetailUiState {
-            return Success(detailFilmContent, status)
+        override fun updateFilmStatus(isFavorite: Boolean): DetailUiState {
+            return Success(detailFilmContent, isFavorite)
         }
 
     }

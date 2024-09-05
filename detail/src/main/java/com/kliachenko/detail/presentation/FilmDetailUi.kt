@@ -6,7 +6,10 @@ import com.kliachenko.detail.databinding.DetailSuccessfulStateLayoutBinding
 
 interface FilmDetailUi {
 
-    fun show(binding: DetailSuccessfulStateLayoutBinding, isFavorite: Boolean)
+    fun show(
+        binding: DetailSuccessfulStateLayoutBinding,
+        isFavorite: Boolean,
+    )
 
     fun filmId(): Int = -1
 
@@ -49,20 +52,24 @@ interface FilmDetailUi {
             )
         }
 
-        override fun show(binding: DetailSuccessfulStateLayoutBinding, isFavorite: Boolean) {
+        override fun show(
+            binding: DetailSuccessfulStateLayoutBinding,
+            isFavorite: Boolean,
+        ) {
             binding.filmNameTextView.text = title
             binding.filmPosterView.show(URL_POSTER + posterPath)
             binding.taglineTextView.text = tagline
             binding.overviewFilmId.text = overview
-            binding.originalLanguageTextView.text = originalLanguage
-            binding.homePageTextId.text = homePage
-            binding.countryProductionTextView.text = productionCountries.toString()
+            binding.originalLanguageTextView.originalLanguage(originalLanguage)
+            binding.homePageTextId.homePage(homePage)
+            binding.countryProductionTextView.countryProduction(productionCountries)
             binding.likeCountTextViewId.text = voteCount.toString()
             binding.scoreIconTextId.text = voteAverage.toString()
             binding.favoriteIconBackgroundId.favoriteStatus(isFavorite)
             val iconRes =
                 if (isFavorite) R.drawable.ic_favorite_bookmark else R.drawable.ic_unfavorite_bookmark
             binding.favoriteIconId.setImageResource(iconRes)
+            binding.characteristicsTextView.characteristics(adult, genres, releaseDate, runtime)
         }
 
     }

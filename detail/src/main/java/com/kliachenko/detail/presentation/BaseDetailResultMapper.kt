@@ -7,7 +7,10 @@ class BaseDetailResultMapper(
     private val uiMapper: DetailUiMapper,
 ) : LoadResult.Mapper<DetailUiState> {
 
-    override fun mapSuccess(item: FilmDetailDomain, isFavorite: Boolean): DetailUiState {
+    override fun mapSuccess(
+        item: FilmDetailDomain,
+        isFavorite: Boolean,
+    ): DetailUiState {
         val result = item.map(uiMapper)
         return DetailUiState.Success(result, isFavorite)
     }

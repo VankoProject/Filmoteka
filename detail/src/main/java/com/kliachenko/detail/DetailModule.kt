@@ -34,7 +34,9 @@ class DetailModule(
                 )
             ),
             communication = DetailCommunication.Base(),
-            uiMapper = BaseDetailResultMapper(DetailUiMapper()),
+            uiMapper = BaseDetailResultMapper(
+                DetailUiMapper(),
+            ),
             clear = clear,
             runAsync = core.provideRunAsync()
         )
