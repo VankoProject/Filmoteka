@@ -13,6 +13,7 @@ import com.kliachenko.detail.presentation.BaseDetailResultMapper
 import com.kliachenko.detail.presentation.DetailCommunication
 import com.kliachenko.detail.presentation.DetailUiMapper
 import com.kliachenko.detail.presentation.DetailViewModel
+import com.kliachenko.detail.presentation.NavigationCommunication
 
 class DetailModule(
     private val core: Core,
@@ -34,6 +35,7 @@ class DetailModule(
                 )
             ),
             communication = DetailCommunication.Base(),
+            navigation = NavigationCommunication.Base(),
             uiMapper = BaseDetailResultMapper(
                 DetailUiMapper(),
             ),

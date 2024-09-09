@@ -12,6 +12,7 @@ import com.kliachenko.detail.presentation.DetailCommunication
 import com.kliachenko.detail.presentation.DetailUiState
 import com.kliachenko.detail.presentation.DetailViewModel
 import com.kliachenko.detail.presentation.FilmDetailUi
+import com.kliachenko.detail.presentation.NavigationCommunication
 import com.kliachenko.domain.FilmDetailDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
@@ -24,6 +25,7 @@ class DetailViewModelTest {
 
     private lateinit var interactor: FakeDetailInteractor
     private lateinit var communication: FakeDetailCommunication
+    private lateinit var navigation: FakeNavigationCommunication
     private lateinit var uiMapper: FakeDetailResultMapper
     private lateinit var clear: FakeClear
     private lateinit var runAsync: FakeRunAsync
@@ -39,6 +41,7 @@ class DetailViewModelTest {
         viewModel = DetailViewModel(
             interactor,
             communication,
+            navigation,
             uiMapper,
             clear,
             runAsync
@@ -90,13 +93,13 @@ class DetailViewModelTest {
                 tagline = "Tagline#0",
                 voteAverage = 5.0,
                 voteCount = 10,
-        )))
+        ), isFavorite = false))
         runAsync.returnLoadResult()
         communication.checkUpdateStates(
             DetailUiState.Progress,
             DetailUiState.Error("No internet connection"),
             DetailUiState.Progress,
-            DetailUiState.Success(filmDetail)
+            DetailUiState.Success(filmDetail, false)
         )
 
         viewModel.changeStatus(filmId = 0)
@@ -107,6 +110,22 @@ class DetailViewModelTest {
 
         clear.checkClearCalled(this.viewModel.javaClass)
     }
+}
+
+class FakeNavigationCommunication: NavigationCommunication {
+
+    override fun liveData(): LiveData<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override fun update(value: Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<Unit>) {
+        TODO("Not yet implemented")
+    }
+
 }
 
 private class FakeDetailResultMapper : LoadResult.Mapper<DetailUiState> {
@@ -128,8 +147,9 @@ private class FakeDetailResultMapper : LoadResult.Mapper<DetailUiState> {
         voteCount = 10,
     )
 
-    override fun mapSuccess(item: FilmDetailDomain): DetailUiState {
-        return DetailUiState.Success(filmDetail)
+
+    override fun mapSuccess(item: FilmDetailDomain, isFavorite: Boolean): DetailUiState {
+        TODO("Not yet implemented")
     }
 
     override fun mapError(message: String): DetailUiState {
