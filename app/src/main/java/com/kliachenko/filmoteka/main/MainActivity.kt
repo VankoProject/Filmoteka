@@ -29,6 +29,16 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
 
         NavigationUI.setupWithNavController(binding.bottomNavMenu, navController)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                com.kliachenko.dashboard.R.id.detailFragment -> {
+                    viewModel.secondaryUiState()
+                }
+
+                else -> viewModel.mainUiState()
+            }
+        }
+
         viewModel.init()
 
         viewModel.liveData().observe(this) {
