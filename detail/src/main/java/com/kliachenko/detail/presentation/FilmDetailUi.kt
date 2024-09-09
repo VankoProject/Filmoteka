@@ -32,6 +32,7 @@ interface FilmDetailUi {
         private val voteAverage: Double,
         private val voteCount: Int,
     ) : FilmDetailUi {
+
         override fun filmId() = filmId
 
         override fun <T : Any> map(mapper: FilmDetailMapper<T>): T {

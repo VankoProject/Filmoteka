@@ -12,6 +12,7 @@ import com.kliachenko.detail.presentation.DetailCommunication
 import com.kliachenko.detail.presentation.DetailUiState
 import com.kliachenko.detail.presentation.DetailViewModel
 import com.kliachenko.detail.presentation.FilmDetailUi
+import com.kliachenko.detail.presentation.NavigationCommunication
 import com.kliachenko.domain.FilmDetailDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
@@ -24,6 +25,7 @@ class DetailViewModelTest {
 
     private lateinit var interactor: FakeDetailInteractor
     private lateinit var communication: FakeDetailCommunication
+    private lateinit var navigation: FakeNavigationCommunication
     private lateinit var uiMapper: FakeDetailResultMapper
     private lateinit var clear: FakeClear
     private lateinit var runAsync: FakeRunAsync
@@ -33,12 +35,14 @@ class DetailViewModelTest {
     fun setup() {
         interactor = FakeDetailInteractor()
         communication = FakeDetailCommunication()
+        navigation = FakeNavigationCommunication()
         uiMapper = FakeDetailResultMapper()
         clear = FakeClear()
         runAsync = FakeRunAsync()
         viewModel = DetailViewModel(
             interactor,
             communication,
+            navigation,
             uiMapper,
             clear,
             runAsync
@@ -47,22 +51,6 @@ class DetailViewModelTest {
 
     @Test
     fun error_then_success_then_add_then_remove_then_goBack() {
-        val filmDetail = FilmDetailUi.FilmDetail(
-            filmId = 0,
-            adult = false,
-            genres = listOf("Action", "Comedy"),
-            homePage = "https://www.amazon.com/",
-            productionCountries = listOf("USA"),
-            originalLanguage = "en",
-            title = "Film#0",
-            overview = "Overview#0",
-            posterPath = "path#0",
-            releaseDate = "2020",
-            runtime = 100,
-            tagline = "Tagline#0",
-            voteAverage = 5.0,
-            voteCount = 10,
-        )
         interactor.expectedResult(LoadResult.Error("No internet connection"))
         viewModel.init(filmId = 0)
         communication.checkUpdateStates(
@@ -73,7 +61,6 @@ class DetailViewModelTest {
             DetailUiState.Progress,
             DetailUiState.Error("No internet connection")
         )
-        viewModel.retry()
         interactor.expectedResult(LoadResult.Success(
             FilmDetailDomain(
                 filmId = 0,
@@ -90,23 +77,91 @@ class DetailViewModelTest {
                 tagline = "Tagline#0",
                 voteAverage = 5.0,
                 voteCount = 10,
-        )))
+            ), isFavorite = false))
+        viewModel.retry()
         runAsync.returnLoadResult()
         communication.checkUpdateStates(
             DetailUiState.Progress,
             DetailUiState.Error("No internet connection"),
             DetailUiState.Progress,
-            DetailUiState.Success(filmDetail)
+            DetailUiState.Success(FilmDetailUi.FilmDetail(
+                filmId = 0,
+                adult = false,
+                genres = listOf("Action", "Comedy"),
+                homePage = "https://www.amazon.com/",
+                productionCountries = listOf("USA"),
+                originalLanguage = "en",
+                title = "Film#0",
+                overview = "Overview#0",
+                posterPath = "path#0",
+                releaseDate = "2020",
+                runtime = 100,
+                tagline = "Tagline#0",
+                voteAverage = 5.0,
+                voteCount = 10,
+            ), false)
         )
 
         viewModel.changeStatus(filmId = 0)
+        runAsync.returnLoadResult()
+        interactor.expectedResult(LoadResult.Success(
+            FilmDetailDomain(
+                filmId = 0,
+                adult = false,
+                genres = listOf("Action", "Comedy"),
+                homePage = "https://www.amazon.com/",
+                productionCountries = listOf("USA"),
+                originalLanguage = "en",
+                title = "Film#0",
+                overview = "Overview#0",
+                posterPath = "path#0",
+                releaseDate = "2020",
+                runtime = 100,
+                tagline = "Tagline#0",
+                voteAverage = 5.0,
+                voteCount = 10,
+            ), isFavorite = true))
         interactor.checkAddToFavoriteCalled()
-
         viewModel.changeStatus(filmId = 0)
+        runAsync.returnLoadResult()
+        interactor.expectedResult(LoadResult.Success(
+            FilmDetailDomain(
+                filmId = 0,
+                adult = false,
+                genres = listOf("Action", "Comedy"),
+                homePage = "https://www.amazon.com/",
+                productionCountries = listOf("USA"),
+                originalLanguage = "en",
+                title = "Film#0",
+                overview = "Overview#0",
+                posterPath = "path#0",
+                releaseDate = "2020",
+                runtime = 100,
+                tagline = "Tagline#0",
+                voteAverage = 5.0,
+                voteCount = 10,
+            ), isFavorite = false))
         interactor.checkRemoveFromFavoritesCalled()
 
+        viewModel.goBack()
         clear.checkClearCalled(this.viewModel.javaClass)
     }
+}
+
+class FakeNavigationCommunication: NavigationCommunication {
+
+    private var actualNavigation: Unit = Unit
+
+    override fun liveData(): LiveData<Unit> {
+        throw IllegalStateException("not used in tests")
+    }
+
+    override fun update(value: Unit) {
+       actualNavigation = value
+    }
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<Unit>) {}
+
 }
 
 private class FakeDetailResultMapper : LoadResult.Mapper<DetailUiState> {
@@ -128,8 +183,9 @@ private class FakeDetailResultMapper : LoadResult.Mapper<DetailUiState> {
         voteCount = 10,
     )
 
-    override fun mapSuccess(item: FilmDetailDomain): DetailUiState {
-        return DetailUiState.Success(filmDetail)
+
+    override fun mapSuccess(item: FilmDetailDomain, isFavorite: Boolean): DetailUiState {
+        return DetailUiState.Success(filmDetail, isFavorite)
     }
 
     override fun mapError(message: String): DetailUiState {
@@ -185,7 +241,7 @@ private class FakeRunAsync : RunAsync {
 
 private class FakeClear : Clear {
 
-    private lateinit var actual: Class<out ViewModel>
+    private var actual: Class<out ViewModel> = DetailViewModel::class.java
 
     override fun clear(viewModelClass: Class<out ViewModel>) {
         actual = viewModelClass
@@ -202,6 +258,7 @@ private class FakeDetailInteractor : DetailInteractor {
     private var actual: LoadResult = LoadResult.Empty
     private var addFavoriteCalled: Boolean = false
     private var removeFavoriteCalled: Boolean = false
+    private var isFavoriteResult: Boolean = false
 
 
     override suspend fun filmDetail(filmId: Int): LoadResult {
@@ -210,14 +267,16 @@ private class FakeDetailInteractor : DetailInteractor {
 
     override suspend fun addToFavorite(filmId: Int) {
         addFavoriteCalled = true
+        isFavoriteResult = true
     }
 
     override suspend fun removeFromFavorite(filmId: Int) {
         removeFavoriteCalled = true
+        isFavoriteResult = false
     }
 
     override suspend fun isFavorite(filmId: Int): Boolean {
-        // TODO: add code
+        return isFavoriteResult
     }
 
     fun expectedResult(result: LoadResult) {

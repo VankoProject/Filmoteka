@@ -13,6 +13,7 @@ import com.kliachenko.detail.domain.LoadResult
 class DetailViewModel(
     private val interactor: DetailInteractor,
     private val communication: DetailCommunication,
+    private val navigation: NavigationCommunication,
     private val uiMapper: LoadResult.Mapper<DetailUiState>,
     private val clear: Clear,
     runAsync: RunAsync,
@@ -23,6 +24,11 @@ class DetailViewModel(
     override fun observe(owner: LifecycleOwner, observer: Observer<DetailUiState>) {
         communication.observe(owner, observer)
     }
+
+    fun observeNavigation(owner: LifecycleOwner, observer: Observer<Unit>) {
+        navigation.observe(owner, observer)
+    }
+
 
     fun init(filmId: Int) {
         currentFilmId = filmId
@@ -58,6 +64,10 @@ class DetailViewModel(
                 }
             }
         }
+    }
+
+    fun goBack() {
+        navigation.update(Unit)
     }
 
     override fun clear(viewModelClass: Class<out ViewModel>) {

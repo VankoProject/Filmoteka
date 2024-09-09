@@ -28,7 +28,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         viewModel.init(filmId = filmId)
 
         binding.toolBar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            viewModel.goBack()
         }
 
         binding.errorState.retryDetailButton.setOnClickListener {
@@ -42,6 +42,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         viewModel.observe(viewLifecycleOwner) { state ->
             state.update(binding)
         }
+
+        viewModel.observeNavigation(viewLifecycleOwner) {
+            findNavController().popBackStack()
+            viewModel.clear(DetailViewModel::class.java)
+        }
+
     }
 
 }
