@@ -1,4 +1,4 @@
-package com.kliachenko.detail
+package com.kliachenko.detail.presentation
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -8,11 +8,6 @@ import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.detail.domain.DetailInteractor
 import com.kliachenko.detail.domain.LoadResult
-import com.kliachenko.detail.presentation.DetailCommunication
-import com.kliachenko.detail.presentation.DetailUiState
-import com.kliachenko.detail.presentation.DetailViewModel
-import com.kliachenko.detail.presentation.FilmDetailUi
-import com.kliachenko.detail.presentation.NavigationCommunication
 import com.kliachenko.domain.FilmDetailDomain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
