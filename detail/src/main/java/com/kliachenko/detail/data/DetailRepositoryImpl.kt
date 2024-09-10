@@ -9,8 +9,8 @@ import com.kliachenko.detail.domain.DetailRepository
 import com.kliachenko.detail.domain.LoadResult
 
 class DetailRepositoryImpl(
-    private val cloudDataSource: FilmsCloudDataSource,
-    private val favoritesCacheDataSource: FavoritesCacheDataSource.Mutable,
+    private val cloudDataSource: FilmsCloudDataSource.FilmDetail,
+    private val favoritesCacheDataSource: FavoritesCacheDataSource.MutableDetail,
     private val mapToDomain: FilmDetailMapper.ToDomain = FilmDetailMapper.ToDomain.Base,
     private val handleError: HandleError<String>,
 ) : DetailRepository {
