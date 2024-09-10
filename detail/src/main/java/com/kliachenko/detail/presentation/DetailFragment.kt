@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.kliachenko.core.BaseFragment
+import com.kliachenko.core.SnackBarWrapper
 import com.kliachenko.detail.databinding.FragmentDetailBinding
 
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
     override val viewModelClass: Class<DetailViewModel>
         get() = DetailViewModel::class.java
+
+    private lateinit var snackBar: SnackBarWrapper
 
     override fun inflate(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentDetailBinding.inflate(
@@ -26,6 +28,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         val filmTitle: String = args.filmTitle
         binding.toolBar.title = filmTitle
 
+        snackBar = SnackBarWrapper()
+
         viewModel.init(filmId = filmId)
 
         binding.toolBar.setNavigationOnClickListener {
@@ -38,10 +42,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
         binding.successState.favoriteIconId.setOnClickListener {
             viewModel.changeStatus(filmId = filmId) { isFavorite ->
-                val message =
-                    if (isFavorite) com.kliachenko.core.R.string.added_to_favorites
-                    else com.kliachenko.core.R.string.removed_from_favorites
-                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+                snackBar.show(binding.root, isFavorite)
             }
         }
 
