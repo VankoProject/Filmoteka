@@ -14,9 +14,9 @@ import com.kliachenko.data.mapper.FilmsDashboardMapper
 import com.kliachenko.domain.FilmDashboardDomain
 
 class DashboardRepositoryImpl(
-    private val cloudDataSource: FilmsCloudDataSource,
+    private val cloudDataSource: FilmsCloudDataSource.Films,
     private val dashboardCacheDataSource: DashboardCacheDataSource.Mutable,
-    private val favoritesCacheDataSource: FavoritesCacheDataSource.Mutable,
+    private val favoritesCacheDataSource: FavoritesCacheDataSource.MutableDashboard,
     private val categoryCacheDataSource: CategoryCacheDataSource.Mutable,
     private val mapToCache: FilmsDashboardMapper.ToCache = FilmsDashboardMapper.ToCache.Base,
     private val mapToDomain: FilmsDashboardMapper.ToDomain = FilmsDashboardMapper.ToDomain.Base,

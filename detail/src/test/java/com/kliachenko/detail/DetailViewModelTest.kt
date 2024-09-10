@@ -144,6 +144,7 @@ class DetailViewModelTest {
         interactor.checkRemoveFromFavoritesCalled()
 
         viewModel.goBack()
+        viewModel.clear(DetailViewModel::class.java)
         clear.checkClearCalled(this.viewModel.javaClass)
     }
 }
