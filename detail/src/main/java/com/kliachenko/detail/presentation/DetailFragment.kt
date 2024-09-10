@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.kliachenko.core.BaseFragment
 import com.kliachenko.detail.databinding.FragmentDetailBinding
 
@@ -36,7 +37,12 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         }
 
         binding.successState.favoriteIconId.setOnClickListener {
-            viewModel.changeStatus(filmId = filmId)
+            viewModel.changeStatus(filmId = filmId) { isFavorite ->
+                val message =
+                    if (isFavorite) com.kliachenko.core.R.string.added_to_favorites
+                    else com.kliachenko.core.R.string.removed_from_favorites
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+            }
         }
 
         viewModel.observe(viewLifecycleOwner) { state ->

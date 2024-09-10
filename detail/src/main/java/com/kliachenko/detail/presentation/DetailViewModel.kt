@@ -44,7 +44,7 @@ class DetailViewModel(
         init(filmId = currentFilmId)
     }
 
-    fun changeStatus(filmId: Int) {
+    fun changeStatus(filmId: Int, onStatusChanged: (Boolean) -> Unit) {
         runAsync({
             interactor.isFavorite(filmId)
         }) { isFavorite ->
@@ -54,6 +54,7 @@ class DetailViewModel(
                 }) {
                     val currentState = communication.liveData().value!!
                     communication.update(currentState.updateFilmStatus(false))
+                    onStatusChanged(false)
                 }
             } else {
                 runAsync({
@@ -61,6 +62,7 @@ class DetailViewModel(
                 }) {
                     val currentState = communication.liveData().value!!
                     communication.update(currentState.updateFilmStatus(true))
+                    onStatusChanged(true)
                 }
             }
         }
