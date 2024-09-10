@@ -6,6 +6,6 @@
     <string name="film_s_poster_description">film\'s poster</string>
     <string name="service_unavailable">Service unavailable</string>
     <string name="added_to_favorites">Added to favorites</string>
-    <string name="removed_from_favorites">Removes from favorites</string>
+    <string name="removed_from_favorites">Removed from favorites</string>
 
 </resources>
