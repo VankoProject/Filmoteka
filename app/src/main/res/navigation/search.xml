@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.kliachenko.filmoteka.fragments.SearchFragment"
+        android:name="com.kliachenko.search.presentation.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
