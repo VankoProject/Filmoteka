@@ -261,7 +261,10 @@ class ScenarioTest {
             )
         )
         detailPage.tapBack()
-
     }
+
+
+    @Test
+    fun load_search_page_with_empty_searchHistory_then_
 
 }
