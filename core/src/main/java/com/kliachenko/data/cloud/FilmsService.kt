@@ -16,6 +16,13 @@ interface FilmsService {
         @Query(QUERY_PARAM_PAGE) page: Int
     ): Call<FilmsResponse>
 
+    @GET("3/movie/{movie_id}")
+    fun filmDetail(
+        @Path("movie_id") filmId: Int,
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
+        @Query(QUERY_PARAM_LANGUAGE) language: String = "en-US"
+    ): Call<FilmDetailCloud>
+
     companion object {
         private const val QUERY_PARAM_API_KEY = "api_key"
         private const val QUERY_PARAM_PAGE = "page"

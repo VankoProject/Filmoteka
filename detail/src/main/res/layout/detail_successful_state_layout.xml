@@ -5,19 +5,21 @@
     android:id="@+id/rootSuccessStateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:background="@color/lightBlue">
 
     <LinearLayout
         android:id="@+id/successStateLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/x_medium_margin"
         android:orientation="vertical">
 
-        <ImageView
+        <com.kliachenko.dashboard.presentation.customView.CustomImageView
             android:id="@+id/filmPosterView"
-            android:layout_width="match_parent"
+            android:layout_width="600dp"
             android:layout_height="300dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/medium_margin"
             android:background="@drawable/rounded_image"
             android:contentDescription="@string/poster_of_the_film"
@@ -29,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/medium_margin"
             android:gravity="center"
+            android:textSize="@dimen/medium_text"
             android:textColor="@color/white"
             tools:text="Bourne Supremacy" />
 
@@ -41,14 +44,23 @@
             android:textColor="@color/liteLimeGreen"
             tools:text="Ready. Steady. Go." />
 
-        <com.google.android.material.textview.MaterialTextView
+        <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
             android:id="@+id/characteristicsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x_small_margin"
+            android:gravity="center"
+            android:textColor="@color/white"
+            tools:text="ACTION | DRAMA | 2002 | 107 min" />
+
+        <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
+            android:id="@+id/ageRatingTextViewId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/x_medium_margin"
             android:gravity="center"
             android:textColor="@color/white"
-            tools:text="ACTION | DRAMA | 2002 | 107 min | All ages" />
+            tools:text="Age Rating: All ages" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/statisticsLayout"
@@ -69,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:backgroundTint="@color/stillBlue"
                     android:background="@drawable/circle_border_shape_icon"
                     android:contentDescription="@string/tmdb_scores_of_the_film" />
 
@@ -82,7 +95,7 @@
                     android:progress="65"
                     android:progressDrawable="@drawable/custom_circular_progress" />
 
-                <com.google.android.material.textview.MaterialTextView
+                <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
                     android:id="@+id/scoreIconTextId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -113,10 +126,11 @@
                 app:layout_constraintStart_toEndOf="@+id/scoreIconLayoutId"
                 app:layout_constraintTop_toTopOf="@+id/scoreIconLayoutId">
 
-                <ImageView
+                <com.kliachenko.detail.presentation.customViews.CustomFavoriteImageButton
                     android:id="@+id/favoriteIconBackgroundId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/stillBlue"
                     android:background="@drawable/circle_border_shape_icon" />
 
                 <ImageButton
@@ -125,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    tools:src="@drawable/ic_bookmark" />
+                    android:src="@drawable/ic_unfavorite_bookmark" />
             </FrameLayout>
 
             <com.google.android.material.textview.MaterialTextView
@@ -152,26 +166,28 @@
                     android:id="@+id/likeIconBackgroundId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/stillBlue"
                     android:background="@drawable/circle_border_shape_icon" />
 
                 <ImageButton
+                    android:id="@+id/likeIconId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    tools:src="@drawable/ic_like" />
+                    android:src="@drawable/ic_like" />
             </FrameLayout>
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
                 android:id="@+id/likeCountTextViewId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textSize="@dimen/small_text"
+                tools:text="Likes: 200"
                 app:layout_constraintEnd_toEndOf="@+id/likeIconLayoutId"
                 app:layout_constraintStart_toStartOf="@+id/likeIconLayoutId"
-                app:layout_constraintTop_toTopOf="@+id/favoriteTextViewId"
-                android:text="@string/like_count" />
+                app:layout_constraintTop_toTopOf="@+id/favoriteTextViewId" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -183,7 +199,7 @@
             android:textColor="@color/white"
             tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book..." />
 
-        <com.google.android.material.textview.MaterialTextView
+        <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
             android:id="@+id/originalLanguageTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -191,7 +207,7 @@
             android:textColor="@color/white"
             tools:text="Original language: Eng" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
             android:id="@+id/countryProductionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -199,12 +215,19 @@
             android:textColor="@color/white"
             tools:text="Country production: USA" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
             android:id="@+id/homePageTextId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             tools:text="Home page: Visit Official Website" />
+
+        <com.kliachenko.detail.presentation.customViews.CustomDetailUiTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:textColor="@color/white"
+            tools:text="Original language: Eng" />
 
     </LinearLayout>
 

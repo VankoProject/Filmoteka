@@ -1,12 +1,12 @@
 package com.kliachenko.dashboard.domain
 
-import com.kliachenko.domain.FilmDomain
+import com.kliachenko.domain.FilmDashboardDomain
 
 interface DashboardInteractor {
 
     suspend fun loadDataByPage(category: String): LoadResult
 
-    suspend fun loadDataByCategory(category: String): List<FilmDomain>
+    suspend fun loadDataByCategory(category: String): List<FilmDashboardDomain>
 
     suspend fun loadCacheByCategory(category: String): LoadResult
 
@@ -33,7 +33,7 @@ interface DashboardInteractor {
             return result
         }
 
-        override suspend fun loadDataByCategory(category: String): List<FilmDomain> {
+        override suspend fun loadDataByCategory(category: String): List<FilmDashboardDomain> {
             return repository.allCachedFilmsByCategory(category)
         }
 

@@ -48,6 +48,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation (libs.gson.v2110)
 
     //ROOM
     implementation(libs.androidx.room.runtime)
@@ -56,6 +57,7 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     testImplementation(libs.androidx.room.testing)
+    implementation(libs.gson)
 
     //RETROFIT
     implementation (libs.retrofit)

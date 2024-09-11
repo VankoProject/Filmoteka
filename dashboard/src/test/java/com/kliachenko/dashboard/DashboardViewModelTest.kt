@@ -13,7 +13,7 @@ import com.kliachenko.dashboard.presentation.DashboardViewModel
 import com.kliachenko.dashboard.presentation.TabIdToCategoryMapper
 import com.kliachenko.dashboard.presentation.adapter.DashboardUi
 import com.kliachenko.domain.DashboardItem
-import com.kliachenko.domain.FilmDomain
+import com.kliachenko.domain.FilmDashboardDomain
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -181,7 +181,7 @@ private class FakeDashboardInteractor : DashboardInteractor {
         TODO("Not yet implemented")
     }
 
-    override suspend fun loadDataByCategory(category: String): List<FilmDomain> {
+    override suspend fun loadDataByCategory(category: String): List<FilmDashboardDomain> {
         TODO("Not yet implemented")
     }
 
@@ -205,9 +205,9 @@ private class FakeDashboardInteractor : DashboardInteractor {
         categoryResult(
             "popular", LoadResult.Success(
                 items = listOf(
-                    FilmDomain(id = 0, overview = "film0", posterPath = "film0", releaseDate = "0.0", title = "film0", voteAverage = 0.0
+                    FilmDashboardDomain(id = 0, overview = "film0", posterPath = "film0", releaseDate = "0.0", title = "film0", voteAverage = 0.0
                     ),
-                    FilmDomain(id = 1, overview = "film1", posterPath = "film1", releaseDate = "1.0", title = "film1", voteAverage = 1.0
+                    FilmDashboardDomain(id = 1, overview = "film1", posterPath = "film1", releaseDate = "1.0", title = "film1", voteAverage = 1.0
                     )
                 ), favoriteFilmIds = setOf()
             )
@@ -216,9 +216,9 @@ private class FakeDashboardInteractor : DashboardInteractor {
             "top_rated",
             LoadResult.Success(
                 items = listOf(
-                    FilmDomain(id = 2, overview = "film2", posterPath = "film2", releaseDate = "2.0", title = "film2", voteAverage = 2.0
+                    FilmDashboardDomain(id = 2, overview = "film2", posterPath = "film2", releaseDate = "2.0", title = "film2", voteAverage = 2.0
                     ),
-                    FilmDomain(id = 3, overview = "film3", posterPath = "film3", releaseDate = "3.0", title = "film3", voteAverage = 3.0
+                    FilmDashboardDomain(id = 3, overview = "film3", posterPath = "film3", releaseDate = "3.0", title = "film3", voteAverage = 3.0
                     )
                 ), favoriteFilmIds = setOf()
             )
@@ -287,7 +287,7 @@ private class FakeDashboardResultMapper(
 
     private var resultUiState: DashboardUiState = DashboardUiState.Empty
 
-    override fun mapSuccess(items: List<FilmDomain>, favoriteFilmIds: Set<Int>): DashboardUiState {
+    override fun mapSuccess(items: List<FilmDashboardDomain>, favoriteFilmIds: Set<Int>): DashboardUiState {
         val uiItems = items.map { filmDomain ->
             filmDomain.map(mapper, favoriteFilmIds.contains(filmDomain.id()))
         }

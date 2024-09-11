@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.kliachenko.core.BaseFragment
+import com.kliachenko.core.SnackBarWrapper
 import com.kliachenko.detail.databinding.FragmentDetailBinding
 
 class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
     override val viewModelClass: Class<DetailViewModel>
         get() = DetailViewModel::class.java
+
+    private lateinit var snackBar: SnackBarWrapper
 
     override fun inflate(inflater: LayoutInflater, container: ViewGroup?) =
         FragmentDetailBinding.inflate(
@@ -22,15 +25,34 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         val args = DetailFragmentArgs.fromBundle(requireArguments())
         val filmId = args.filmId
+        val filmTitle: String = args.filmTitle
+        binding.toolBar.title = filmTitle
 
-        viewModel.init(filmId)
+        snackBar = SnackBarWrapper()
+
+        viewModel.init(filmId = filmId)
 
         binding.toolBar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            viewModel.goBack()
         }
 
         binding.errorState.retryDetailButton.setOnClickListener {
             viewModel.retry()
+        }
+
+        binding.successState.favoriteIconId.setOnClickListener {
+            viewModel.changeStatus(filmId = filmId) { isFavorite ->
+                snackBar.show(binding.root, isFavorite)
+            }
+        }
+
+        viewModel.observe(viewLifecycleOwner) { state ->
+            state.update(binding)
+        }
+
+        viewModel.observeNavigation(viewLifecycleOwner) {
+            findNavController().popBackStack()
+            viewModel.clear(DetailViewModel::class.java)
         }
 
     }
