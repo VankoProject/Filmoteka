@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":dashboard"))
     implementation(project(":detail"))
+    implementation(project(":search"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
