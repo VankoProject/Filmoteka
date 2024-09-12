@@ -319,6 +319,7 @@ class ScenarioTest {
                 FilmSearchItem(title = "Film#1")
             )
         )
+        searchPage.tapSearchFilmFromHistory(position = 0)
     }
 
 }
