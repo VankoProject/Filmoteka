@@ -13,7 +13,7 @@ import com.kliachenko.dashboard.databinding.PagingProgressLayoutBinding
 
 class DashboardAdapter(
     private val clickListener: ClickActions,
-    private val navigate: (Int) -> Unit,
+    private val navigate: (Int, String) -> Unit,
     private val typeList: List<DashboardUiType> = DashboardUiType.typeList(),
 ) : RecyclerView.Adapter<DashboardViewHolder>(), ShowList {
 
@@ -90,13 +90,13 @@ abstract class DashboardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class Film(
         private val binding: FilmItemLayoutBinding,
         private val clickListener: ClickActions,
-        private val navigate: (Int) -> Unit,
+        private val navigate: (Int, String) -> Unit,
     ) : DashboardViewHolder(binding.root) {
         override fun bind(item: DashboardUi) {
             item.show(binding)
             binding.root.setOnClickListener {
                 if (itemView.id != com.kliachenko.dashboard.R.id.iconImageView) {
-                    navigate(item.filmId())
+                    navigate(item.filmId(), item.title())
                 }
             }
             binding.iconImageView.setOnClickListener {

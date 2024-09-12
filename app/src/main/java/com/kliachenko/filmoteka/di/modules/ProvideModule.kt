@@ -6,6 +6,8 @@ import com.kliachenko.core.modules.Clear
 import com.kliachenko.core.modules.Module
 import com.kliachenko.dashboard.DashboardModule
 import com.kliachenko.dashboard.presentation.DashboardViewModel
+import com.kliachenko.detail.DetailModule
+import com.kliachenko.detail.presentation.DetailViewModel
 import com.kliachenko.filmoteka.main.MainModule
 import com.kliachenko.filmoteka.main.MainViewModel
 
@@ -23,6 +25,7 @@ interface ProvideModule {
            return when(clazz) {
                MainViewModel::class.java -> MainModule(clear)
                DashboardViewModel::class.java -> DashboardModule(core, clear)
+               DetailViewModel::class.java -> DetailModule(core, clear)
                else -> throw IllegalStateException("unknown viewModel $clazz")
            } as Module<T>
         }

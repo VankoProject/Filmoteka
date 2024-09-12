@@ -11,6 +11,14 @@ class MainViewModel(
     override fun liveData(): LiveData<MainUiState> = communication.liveData()
 
     fun init() {
+       mainUiState()
+    }
+
+    fun secondaryUiState() {
+        communication.update(MainUiState.Secondary)
+    }
+
+    fun mainUiState() {
         communication.update(MainUiState.Main)
     }
 

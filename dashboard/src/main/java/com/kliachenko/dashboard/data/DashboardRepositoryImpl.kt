@@ -10,16 +10,16 @@ import com.kliachenko.data.cache.FavoritesCacheDataSource
 import com.kliachenko.data.cache.entity.CategoryCache
 import com.kliachenko.data.cache.entity.FavoriteCache
 import com.kliachenko.data.cloud.FilmsCloudDataSource
-import com.kliachenko.data.mapper.FilmsMapper
-import com.kliachenko.domain.FilmDomain
+import com.kliachenko.data.mapper.FilmsDashboardMapper
+import com.kliachenko.domain.FilmDashboardDomain
 
 class DashboardRepositoryImpl(
-    private val cloudDataSource: FilmsCloudDataSource,
+    private val cloudDataSource: FilmsCloudDataSource.Films,
     private val dashboardCacheDataSource: DashboardCacheDataSource.Mutable,
-    private val favoritesCacheDataSource: FavoritesCacheDataSource.Mutable,
+    private val favoritesCacheDataSource: FavoritesCacheDataSource.MutableDashboard,
     private val categoryCacheDataSource: CategoryCacheDataSource.Mutable,
-    private val mapToCache: FilmsMapper.ToCache = FilmsMapper.ToCache.Base,
-    private val mapToDomain: FilmsMapper.ToDomain = FilmsMapper.ToDomain.Base,
+    private val mapToCache: FilmsDashboardMapper.ToCache = FilmsDashboardMapper.ToCache.Base,
+    private val mapToDomain: FilmsDashboardMapper.ToDomain = FilmsDashboardMapper.ToDomain.Base,
     private val handleError: HandleError<String>,
 ) : DashboardRepository {
 
@@ -34,7 +34,7 @@ class DashboardRepositoryImpl(
                 val response = cloudDataSource.loadFilms(category, page)
                 val totalPages = response.totalPages()
                 val cloudFilms = response.results()
-                val relationMapper = FilmsMapper.ToRelation.Base(category, page)
+                val relationMapper = FilmsDashboardMapper.ToRelation.Base(category, page)
                 categoryCacheDataSource.save(
                     CategoryCache(
                         categoryName = category,
@@ -54,7 +54,7 @@ class DashboardRepositoryImpl(
         }
     }
 
-    override suspend fun allCachedFilmsByCategory(category: String): List<FilmDomain> {
+    override suspend fun allCachedFilmsByCategory(category: String): List<FilmDashboardDomain> {
         return dashboardCacheDataSource.filmsByCategory(category).map { it.map(mapToDomain) }
     }
 

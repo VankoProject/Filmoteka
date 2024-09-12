@@ -17,7 +17,7 @@ interface DashboardItem {
     }
 }
 
-data class FilmDomain(
+data class FilmDashboardDomain(
     private val id: Int,
     private val overview: String,
     private val posterPath: String,
@@ -28,8 +28,8 @@ data class FilmDomain(
 
     fun id(): Int = id
 
-    override fun <T : Any> map(mapper: DashboardItem.Mapper<T>, isFavorite: Boolean): T =
-        mapper.mapItems(
+    override fun <T : Any> map(mapper: DashboardItem.Mapper<T>, isFavorite: Boolean): T {
+        return mapper.mapItems(
             id,
             overview,
             posterPath,
@@ -38,4 +38,5 @@ data class FilmDomain(
             voteAverage,
             isFavorite
         )
+    }
 }

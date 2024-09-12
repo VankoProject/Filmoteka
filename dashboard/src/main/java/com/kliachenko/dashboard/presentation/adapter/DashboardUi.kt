@@ -28,6 +28,8 @@ interface DashboardUi {
 
     fun type(): DashboardUiType
 
+    fun title(): String = ""
+
     object Progress : DashboardUi {
 
         override fun id(): String = javaClass.simpleName
@@ -77,6 +79,8 @@ interface DashboardUi {
         override fun filmId() = filmId
 
         override fun type() = DashboardUiType.Film
+
+        override fun title() = title
 
         override fun show(binding: FilmItemLayoutBinding) = with(binding) {
             rateTextView.text = rate.toString()
