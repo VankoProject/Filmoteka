@@ -13,7 +13,7 @@ class SearchPage {
     private val parentId: Matcher<View> = withParent(withId(R.id.rootSearchLayout))
     private val parentClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
     private val searchViewUi = SearchViewUi(parentId, parentClass)
-    private val initialSearchStateUi = InititalSearchStateUi(parentId, parentClass)
+    private val initialSearchStateUi = InitialSearchStateUi(parentId, parentClass)
     private val historySearchStateUi = HistorySearchStateUi(parentId, parentId)
     private val invalidSearchStateUi = InvalidSearchStateUi(parentId, parentClass)
     private val validSearchStateUi = ValidSearchStateUi(parentId, parentClass)
