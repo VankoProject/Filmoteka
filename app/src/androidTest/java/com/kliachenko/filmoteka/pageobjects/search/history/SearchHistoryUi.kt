@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.pageobjects.search
+package com.kliachenko.filmoteka.pageobjects.search.history
 
 import android.view.View
 import android.widget.LinearLayout
@@ -12,11 +12,12 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.kliachenko.dashboard.R
 import com.kliachenko.filmoteka.core.LinearLayoutChildPositionMatcher
+import com.kliachenko.filmoteka.pageobjects.search.FilmSearchItem
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
-class SearchResultsUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
+class SearchHistoryUi(parentId: Int, parentClass: Matcher<View>) {
 
     private val rootLayoutId: Matcher<View> = withId(com.kliachenko.search.R.scrollViewId)
     private val rootLayoutClass: Matcher<View> = isAssignableFrom(ScrollView::class.java)
@@ -24,23 +25,20 @@ class SearchResultsUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
         withParent(withId(com.kliachenko.search.R.id.filmsContainerLayoutId))
     private val filmsContainerClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
-    private val searchFilmItemId: Matcher<View> = withId(R.id.searchfilmItemLayoutId)
-    private val searchFilmItemClass: Matcher<View> = isAssignableFrom(LinearLayout::class.java)
+    private val historyFilmItemId: Matcher<View> = withId(R.id.searchfilmItemLayoutId)
+    private val historyFilmItemClass: Matcher<View> = isAssignableFrom(LinearLayout::class.java)
     private val rootInteraction = onView(
-        allOf(
-            parentId, parentClass, rootLayoutId, rootLayoutClass
-        )
+        allOf(withParent(withId(parentId)), parentClass, rootLayoutId, rootLayoutClass)
     )
     private val filmItemInteraction = onView(
         allOf(
             filmsContainerLayoutId,
             filmsContainerClass,
-            searchFilmItemId,
-            searchFilmItemClass
+            historyFilmItemId,
+            historyFilmItemClass
         )
     )
-
-    fun checkSuccessState(films: List<FilmSearchItem>) {
+    fun checkSearchHistoryState(films: List<FilmSearchItem>) {
         rootInteraction.check(matches(isDisplayed()))
         filmItemInteraction.check(matches(isDisplayed()))
         films.forEach {
@@ -53,7 +51,7 @@ class SearchResultsUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
             allOf(
                 filmsContainerLayoutId,
                 filmsContainerClass,
-                LinearLayoutChildPositionMatcher(position, searchFilmItemId)
+                LinearLayoutChildPositionMatcher(position, historyFilmItemId)
             )
         ).perform(click())
     }

@@ -1,34 +1,35 @@
-package com.kliachenko.filmoteka.pageobjects.search
+package com.kliachenko.filmoteka.pageobjects.search.error
 
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
-import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.filmoteka.core.ColorMatcher
 import com.kliachenko.filmoteka.core.RecyclerViewMatcher
+import com.kliachenko.filmoteka.core.TextMatcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
-class SearchErrorTextUi(rootId: Int, rootClass: Class<RecyclerView>) {
+class SearchRetryButtonUi(rootId: Int, rootClass: Class<RecyclerView>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val errorContainerLayoutId: Int =
         com.kliachenko.search.R.id.searchErrorContainerLayoutId
-    private val searchErrorTextId: Int = com.kliachenko.search.R.id.errorTextViewId
-    private val errorTextColor =
-        ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.error)
+    private val searchRetryButtonId: Int = com.kliachenko.search.R.id.searchRetryButtonId
+    private val errorTextRetryButton =
+        uiContext.getText(com.kliachenko.core.R.string.retry_button).toString()
 
     private val rootInteraction: ViewInteraction = onView(
         allOf(
+            withParent(isAssignableFrom(rootClass)),
+            withParent(withId(rootId)),
             RecyclerViewMatcher(
                 position = 0,
                 targetViewId = errorContainerLayoutId,
@@ -37,27 +38,27 @@ class SearchErrorTextUi(rootId: Int, rootClass: Class<RecyclerView>) {
         )
     )
 
-    private val textInteraction = onView(
+    private val buttonInteraction = onView(
         allOf(
             withParent(withId(errorContainerLayoutId)),
             withParent(isAssignableFrom(LinearLayout::class.java)),
-            withId(searchErrorTextId),
-            isAssignableFrom(MaterialTextView::class.java)
+            withId(searchRetryButtonId),
+            isAssignableFrom(AppCompatButton::class.java),
         )
     )
 
-    fun checkErrorState(errorMessage: String) {
+    fun checkErrorState() {
         rootInteraction.check(matches(isDisplayed()))
-        textInteraction.apply {
-            check(matches(isDisplayed()))
-            check(matches(ColorMatcher(errorTextColor)))
-            check(matches(withText(errorMessage)))
-        }
+        buttonInteraction.check(matches(isDisplayed()))
+            .check(matches(TextMatcher(errorTextRetryButton)))
+    }
+
+    fun tap() {
+        buttonInteraction.perform(click())
     }
 
     fun isNotVisible() {
         rootInteraction.check(matches(not(isDisplayed())))
-        textInteraction.check(matches(not(isDisplayed())))
     }
 
 }

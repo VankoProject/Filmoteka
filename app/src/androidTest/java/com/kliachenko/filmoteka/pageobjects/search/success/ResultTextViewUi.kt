@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.pageobjects.search
+package com.kliachenko.filmoteka.pageobjects.search.success
 
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -8,6 +8,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.android.material.textview.MaterialTextView
 import com.kliachenko.filmoteka.core.ColorMatcher
@@ -16,7 +17,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
-class ResultTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
+class ResultTextViewUi(parentId: Int, parentClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val resultText =
@@ -26,7 +27,7 @@ class ResultTextViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
     private val resultTextViewId: Matcher<View> = withId(com.kliachenko.search.R.resultTextViewId)
     private val interaction: ViewInteraction = onView(
         allOf(
-            parentId, parentClass,
+            withParent(withId(parentId)), parentClass,
             resultTextViewId,
             isAssignableFrom(MaterialTextView::class.java)
         )

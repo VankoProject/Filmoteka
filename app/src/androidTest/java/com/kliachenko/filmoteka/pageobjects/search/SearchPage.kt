@@ -7,6 +7,13 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.kliachenko.filmoteka.R
+import com.kliachenko.filmoteka.pageobjects.search.blank.BlankSearchStateUi
+import com.kliachenko.filmoteka.pageobjects.search.error.ErrorSearchStateUi
+import com.kliachenko.filmoteka.pageobjects.search.history.HistorySearchStateUi
+import com.kliachenko.filmoteka.pageobjects.search.initial.InitialSearchStateUi
+import com.kliachenko.filmoteka.pageobjects.search.invalid.InvalidSearchStateUi
+import com.kliachenko.filmoteka.pageobjects.search.success.SuccessSearchStateUi
+import com.kliachenko.filmoteka.pageobjects.search.valid.ValidSearchStateUi
 import org.hamcrest.Matcher
 
 class SearchPage {
@@ -17,7 +24,7 @@ class SearchPage {
     private val rootClass: Class<RecyclerView> = RecyclerView::class.java
     private val searchViewUi = SearchViewUi(parentId, parentClass)
     private val initialSearchStateUi = InitialSearchStateUi(parentId, parentClass, rootId, rootClass)
-    private val historySearchStateUi = HistorySearchStateUi(parentId, parentId, rootId, rootClass)
+    private val historySearchStateUi = HistorySearchStateUi(parentId, parentClass, rootId, rootClass)
     private val invalidSearchStateUi = InvalidSearchStateUi(parentId, parentClass, rootId, rootClass)
     private val validSearchStateUi = ValidSearchStateUi(parentId, parentClass, rootId, rootClass)
     private val errorSearchStateUi = ErrorSearchStateUi(parentId, parentClass, rootId, rootClass)
@@ -53,7 +60,7 @@ class SearchPage {
         initialSearchStateUi.isNotVisible()
         historySearchStateUi.isNotVisible()
         invalidSearchStateUi.isNotVisible()
-        validSearchStateUi.checkVisible(message = message)
+        validSearchStateUi.checkVisible()
         errorSearchStateUi.isNotVisible()
         successSearchStateUi.isNotVisible()
         blankSearchStateUi.isNotVisible()

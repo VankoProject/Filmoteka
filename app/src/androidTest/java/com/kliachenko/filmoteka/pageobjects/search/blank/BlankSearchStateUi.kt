@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.pageobjects.search
+package com.kliachenko.filmoteka.pageobjects.search.blank
 
 import android.view.View
 import androidx.core.content.ContextCompat

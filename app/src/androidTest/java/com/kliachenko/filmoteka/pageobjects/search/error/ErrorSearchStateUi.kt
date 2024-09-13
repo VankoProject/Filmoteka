@@ -1,33 +1,27 @@
-package com.kliachenko.filmoteka.pageobjects.search
+package com.kliachenko.filmoteka.pageobjects.search.error
 
 import android.view.View
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
 import com.kliachenko.filmoteka.core.RecyclerViewMatcher
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
-class SuccessSearchStateUi(
+class ErrorSearchStateUi(
     parentId: Matcher<View>,
     parentClass: Matcher<View>,
     rootId: Int,
     rootClass: Class<RecyclerView>,
 ) {
 
-    private val searchStateLayoutId =
-        com.kliachenko.search.R.id.searchStateLayoutId
-    private val searchStateLayoutClass = withParent(isAssignableFrom(LinearLayout::class.java))
-    private val resultTextViewUi =
-        ResultTextViewUi(parentId = searchStateLayoutId, parentClass = searchStateLayoutClass)
-    private val searchResultsUi =
-        SearchResultsUi(parentId = searchStateLayoutId, parentClass = searchStateLayoutClass)
+    private val searchErrorStateLayoutId = com.kliachenko.search.R.id.searchErrorStateLayoutId
+    private val searchRetryButtonUi = SearchRetryButtonUi(rootId, rootClass)
+    private val searchErrorTextUi = SearchErrorTextUi(rootId, rootClass)
 
     private val rootInteraction = onView(
         allOf(
@@ -37,27 +31,26 @@ class SuccessSearchStateUi(
             isAssignableFrom(rootClass),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = searchStateLayoutId,
+                targetViewId = searchErrorStateLayoutId,
                 recyclerViewId = rootId
             ),
         )
     )
 
-    fun checkVisible(films: List<FilmSearchItem>) {
+    fun checkVisible(errorMessage: String) {
         rootInteraction.check(matches(isDisplayed()))
-        resultTextViewUi.checkSuccessState()
-        searchResultsUi.checkSuccessState(films = films)
+        searchErrorTextUi.checkErrorState(errorMessage = errorMessage)
+        searchRetryButtonUi.checkErrorState()
     }
 
-    fun tapFilm(position: Int) {
-        searchResultsUi.tapFilm(position)
+    fun retry() {
+        searchRetryButtonUi.tap()
     }
-
 
     fun isNotVisible() {
         rootInteraction.check(matches(not(isDisplayed())))
-        resultTextViewUi.isNotVisible()
-        searchResultsUi.isNotVisible()
+        searchErrorTextUi.isNotVisible()
+        searchRetryButtonUi.isNotVisible()
     }
 
 }
