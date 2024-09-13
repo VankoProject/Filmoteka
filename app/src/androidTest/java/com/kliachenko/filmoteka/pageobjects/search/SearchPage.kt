@@ -2,6 +2,7 @@ package com.kliachenko.filmoteka.pageobjects.search
 
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
@@ -12,14 +13,16 @@ class SearchPage {
 
     private val parentId: Matcher<View> = withParent(withId(R.id.rootSearchLayout))
     private val parentClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
+    private val rootId: Int = com.kliachenko.search.R.id.recyclerViewSearchId
+    private val rootClass: Class<RecyclerView> = RecyclerView::class.java
     private val searchViewUi = SearchViewUi(parentId, parentClass)
-    private val initialSearchStateUi = InitialSearchStateUi(parentId, parentClass)
-    private val historySearchStateUi = HistorySearchStateUi(parentId, parentId)
-    private val invalidSearchStateUi = InvalidSearchStateUi(parentId, parentClass)
-    private val validSearchStateUi = ValidSearchStateUi(parentId, parentClass)
-    private val errorSearchStateUi = ErrorSearchStateUi(parentId, parentClass)
-    private val successSearchStateUi = SuccessSearchStateUi(parentId, parentClass)
-    private val blankSearchStateUi = BlankSearchStateUi(parentId, parentClass)
+    private val initialSearchStateUi = InitialSearchStateUi(parentId, parentClass, rootId, rootClass)
+    private val historySearchStateUi = HistorySearchStateUi(parentId, parentId, rootId, rootClass)
+    private val invalidSearchStateUi = InvalidSearchStateUi(parentId, parentClass, rootId, rootClass)
+    private val validSearchStateUi = ValidSearchStateUi(parentId, parentClass, rootId, rootClass)
+    private val errorSearchStateUi = ErrorSearchStateUi(parentId, parentClass, rootId, rootClass)
+    private val successSearchStateUi = SuccessSearchStateUi(parentId, parentClass, rootId, rootClass)
+    private val blankSearchStateUi = BlankSearchStateUi(parentId, parentClass, rootId, rootClass)
 
     fun checkInitialState() {
         searchViewUi.checkInitial()
@@ -56,14 +59,14 @@ class SearchPage {
         blankSearchStateUi.isNotVisible()
     }
 
-    fun checkBlankState(message: String) {
+    fun checkBlankState() {
         initialSearchStateUi.isNotVisible()
         historySearchStateUi.isNotVisible()
         invalidSearchStateUi.isNotVisible()
         validSearchStateUi.isNotVisible()
         errorSearchStateUi.isNotVisible()
         successSearchStateUi.isNotVisible()
-        blankSearchStateUi.checkVisible(message = message)
+        blankSearchStateUi.checkVisible()
     }
 
     fun tapClearAllInput() {
