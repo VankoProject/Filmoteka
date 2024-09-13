@@ -39,10 +39,10 @@ class SearchPage {
         searchViewUi.type(text = text)
     }
 
-    fun checkInvalidSearchState(message: String) {
+    fun checkInvalidSearchState() {
         initialSearchStateUi.isNotVisible()
         historySearchStateUi.isNotVisible()
-        invalidSearchStateUi.checkVisible(message = message)
+        invalidSearchStateUi.checkVisible()
         validSearchStateUi.isNotVisible()
         errorSearchStateUi.isNotVisible()
         successSearchStateUi.isNotVisible()
