@@ -56,7 +56,7 @@ class DetailPage {
         overView: String,
         originalLanguage: String,
         countryProduction: String,
-        homePage: String,
+        homePage: String
     ) {
         toolBarView.checkSuccess(title = title)
         progressStateUi.isNotVisible()
@@ -74,7 +74,6 @@ class DetailPage {
             overView,
             originalLanguage,
             countryProduction,
-            homePage
         )
     }
 

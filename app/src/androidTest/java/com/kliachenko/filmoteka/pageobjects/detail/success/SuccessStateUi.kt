@@ -49,7 +49,6 @@ object SuccessStateUi {
         overView: String,
         originalLanguage: String,
         countryProduction: String,
-        homePage: String,
     ) {
         interaction.check(matches(isDisplayed()))
         imagePosterView.checkSuccess()
