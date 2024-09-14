@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.kliachenko.filmoteka.R
 import com.kliachenko.filmoteka.pageobjects.search.blank.BlankSearchStateUi
 import com.kliachenko.filmoteka.pageobjects.search.error.ErrorSearchStateUi
 import com.kliachenko.filmoteka.pageobjects.search.history.HistorySearchStateUi
@@ -18,18 +17,18 @@ import org.hamcrest.Matcher
 
 class SearchPage {
 
-    private val parentId: Matcher<View> = withParent(withId(R.id.rootSearchLayout))
+    private val parentId: Matcher<View> = withParent(withId(com.kliachenko.search.R.id.rootSearchLayout))
     private val parentClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
-    private val rootId: Int = com.kliachenko.search.R.id.recyclerViewSearchId
-    private val rootClass: Class<RecyclerView> = RecyclerView::class.java
+    private val rootContainerResultId: Int = com.kliachenko.search.R.id.recyclerViewSearch
+    private val rootContainerResultClass: Class<RecyclerView> = RecyclerView::class.java
     private val searchViewUi = SearchViewUi(parentId, parentClass)
-    private val initialSearchStateUi = InitialSearchStateUi(parentId, parentClass, rootId, rootClass)
-    private val historySearchStateUi = HistorySearchStateUi(parentId, parentClass, rootId, rootClass)
-    private val invalidSearchStateUi = InvalidSearchStateUi(parentId, parentClass, rootId, rootClass)
-    private val validSearchStateUi = ValidSearchStateUi(parentId, parentClass, rootId, rootClass)
-    private val errorSearchStateUi = ErrorSearchStateUi(parentId, parentClass, rootId, rootClass)
-    private val successSearchStateUi = SuccessSearchStateUi(parentId, parentClass, rootId, rootClass)
-    private val blankSearchStateUi = BlankSearchStateUi(parentId, parentClass, rootId, rootClass)
+    private val initialSearchStateUi = InitialSearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)
+    private val historySearchStateUi = HistorySearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)
+    private val invalidSearchStateUi = InvalidSearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)
+    private val validSearchStateUi = ValidSearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)
+    private val errorSearchStateUi = ErrorSearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)
+    private val successSearchStateUi = SuccessSearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)
+    private val blankSearchStateUi = BlankSearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)
 
     fun checkInitialState() {
         searchViewUi.checkInitial()
@@ -56,7 +55,7 @@ class SearchPage {
         blankSearchStateUi.isNotVisible()
     }
 
-    fun checkValidSearchState(message: String) {
+    fun checkValidSearchState() {
         initialSearchStateUi.isNotVisible()
         historySearchStateUi.isNotVisible()
         invalidSearchStateUi.isNotVisible()

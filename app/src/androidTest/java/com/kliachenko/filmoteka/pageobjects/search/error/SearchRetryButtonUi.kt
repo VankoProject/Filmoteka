@@ -20,9 +20,9 @@ import org.hamcrest.Matchers.not
 class SearchRetryButtonUi(rootId: Int, rootClass: Class<RecyclerView>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val errorContainerLayoutId: Int =
-        com.kliachenko.search.R.id.searchErrorContainerLayoutId
-    private val searchRetryButtonId: Int = com.kliachenko.search.R.id.searchRetryButtonId
+    private val searchErrorStateLayoutId: Int =
+        com.kliachenko.search.R.id.searchErrorStateLayout
+    private val searchRetryButtonId: Int = com.kliachenko.search.R.id.searchRetryButton
     private val errorTextRetryButton =
         uiContext.getText(com.kliachenko.core.R.string.retry_button).toString()
 
@@ -32,7 +32,7 @@ class SearchRetryButtonUi(rootId: Int, rootClass: Class<RecyclerView>) {
             withParent(withId(rootId)),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = errorContainerLayoutId,
+                targetViewId = searchErrorStateLayoutId,
                 recyclerViewId = rootId
             )
         )
@@ -40,7 +40,7 @@ class SearchRetryButtonUi(rootId: Int, rootClass: Class<RecyclerView>) {
 
     private val buttonInteraction = onView(
         allOf(
-            withParent(withId(errorContainerLayoutId)),
+            withParent(withId(searchErrorStateLayoutId)),
             withParent(isAssignableFrom(LinearLayout::class.java)),
             withId(searchRetryButtonId),
             isAssignableFrom(AppCompatButton::class.java),

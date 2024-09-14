@@ -1,4 +1,4 @@
-package com.kliachenko.dashboard.presentation.customView
+package com.kliachenko.dashboard.presentation.customViews
 
 import android.os.Parcel
 import android.os.Parcelable

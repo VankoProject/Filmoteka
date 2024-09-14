@@ -24,7 +24,7 @@ class InitialSearchStateUi(
     rootId: Int,
     rootClass: Class<RecyclerView>
 ) {
-    private val initialSearchTextViewId: Int = com.kliachenko.search.R.id.initialSearchTextViewId
+    private val initialSearchTextViewId: Int = com.kliachenko.search.R.id.initialSearchTextView
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val initialText =

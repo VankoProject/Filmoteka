@@ -10,13 +10,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.dashboard.presentation.customView.CustomImageView
+import com.kliachenko.dashboard.presentation.customViews.CustomImageView
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 
 class FilmSearchItem(private val title: String) {
 
-    private val filmSearchItemId: Matcher<View> = withParent(withId(com.kliachenko.search.R.id.searchFilmItemLayoutId))
+    private val filmSearchItemId: Matcher<View> = withParent(withId(com.kliachenko.search.R.id.searchFilmItemLayout))
     private val filmSearchItemClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
 
     fun checkSuccess() {

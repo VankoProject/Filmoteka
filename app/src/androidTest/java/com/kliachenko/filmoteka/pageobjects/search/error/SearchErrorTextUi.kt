@@ -21,17 +21,19 @@ import org.hamcrest.Matchers.not
 class SearchErrorTextUi(rootId: Int, rootClass: Class<RecyclerView>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val errorContainerLayoutId: Int =
-        com.kliachenko.search.R.id.searchErrorContainerLayoutId
-    private val searchErrorTextId: Int = com.kliachenko.search.R.id.errorTextViewId
+    private val searchErrorStateLayoutId: Int =
+        com.kliachenko.search.R.id.searchErrorStateLayout
+    private val searchErrorTextId: Int = com.kliachenko.search.R.id.searchErrorTextView
     private val errorTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.error)
 
     private val rootInteraction: ViewInteraction = onView(
         allOf(
+            withParent(isAssignableFrom(rootClass)),
+            withParent(withId(rootId)),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = errorContainerLayoutId,
+                targetViewId = searchErrorStateLayoutId,
                 recyclerViewId = rootId
             )
         )
@@ -39,7 +41,7 @@ class SearchErrorTextUi(rootId: Int, rootClass: Class<RecyclerView>) {
 
     private val textInteraction = onView(
         allOf(
-            withParent(withId(errorContainerLayoutId)),
+            withParent(withId(searchErrorStateLayoutId)),
             withParent(isAssignableFrom(LinearLayout::class.java)),
             withId(searchErrorTextId),
             isAssignableFrom(MaterialTextView::class.java)

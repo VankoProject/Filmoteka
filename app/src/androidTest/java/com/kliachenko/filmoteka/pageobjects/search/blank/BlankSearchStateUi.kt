@@ -25,7 +25,7 @@ class BlankSearchStateUi(
     rootClass: Class<RecyclerView>,
 ) {
 
-    private val blankSearchTextViewId: Int = com.kliachenko.search.R.id.blankSearchTextViewId
+    private val textViewId: Int = com.kliachenko.search.R.id.blankSearchTextView
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val initialText =
@@ -37,7 +37,7 @@ class BlankSearchStateUi(
             withId(rootId),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = blankSearchTextViewId,
+                targetViewId = textViewId,
                 recyclerViewId = rootId
             ),
         )
@@ -47,7 +47,7 @@ class BlankSearchStateUi(
         allOf(
             withParent(withId(rootId)),
             withParent(isAssignableFrom(rootClass)),
-            withId(blankSearchTextViewId),
+            withId(textViewId),
             isAssignableFrom(MaterialTextView::class.java)
         )
     )

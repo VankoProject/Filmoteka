@@ -22,7 +22,7 @@ import org.hamcrest.Matchers.allOf
 
 class SearchViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
 
-    private val searchViewId: Int = com.kliachenko.search.R.id.searchViewId
+    private val searchViewId: Int = com.kliachenko.search.R.id.searchView
     private val interaction: ViewInteraction = onView(
         allOf(parentId, parentClass, withId(searchViewId), isAssignableFrom(SearchView::class.java))
     )
@@ -32,7 +32,7 @@ class SearchViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
     private val hintTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.darkGrey)
     private val searchHintText =
-        uiContext.getText(com.kliachenko.detail.R.string.search_hint).toString()
+        uiContext.getText(com.kliachenko.search.R.string.search_hint).toString()
 
     fun checkInitial() {
         interaction.apply {

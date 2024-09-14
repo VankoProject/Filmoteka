@@ -24,7 +24,7 @@ class RecentTextViewUi(parentId: Int, parentClass: Matcher<View>?) {
         uiContext.getText(com.kliachenko.search.R.string.recent).toString()
     private val recentTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
-    private val recentTextViewId: Matcher<View> = withId(com.kliachenko.search.R.recentTextViewId)
+    private val recentTextViewId: Matcher<View> = withId(com.kliachenko.search.R.id.recentTextView)
 
     private val interaction: ViewInteraction = onView(
         allOf(
