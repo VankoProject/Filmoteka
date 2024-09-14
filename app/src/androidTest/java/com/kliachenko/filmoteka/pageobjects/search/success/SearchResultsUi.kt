@@ -10,7 +10,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
-import com.kliachenko.dashboard.R
 import com.kliachenko.filmoteka.core.LinearLayoutChildPositionMatcher
 import com.kliachenko.filmoteka.pageobjects.search.FilmSearchItem
 import org.hamcrest.Matcher
@@ -19,13 +18,13 @@ import org.hamcrest.Matchers.not
 
 class SearchResultsUi(parentId: Int, parentClass: Matcher<View>) {
 
-    private val rootLayoutId: Matcher<View> = withId(com.kliachenko.search.R.scrollViewId)
+    private val rootLayoutId: Matcher<View> = withId(com.kliachenko.search.R.id.scrollViewId)
     private val rootLayoutClass: Matcher<View> = isAssignableFrom(ScrollView::class.java)
     private val filmsContainerLayoutId: Matcher<View> =
         withParent(withId(com.kliachenko.search.R.id.filmsContainerLayoutId))
     private val filmsContainerClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
-    private val searchFilmItemId: Matcher<View> = withId(R.id.searchfilmItemLayoutId)
+    private val searchFilmItemId: Matcher<View> = withId(com.kliachenko.search.R.id.searchFilmItemLayoutId)
     private val searchFilmItemClass: Matcher<View> = isAssignableFrom(LinearLayout::class.java)
     private val rootInteraction = onView(
         allOf(withParent(withId(parentId)), parentClass, rootLayoutId, rootLayoutClass)

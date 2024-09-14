@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/searchFilmItemLayoutId"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/lightBlue"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="140dp"
+    android:layout_height="240dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_marginStart="@dimen/medium_margin"
+    android:layout_marginTop="@dimen/medium_margin">
+
+    <com.kliachenko.core.customView.CustomImageView
+        android:id="@+id/searchItemImageView"
+        android:layout_width="140dp"
+        android:layout_height="192dp"
+        android:contentDescription="@string/film_s_poster_description"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/searchTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:textSize="@dimen/small_text"
+        tools:text="Bad boys for life"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/small_margin" />
+
+</LinearLayout>

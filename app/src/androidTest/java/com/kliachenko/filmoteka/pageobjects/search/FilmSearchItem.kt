@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.dashboard.presentation.customView.CustomImageView
+import com.kliachenko.core.customView.CustomImageView
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 

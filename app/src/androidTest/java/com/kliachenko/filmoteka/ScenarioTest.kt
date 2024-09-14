@@ -278,7 +278,7 @@ class ScenarioTest {
         searchPage.type(text = "Ab")
         searchPage.checkInvalidSearchState()
         searchPage.type(text = "Abc")
-        searchPage.checkValidSearchState(message = "Searching...")
+        searchPage.checkValidSearchState()
         searchPage.checkBlankState()
         searchPage.tapClearAllInput()
         searchPage.checkInitialState()

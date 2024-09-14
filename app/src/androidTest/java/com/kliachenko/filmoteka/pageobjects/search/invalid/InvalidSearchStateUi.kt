@@ -45,7 +45,7 @@ class InvalidSearchStateUi(
             isAssignableFrom(rootClass),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = searchErrorStateLayoutId,
+                targetViewId = searchInvalidStateLayoutId,
                 recyclerViewId = rootId
             ),
         )

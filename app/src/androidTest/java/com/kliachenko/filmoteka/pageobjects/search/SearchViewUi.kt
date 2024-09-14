@@ -32,7 +32,7 @@ class SearchViewUi(parentId: Matcher<View>, parentClass: Matcher<View>) {
     private val hintTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.darkGrey)
     private val searchHintText =
-        uiContext.getText(com.kliachenko.detail.R.string.search_hint).toString()
+        uiContext.getText(com.kliachenko.search.R.string.search_hint).toString()
 
     fun checkInitial() {
         interaction.apply {

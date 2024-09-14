@@ -2,24 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/searchFragment"
+    android:id="@+id/rootSearchLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/stillBlue"
     tools:context="com.kliachenko.search.presentation.SearchFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SEARCH"
-        android:gravity="center"/>
-
     <androidx.appcompat.widget.SearchView
-        style="@style/ThemeOverlay.Material3.Search"
+        android:id="@+id/searchViewId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:queryHint="Enter your film"
-        android:background="@color/stillBlue"
-        app:queryBackground="@color/royalBlue"/>
+        app:queryHint="@string/search_hint"
+        android:layout_marginBottom="@dimen/medium_margin"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearchId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
 
 </LinearLayout>
