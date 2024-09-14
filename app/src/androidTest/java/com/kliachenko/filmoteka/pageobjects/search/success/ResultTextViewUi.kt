@@ -24,7 +24,7 @@ class ResultTextViewUi(parentId: Int, parentClass: Matcher<View>) {
         uiContext.getText(com.kliachenko.search.R.string.search_results).toString()
     private val resultTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
-    private val resultTextViewId: Matcher<View> = withId(com.kliachenko.search.R.id.resultTextViewId)
+    private val resultTextViewId: Matcher<View> = withId(com.kliachenko.search.R.id.resultTextView)
     private val interaction: ViewInteraction = onView(
         allOf(
             withParent(withId(parentId)), parentClass,

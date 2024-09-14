@@ -10,14 +10,14 @@
     tools:context="com.kliachenko.search.presentation.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchViewId"
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:queryHint="@string/search_hint"
         android:layout_marginBottom="@dimen/medium_margin"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSearchId"
+        android:id="@+id/recyclerViewSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

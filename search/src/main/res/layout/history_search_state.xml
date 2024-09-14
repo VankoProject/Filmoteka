@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/searchHistoryStateLayoutId"
+    android:id="@+id/searchHistoryStateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:background="@color/stillBlue">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/recentTextViewId"
+        android:id="@+id/recentTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
@@ -17,12 +17,12 @@
         tools:text="@string/recent" />
 
     <ScrollView
-        android:id="@+id/scrollViewId"
+        android:id="@+id/searchScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/filmsContainerLayoutId"
+            android:id="@+id/filmsContainerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>

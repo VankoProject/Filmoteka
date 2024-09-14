@@ -2,14 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/searchInvalidStateLayoutId"
+    android:id="@+id/searchInvalidStateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/stillBlue">
 
     <ProgressBar
-        android:id="@+id/invalidProgressbarId"
+        android:id="@+id/invalidProgressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -17,7 +17,7 @@
         android:layout_marginBottom="@dimen/small_margin"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/invalidTextViewId"
+        android:id="@+id/invalidTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

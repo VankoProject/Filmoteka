@@ -21,13 +21,13 @@ class HistorySearchStateUi(
     rootId: Int,
     rootClass: Class<RecyclerView>,
 ) {
-    private val searchHistoryStateLayoutId: Int =
-        com.kliachenko.search.R.id.searchHistoryStateLayoutId
-    private val searchHistoryStateLayoutClass = withParent(isAssignableFrom(LinearLayout::class.java))
+    private val historyStateLayoutId: Int =
+        com.kliachenko.search.R.id.searchHistoryStateLayout
+    private val historyStateLayoutClass = withParent(isAssignableFrom(LinearLayout::class.java))
     private val recentTextViewUi =
-        RecentTextViewUi(parentId = searchHistoryStateLayoutId, parentClass = searchHistoryStateLayoutClass)
+        RecentTextViewUi(parentId = historyStateLayoutId, parentClass = historyStateLayoutClass)
     private val searchHistoryUi =
-        SearchHistoryUi(parentId = searchHistoryStateLayoutId, parentClass = searchHistoryStateLayoutClass)
+        SearchHistoryUi(parentId = historyStateLayoutId, parentClass = historyStateLayoutClass)
 
     private val rootInteraction = onView(
         allOf(
@@ -37,7 +37,7 @@ class HistorySearchStateUi(
             isAssignableFrom(rootClass),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = searchHistoryStateLayoutId,
+                targetViewId = historyStateLayoutId,
                 recyclerViewId = rootId
             ),
         )

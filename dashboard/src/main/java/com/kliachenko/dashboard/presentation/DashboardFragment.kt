@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.kliachenko.core.BaseFragment
-import com.kliachenko.core.customView.TabScrollListener
-import com.kliachenko.core.customView.TabSelectedListener
 import com.kliachenko.dashboard.databinding.FragmentDashboardBinding
 import com.kliachenko.dashboard.presentation.adapter.DashboardAdapter
+import com.kliachenko.dashboard.presentation.customViews.TabScrollListener
+import com.kliachenko.dashboard.presentation.customViews.TabSelectedListener
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>(),
     TabSelectedListener, TabScrollListener {

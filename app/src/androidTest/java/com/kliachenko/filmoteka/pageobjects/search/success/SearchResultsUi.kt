@@ -18,13 +18,13 @@ import org.hamcrest.Matchers.not
 
 class SearchResultsUi(parentId: Int, parentClass: Matcher<View>) {
 
-    private val rootLayoutId: Matcher<View> = withId(com.kliachenko.search.R.id.scrollViewId)
+    private val rootLayoutId: Matcher<View> = withId(com.kliachenko.search.R.id.searchScrollView)
     private val rootLayoutClass: Matcher<View> = isAssignableFrom(ScrollView::class.java)
     private val filmsContainerLayoutId: Matcher<View> =
-        withParent(withId(com.kliachenko.search.R.id.filmsContainerLayoutId))
+        withParent(withId(com.kliachenko.search.R.id.filmsContainerLayout))
     private val filmsContainerClass: Matcher<View> =
         withParent(isAssignableFrom(LinearLayout::class.java))
-    private val searchFilmItemId: Matcher<View> = withId(com.kliachenko.search.R.id.searchFilmItemLayoutId)
+    private val searchFilmItemId: Matcher<View> = withId(com.kliachenko.search.R.id.searchFilmItemLayout)
     private val searchFilmItemClass: Matcher<View> = isAssignableFrom(LinearLayout::class.java)
     private val rootInteraction = onView(
         allOf(withParent(withId(parentId)), parentClass, rootLayoutId, rootLayoutClass)

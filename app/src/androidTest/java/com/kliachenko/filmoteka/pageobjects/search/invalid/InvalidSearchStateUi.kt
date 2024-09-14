@@ -33,9 +33,9 @@ class InvalidSearchStateUi(
     private val invalidTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val searchInvalidStateLayoutId: Int =
-        com.kliachenko.search.R.id.searchInvalidStateLayoutId
-    private val invalidTextViewId: Int = com.kliachenko.search.R.id.invalidTextViewId
-    private val invalidProgressbarId: Int = com.kliachenko.search.R.id.invalidProgressbarId
+        com.kliachenko.search.R.id.searchInvalidStateLayout
+    private val invalidTextViewId: Int = com.kliachenko.search.R.id.invalidTextView
+    private val invalidProgressbarId: Int = com.kliachenko.search.R.id.invalidProgressbar
 
     private val rootInteraction = onView(
         allOf(

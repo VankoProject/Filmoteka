@@ -19,7 +19,7 @@ class ErrorSearchStateUi(
     rootClass: Class<RecyclerView>,
 ) {
 
-    private val searchErrorStateLayoutId = com.kliachenko.search.R.id.searchErrorStateLayoutId
+    private val errorStateLayoutId = com.kliachenko.search.R.id.searchErrorStateLayout
     private val searchRetryButtonUi = SearchRetryButtonUi(rootId, rootClass)
     private val searchErrorTextUi = SearchErrorTextUi(rootId, rootClass)
 
@@ -31,7 +31,7 @@ class ErrorSearchStateUi(
             isAssignableFrom(rootClass),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = searchErrorStateLayoutId,
+                targetViewId = errorStateLayoutId,
                 recyclerViewId = rootId
             ),
         )

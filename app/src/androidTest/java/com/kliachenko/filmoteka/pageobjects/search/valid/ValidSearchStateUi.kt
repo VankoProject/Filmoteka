@@ -33,9 +33,9 @@ class ValidSearchStateUi(
     private val validTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
     private val searchValidStateLayoutId: Int =
-        com.kliachenko.search.R.id.searchValidStateLayoutId
-    private val continueSearchTextViewId: Int = com.kliachenko.search.R.id.continueSearchTextViewId
-    private val validProgressbarId: Int = com.kliachenko.search.R.id.validProgressbarId
+        com.kliachenko.search.R.id.searchValidStateLayout
+    private val continueSearchTextViewId: Int = com.kliachenko.search.R.id.continueSearchTextView
+    private val validProgressbarId: Int = com.kliachenko.search.R.id.validProgressbar
 
     private val rootInteraction = onView(
         allOf(

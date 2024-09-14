@@ -21,8 +21,8 @@ class SearchRetryButtonUi(rootId: Int, rootClass: Class<RecyclerView>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val searchErrorStateLayoutId: Int =
-        com.kliachenko.search.R.id.searchErrorStateLayoutId
-    private val searchRetryButtonId: Int = com.kliachenko.search.R.id.searchRetryButtonId
+        com.kliachenko.search.R.id.searchErrorStateLayout
+    private val searchRetryButtonId: Int = com.kliachenko.search.R.id.searchRetryButton
     private val errorTextRetryButton =
         uiContext.getText(com.kliachenko.core.R.string.retry_button).toString()
 

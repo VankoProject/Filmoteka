@@ -22,8 +22,8 @@ class SearchErrorTextUi(rootId: Int, rootClass: Class<RecyclerView>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val searchErrorStateLayoutId: Int =
-        com.kliachenko.search.R.id.searchErrorStateLayoutId
-    private val searchErrorTextId: Int = com.kliachenko.search.R.id.searchErrorTextViewId
+        com.kliachenko.search.R.id.searchErrorStateLayout
+    private val searchErrorTextId: Int = com.kliachenko.search.R.id.searchErrorTextView
     private val errorTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.error)
 

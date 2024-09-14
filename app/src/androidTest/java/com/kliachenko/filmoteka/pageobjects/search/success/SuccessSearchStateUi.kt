@@ -23,7 +23,7 @@ class SuccessSearchStateUi(
 ) {
 
     private val searchSuccessStateLayoutId =
-        com.kliachenko.search.R.id.searchStateLayoutId
+        com.kliachenko.search.R.id.searchStateLayout
     private val searchSuccessStateLayoutClass = withParent(isAssignableFrom(LinearLayout::class.java))
     private val resultTextViewUi =
         ResultTextViewUi(parentId = searchSuccessStateLayoutId, parentClass = searchSuccessStateLayoutClass)
