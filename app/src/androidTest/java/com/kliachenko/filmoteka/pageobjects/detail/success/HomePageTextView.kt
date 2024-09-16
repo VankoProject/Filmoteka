@@ -20,7 +20,7 @@ class HomePageTextView(parentSuccessId: Matcher<View>, parentSuccessClass: Match
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val category = uiContext.getText(com.kliachenko.detail.R.string.home_page).toString()
-    private val textPlug = uiContext.getText(com.kliachenko.detail.R.string.visit_official_website).toString()
+    private val textPlug = uiContext.getText(com.kliachenko.detail.R.string.hyper_link).toString()
     private val homePageTextId: Int = com.kliachenko.detail.R.id.homePageTextId
     private val interaction: ViewInteraction = onView(
         allOf(

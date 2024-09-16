@@ -10,7 +10,7 @@
     android:layout_marginTop="@dimen/medium_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.kliachenko.core.customView.CustomImageView
+    <com.kliachenko.dashboard.presentation.customViews.CustomImageView
         android:id="@+id/posterImageView"
         android:layout_width="140dp"
         android:layout_height="192dp"
@@ -61,7 +61,7 @@
             android:progressTint="@color/yellow"/>
     </LinearLayout>
 
-    <com.kliachenko.core.customView.CustomImageIconView
+    <com.kliachenko.dashboard.presentation.customViews.CustomImageIconView
         android:id="@+id/iconImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

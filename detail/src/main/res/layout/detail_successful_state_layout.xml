@@ -15,7 +15,7 @@
         android:layout_margin="@dimen/x_medium_margin"
         android:orientation="vertical">
 
-        <com.kliachenko.dashboard.presentation.customView.CustomImageView
+        <com.kliachenko.dashboard.presentation.customViews.CustomImageView
             android:id="@+id/filmPosterView"
             android:layout_width="600dp"
             android:layout_height="300dp"
