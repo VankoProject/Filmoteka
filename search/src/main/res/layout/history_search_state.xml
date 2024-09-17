@@ -14,7 +14,7 @@
         android:textColor="@color/white"
         android:layout_marginStart="@dimen/medium_margin"
         android:textSize="@dimen/medium_text"
-        tools:text="@string/recent" />
+        android:text="@string/recent" />
 
     <ScrollView
         android:id="@+id/searchScrollView"
