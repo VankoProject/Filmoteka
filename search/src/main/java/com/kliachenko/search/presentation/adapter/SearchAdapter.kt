@@ -4,13 +4,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kliachenko.search.databinding.BlankSearchStateBinding
 import com.kliachenko.search.databinding.ErrorSearchStateBinding
-import com.kliachenko.search.databinding.HistorySearchStateBinding
 import com.kliachenko.search.databinding.InitialSearchStateBinding
-import com.kliachenko.search.databinding.InvalidSearchStateBinding
+import com.kliachenko.search.databinding.ProgressSearchStateBinding
 import com.kliachenko.search.databinding.SuccessSearchStateBinding
-import com.kliachenko.search.databinding.ValidSearchStateBinding
 
 class SearchAdapter(
     private val clickListener: ClickActions,
@@ -54,14 +51,6 @@ abstract class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     class Initial(private val binding: InitialSearchStateBinding) : SearchViewHolder(binding.root) {
         override fun bind(item: SearchUi) {
             super.bind(item)
-            item.show(binding)
-        }
-    }
-
-    class History(private val binding: HistorySearchStateBinding) : SearchViewHolder(binding.root) {
-        override fun bind(item: SearchUi) {
-            super.bind(item)
-            item.show(binding)
         }
     }
 
@@ -71,39 +60,21 @@ abstract class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     ) : SearchViewHolder(binding.root) {
         override fun bind(item: SearchUi) {
             super.bind(item)
-            item.show(binding)
             binding.searchRetryButton.setOnClickListener {
                 clickListener.retry()
             }
         }
     }
 
-    class Invalid(private val binding: InvalidSearchStateBinding) : SearchViewHolder(binding.root) {
-        override fun bind(item: SearchUi) {
-            super.bind(item)
-            item.show(binding)
-        }
-    }
-
-    class Valid(private val binding: ValidSearchStateBinding) : SearchViewHolder(binding.root) {
-        override fun bind(item: SearchUi) {
-            super.bind(item)
-            item.show(binding)
-        }
-    }
-
     class Success(private val binding: SuccessSearchStateBinding) : SearchViewHolder(binding.root) {
         override fun bind(item: SearchUi) {
             super.bind(item)
-            item.show(binding)
         }
     }
 
-    class Blank(private val binding: BlankSearchStateBinding) : SearchViewHolder(binding.root) {
-        override fun bind(item: SearchUi) {
-            super.bind(item)
-            item.show(binding)
-        }
+    class Progress(private val binding: ProgressSearchStateBinding) :
+        SearchViewHolder(binding.root) {
+
     }
 
 }
