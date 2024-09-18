@@ -19,34 +19,20 @@ interface SearchUiState {
         }
     }
 
-    data class History(private val filmsList: List<SearchUi>) : SearchUiState {
+    data class Progress(private val progressMessage: String) : SearchUiState {
         override fun updateAdapter(adapter: ShowList) {
-            adapter.show(filmsList)
+            adapter.show(listOf(SearchUi.Progress(progressMessage)))
         }
     }
 
-    object Valid : SearchUiState {
+    data class Initial(private val titleMessage: String) : SearchUiState {
         override fun updateAdapter(adapter: ShowList) {
-            adapter.show(listOf(SearchUi.Valid))
+            adapter.show(listOf(SearchUi.Initial(titleMessage)))
         }
     }
 
-    object Invalid : SearchUiState {
-        override fun updateAdapter(adapter: ShowList) {
-            adapter.show(listOf(SearchUi.Invalid))
-        }
-    }
-
-    object Blank : SearchUiState {
-        override fun updateAdapter(adapter: ShowList) {
-            adapter.show(listOf(SearchUi.Blank))
-        }
-    }
-
-    object Initial : SearchUiState {
-        override fun updateAdapter(adapter: ShowList) {
-            adapter.show(listOf(SearchUi.Initial))
-        }
+    object Empty: SearchUiState {
+        override fun updateAdapter(adapter: ShowList) = Unit
     }
 
 }

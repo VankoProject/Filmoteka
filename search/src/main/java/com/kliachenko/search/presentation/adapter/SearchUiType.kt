@@ -2,13 +2,10 @@ package com.kliachenko.search.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.kliachenko.search.databinding.BlankSearchStateBinding
 import com.kliachenko.search.databinding.ErrorSearchStateBinding
-import com.kliachenko.search.databinding.HistorySearchStateBinding
 import com.kliachenko.search.databinding.InitialSearchStateBinding
-import com.kliachenko.search.databinding.InvalidSearchStateBinding
+import com.kliachenko.search.databinding.ProgressSearchStateBinding
 import com.kliachenko.search.databinding.SuccessSearchStateBinding
-import com.kliachenko.search.databinding.ValidSearchStateBinding
 
 interface SearchUiType {
 
@@ -37,33 +34,6 @@ interface SearchUiType {
             )
     }
 
-    object History : SearchUiType {
-        override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
-            SearchViewHolder.History(
-                HistorySearchStateBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                )
-            )
-    }
-
-    object Valid : SearchUiType {
-        override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
-            SearchViewHolder.Valid(
-                ValidSearchStateBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                )
-            )
-    }
-
-    object Invalid : SearchUiType {
-        override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
-            SearchViewHolder.Invalid(
-                InvalidSearchStateBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
-                )
-            )
-    }
-
     object Error : SearchUiType {
         override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
             SearchViewHolder.Error(
@@ -74,10 +44,10 @@ interface SearchUiType {
             )
     }
 
-    object Blank : SearchUiType {
+    object Progress : SearchUiType {
         override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
-            SearchViewHolder.Blank(
-                BlankSearchStateBinding.inflate(
+            SearchViewHolder.Progress(
+                ProgressSearchStateBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
@@ -87,12 +57,9 @@ interface SearchUiType {
         fun typeList(): List<SearchUiType> {
             return listOf(
                 Initial,
-                History,
                 Error,
-                Valid,
-                Invalid,
                 Success,
-                Blank
+                Progress
             )
         }
     }
