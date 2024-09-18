@@ -12,7 +12,7 @@ interface Core {
 
     fun provideMakeService(): MakeService
 
-    fun provideManageResources(): ManageResource
+    fun provideManageResources(): ManageResource.Mutable
 
     fun provideDataBase(): FilmsDataBase
 

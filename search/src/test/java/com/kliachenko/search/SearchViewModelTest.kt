@@ -4,10 +4,16 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import com.kliachenko.core.Communication
 import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
+import com.kliachenko.domain.FilmSearchDomain
+import com.kliachenko.domain.SearchItem
+import com.kliachenko.search.domain.LoadResult
+import com.kliachenko.search.domain.SearchInteractor
+import com.kliachenko.search.presentation.SearchCommunication
+import com.kliachenko.search.presentation.SearchUiState
 import com.kliachenko.search.presentation.SearchViewModel
+import com.kliachenko.search.presentation.adapter.SearchUi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -45,67 +51,46 @@ class SearchViewModelTest {
     fun testEmptyHistoryThenErrorThenSuccess() {
         interactor.emptyHistory()
         viewModel.init()
-        communication.checkUpdateState(listOf(SearchUiState.Initial))
+        communication.checkUpdateState(SearchUiState.Initial(titleMessage = "Start searching to see your history here"))
         runAsync.returnResult()
-        communication.checkUpdateState(listOf(SearchUiState.Initial))
-        interactor.hasError(LoadResult.Error(error = "No internet connection"))
+        communication.checkUpdateState(SearchUiState.Initial(titleMessage = "Start searching to see your history here"))
+        interactor.hasError(error = "No internet connection")
         viewModel.search(query = "Film1")
-        communication.checkUpdateState(listOf(
-            SearchUiState.Initial,
-            SearchUiState.Progress))
+        communication.checkUpdateState(SearchUiState.Progress(progressMessage = "Continue typing..."))
         runAsync.returnResult()
-        communication.checkUpdateState(
-            listOf(
-                SearchUiState.Initial,
-                SearchUiState.Progress,
-                SearchUiState.Error(error = "No internet connection")
-            )
-        )
+        communication.checkUpdateState(SearchUiState.Error(message = "No internet connection"))
         interactor.hasSearchResults(
             LoadResult.Success(
                 listOf(
                     FilmSearchDomain(
                         filmId = 1,
-                        imageUrl = "film1",
+                        posterPath = "film1",
                         title = "film1"
                     ),
                     FilmSearchDomain(
                         filmId = 2,
-                        imageUrl = "film21",
+                        posterPath = "film21",
                         title = "film2"
                     )
                 )
             )
         )
         viewModel.retry()
-        communication.checkUpdateState(
-            listOf(
-                SearchUiState.Initial,
-                SearchUiState.Progress,
-                SearchUiState.Error(error = "No internet connection"),
-                SearchUiState.Progress,
-            )
-        )
+        communication.checkUpdateState(SearchUiState.Progress(progressMessage = "Searching..."))
         runAsync.returnResult()
         communication.checkUpdateState(
-            listOf(
-                SearchUiState.Initial,
-                SearchUiState.Progress,
-                SearchUiState.Error(error = "No internet connection"),
-                SearchUiState.Progress,
-                SearchUiState.FilmList(
-                    listOf(
-                        SearchUi.Film(
-                            filmId = 1,
-                            imageUrl = "film1",
-                            title = "film1"
-                        ),
-                        SearchUi.Film(
-                            filmId = 2,
-                            imageUrl = "film2",
-                            title = "film2"
-                        ),
-                    )
+            SearchUiState.Success(
+                listOf(
+                    SearchUi.Success(
+                        filmId = 1,
+                        imageUrl = "film1",
+                        title = "film1"
+                    ),
+                    SearchUi.Success(
+                        filmId = 2,
+                        imageUrl = "film2",
+                        title = "film2"
+                    ),
                 )
             )
         )
@@ -115,54 +100,29 @@ class SearchViewModelTest {
     fun testInvalidTypeThenSuccess() {
         interactor.emptyHistory()
         viewModel.init()
-        communication.checkUpdateState(listOf(SearchUiState.Initial))
+        communication.checkUpdateState(SearchUiState.Initial(titleMessage = "Start searching to see your history here"))
         runAsync.returnResult()
-        communication.checkUpdateState(listOf(SearchUiState.Initial))
+        communication.checkUpdateState(SearchUiState.Initial(titleMessage = "Start searching to see your history here"))
         viewModel.search(query = "F")
-        communication.checkUpdateState(
-            listOf(
-                SearchUiState.Initial,
-                SearchUiState.Progress,
-                SearchUiState.InvalidSearch
-            )
-        )
+        communication.checkUpdateState(SearchUiState.Progress(progressMessage = "Continue typing..."))
         viewModel.search(query = "Fi")
-        communication.checkUpdateState(
-            listOf(
-                SearchUiState.Initial,
-                SearchUiState.Progress,
-                SearchUiState.InvalidSearch
-            )
-        )
+        communication.checkUpdateState(SearchUiState.Progress(progressMessage = "Continue typing..."))
         viewModel.search(query = "Fil")
-        communication.checkUpdateState(
-            listOf(
-                SearchUiState.Initial,
-                SearchUiState.Progress,
-                SearchUiState.InvalidSearch,
-                SearchUiState.Progress,
-            )
-        )
+        communication.checkUpdateState(SearchUiState.Progress(progressMessage = "Searching..."))
         runAsync.returnResult()
         communication.checkUpdateState(
-            listOf(
-                SearchUiState.Initial,
-                SearchUiState.Progress,
-                SearchUiState.InvalidSearch,
-                SearchUiState.Progress,
-                SearchUiState.FilmList(
-                    listOf(
-                        SearchUi.Film(
-                            filmId = 1,
-                            imageUrl = "film1",
-                            title = "film1"
-                        ),
-                        SearchUi.Film(
-                            filmId = 2,
-                            imageUrl = "film2",
-                            title = "film2"
-                        ),
-                    )
+            SearchUiState.Success(
+                listOf(
+                    SearchUi.Success(
+                        filmId = 1,
+                        imageUrl = "film1",
+                        title = "film1"
+                    ),
+                    SearchUi.Success(
+                        filmId = 2,
+                        imageUrl = "film2",
+                        title = "film2"
+                    ),
                 )
             )
         )
@@ -181,7 +141,7 @@ class SearchViewModelTest {
 
 }
 
-private class FakeCommunication : Communication {
+private class FakeCommunication : SearchCommunication {
 
     private var actualUiStateList: MutableList<SearchUiState> = mutableListOf()
 
@@ -198,22 +158,26 @@ private class FakeCommunication : Communication {
     }
 
     fun checkUpdateState(vararg expected: SearchUiState) {
-        assertEquals(expected.toString(), actualUiStateList)
+        assertEquals(expected.toList(), actualUiStateList.last())
     }
 
 }
 
-private class FakeSearchInteractor : SearchInteractor() {
+private class FakeSearchInteractor : SearchInteractor {
 
     private var actualLoadResult: LoadResult = LoadResult.Empty
     private var actualListHistoryFilms: MutableList<FilmSearchDomain> = mutableListOf()
 
-    override suspend fun searchFilms(query: String): LoadResult {
+    override suspend fun search(query: String): LoadResult {
         return actualLoadResult
     }
 
-    override suspend fun historySearch(): List<FilmSearchDomain> {
+    override suspend fun loadHistory(): List<FilmSearchDomain> {
         return actualListHistoryFilms
+    }
+
+    override suspend fun saveFilmToHistory(filmSearchDomain: FilmSearchDomain) {
+        actualListHistoryFilms.add(filmSearchDomain)
     }
 
     fun hasHistoryFilmsSearch(films: List<FilmSearchDomain>) {
@@ -242,7 +206,7 @@ class FakeUiMapper(
 
     override fun mapSuccess(items: List<FilmSearchDomain>): SearchUiState {
         val uiItems = items.map { filmDomain -> filmDomain.map(mapper) }
-        resultUiState = SearchUiState.FilmsList(uiItems)
+        resultUiState = SearchUiState.Success(uiItems)
         return resultUiState
     }
 
@@ -257,20 +221,16 @@ class FakeUiMapper(
     }
 }
 
-private class FakeSearchItemMapper : SearchItem.Mapper<SearchUiState> {
+class FakeSearchItemMapper : SearchItem.Mapper<SearchUi> {
 
-    override fun mapItems(
-        id: Int,
-        posterPath: String,
-        title: String,
-    ): SearchUi {
-        val uiItem = SearchUiState.Film(
-            filmId = id,
-            imageUrl = posterPath,
-            title = title
+    override fun mapItem(filmId: Int, title: String, posterPath: String): SearchUi {
+        return SearchUi.Success(
+            filmId = filmId,
+            title = title,
+            imageUrl = posterPath
         )
-        return uiItem
     }
+
 }
 
 @Suppress("UNCHECKED_CAST")
