@@ -1,4 +1,4 @@
-package com.kliachenko.filmoteka.pageobjects.search.valid
+package com.kliachenko.filmoteka.pageobjects.search.progress
 
 import android.view.View
 import android.widget.LinearLayout
@@ -20,7 +20,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
 
-class ValidSearchStateUi(
+class ProgressSearchStateUi(
     parentId: Matcher<View>,
     parentClass: Matcher<View>,
     rootId: Int,
@@ -28,14 +28,12 @@ class ValidSearchStateUi(
 ) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val validText =
-        uiContext.getText(com.kliachenko.search.R.string.search_text).toString()
-    private val validTextColor =
+    private val progressTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
-    private val searchValidStateLayoutId: Int =
-        com.kliachenko.search.R.id.searchValidStateLayout
-    private val continueSearchTextViewId: Int = com.kliachenko.search.R.id.continueSearchTextView
-    private val validProgressbarId: Int = com.kliachenko.search.R.id.validProgressbar
+    private val searchInvalidStateLayoutId: Int =
+        com.kliachenko.search.R.id.searchProgressStateLayout
+    private val progressTextViewId: Int = com.kliachenko.search.R.id.progressTextView
+    private val progressbarId: Int = com.kliachenko.search.R.id.searchProgressbar
 
     private val rootInteraction = onView(
         allOf(
@@ -45,7 +43,7 @@ class ValidSearchStateUi(
             isAssignableFrom(rootClass),
             RecyclerViewMatcher(
                 position = 0,
-                targetViewId = searchValidStateLayoutId,
+                targetViewId = searchInvalidStateLayoutId,
                 recyclerViewId = rootId
             ),
         )
@@ -53,29 +51,29 @@ class ValidSearchStateUi(
 
     private val textInteraction = onView(
         allOf(
-            withParent(withId(searchValidStateLayoutId)),
+            withParent(withId(searchInvalidStateLayoutId)),
             withParent(isAssignableFrom(LinearLayout::class.java)),
-            withId(continueSearchTextViewId),
+            withId(progressTextViewId),
             isAssignableFrom(MaterialTextView::class.java)
         )
     )
 
     private val progressInteraction = onView(
         allOf(
-            withParent(withId(searchValidStateLayoutId)),
+            withParent(withId(searchInvalidStateLayoutId)),
             withParent(isAssignableFrom(LinearLayout::class.java)),
-            withId(validProgressbarId),
+            withId(progressbarId),
             isAssignableFrom(ProgressBar::class.java)
         )
     )
 
-    fun checkVisible() {
+    fun checkVisible(progressMessage: String) {
         rootInteraction.check(matches(isDisplayed()))
         progressInteraction.check(matches(isDisplayed()))
         textInteraction.apply {
             check(matches(isDisplayed()))
-            check(matches(TextMatcher(validText)))
-            check(matches(ColorMatcher(validTextColor)))
+            check(matches(TextMatcher(progressMessage)))
+            check(matches(ColorMatcher(progressTextColor)))
         }
     }
 

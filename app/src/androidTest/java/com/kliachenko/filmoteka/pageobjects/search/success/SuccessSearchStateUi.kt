@@ -23,7 +23,7 @@ class SuccessSearchStateUi(
 ) {
 
     private val searchSuccessStateLayoutId =
-        com.kliachenko.search.R.id.searchStateLayout
+        com.kliachenko.search.R.id.searchSuccessStateLayout
     private val searchSuccessStateLayoutClass = withParent(isAssignableFrom(LinearLayout::class.java))
     private val resultTextViewUi =
         ResultTextViewUi(parentId = searchSuccessStateLayoutId, parentClass = searchSuccessStateLayoutClass)
@@ -44,9 +44,9 @@ class SuccessSearchStateUi(
         )
     )
 
-    fun checkVisible(films: List<FilmSearchItem>) {
+    fun checkVisible(subscriptionText: String, films: List<FilmSearchItem>) {
         rootInteraction.check(matches(isDisplayed()))
-        resultTextViewUi.checkSuccessState()
+        resultTextViewUi.checkSuccessState(subscriptionText = subscriptionText)
         searchResultsUi.checkSuccessState(films = films)
     }
 
