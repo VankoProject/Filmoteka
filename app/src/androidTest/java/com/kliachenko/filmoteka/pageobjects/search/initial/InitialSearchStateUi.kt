@@ -27,8 +27,6 @@ class InitialSearchStateUi(
     private val initialSearchTextViewId: Int = com.kliachenko.search.R.id.initialSearchTextView
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
     private val textColor = ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
-    private val initialText =
-        uiContext.getText(com.kliachenko.search.R.string.initial_search_message).toString()
 
     private val rootInteraction = onView(
         allOf(
@@ -51,12 +49,12 @@ class InitialSearchStateUi(
         )
     )
 
-    fun checkVisible() {
+    fun checkVisible(titleMessage: String) {
         rootInteraction.check(matches(isDisplayed()))
         textInteraction.apply {
             check(matches(isDisplayed()))
             check(matches(ColorMatcher(textColor)))
-            check(matches(TextMatcher(initialText)))
+            check(matches(TextMatcher(titleMessage)))
         }
     }
 

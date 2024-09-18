@@ -20,11 +20,9 @@ import org.hamcrest.Matchers.not
 class ResultTextViewUi(parentId: Int, parentClass: Matcher<View>) {
 
     private val uiContext = InstrumentationRegistry.getInstrumentation().targetContext
-    private val resultText =
-        uiContext.getText(com.kliachenko.search.R.string.search_results).toString()
     private val resultTextColor =
         ContextCompat.getColor(uiContext, com.kliachenko.core.R.color.white)
-    private val resultTextViewId: Matcher<View> = withId(com.kliachenko.search.R.id.resultTextView)
+    private val resultTextViewId: Matcher<View> = withId(com.kliachenko.search.R.id.subscriptionTextView)
     private val interaction: ViewInteraction = onView(
         allOf(
             withParent(withId(parentId)), parentClass,
@@ -33,13 +31,12 @@ class ResultTextViewUi(parentId: Int, parentClass: Matcher<View>) {
         )
     )
 
-    fun checkSuccessState() {
+    fun checkSuccessState(subscriptionText: String) {
         interaction.apply {
             check(matches(isDisplayed()))
             check(matches(ColorMatcher(resultTextColor)))
-            check(matches(TextMatcher(resultText)))
+            check(matches(TextMatcher(subscriptionText)))
         }
-
     }
 
     fun isNotVisible() {

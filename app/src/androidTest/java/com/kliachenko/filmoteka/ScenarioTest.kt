@@ -272,32 +272,33 @@ class ScenarioTest {
 
     @Test
     fun searchPage_withEmptyHistory_noResults_thenError_thenSuccess_thenHistory() {
-        searchPage.checkInitialState()
+        searchPage.checkInitialState(titleMessage = "Start searching to see your history here")
         searchPage.type(text = "A")
-        searchPage.checkInvalidSearchState()
+        searchPage.checkProgressState(progressMessage = "Continue typing...")
         searchPage.type(text = "Ab")
-        searchPage.checkInvalidSearchState()
+        searchPage.checkProgressState(progressMessage = "Continue typing...")
         searchPage.type(text = "Abc")
-        searchPage.checkValidSearchState()
-        searchPage.checkBlankState()
+        searchPage.checkProgressState(progressMessage = "Searching...")
+        searchPage.checkInitialState(titleMessage = "Unfortunately, nothing was found")
         searchPage.tapClearAllInput()
-        searchPage.checkInitialState()
+        searchPage.checkInitialState(titleMessage = "Start searching to see your history here")
         searchPage.type(text = "F")
-        searchPage.checkInvalidSearchState()
+        searchPage.checkProgressState(progressMessage = "Continue typing...")
         searchPage.type(text = "Fi")
-        searchPage.checkInvalidSearchState()
+        searchPage.checkProgressState(progressMessage = "Continue typing...")
         searchPage.type(text = "Fil")
-        searchPage.checkValidSearchState()
+        searchPage.checkProgressState(progressMessage = "Searching...")
         searchPage.checkErrorState(errorMessage = "No internet connection")
         searchPage.retry()
         searchPage.checkSuccessfulState(
+            subscriptionText = "Search results",
             filmSearchItems = listOf(
                 FilmSearchItem(title = "Film#1"),
                 FilmSearchItem(title = "Film#2"),
                 FilmSearchItem(title = "Film#3")
             )
         )
-        searchPage.tapSearchFilm(position = 0)
+        searchPage.tapFilm(position = 0)
         detailPage.checkSuccessfulState(
             title = "Film#1",
             tagline = "Tagline Film#1",
@@ -314,12 +315,13 @@ class ScenarioTest {
             homePage = "https://www.google.com/"
         )
         detailPage.tapBack()
-        searchPage.checkHistoryState(
+        searchPage.checkSuccessfulState(
+            subscriptionText = "Recent",
             filmSearchItems = listOf(
-                FilmSearchItem(title = "Film#1")
+                FilmSearchItem(title = "Film#1"),
             )
         )
-        searchPage.tapSearchFilmFromHistory(position = 0)
+        searchPage.tapFilm(position = 0)
     }
 
 }
