@@ -133,7 +133,7 @@ class DashboardViewModel(
     }
 
     override fun clear(viewModelClass: Class<out ViewModel>) {
-        clear.clear(DashboardViewModel::class.java)
+        clear.clear(this.javaClass)
     }
 
     override fun observe(owner: LifecycleOwner, observer: Observer<DashboardUiState>) {

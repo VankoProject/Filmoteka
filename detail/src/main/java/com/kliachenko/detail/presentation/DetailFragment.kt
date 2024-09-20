@@ -23,9 +23,15 @@ class DetailFragment : BaseFragment<FragmentDetailBinding, DetailViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args = DetailFragmentArgs.fromBundle(requireArguments())
-        val filmId = args.filmId
-        val filmTitle: String = args.filmTitle
+
+        var filmId = 0
+        var filmTitle: String? = null
+
+        arguments?.let {
+            filmId = it.getInt("filmId")
+            filmTitle = it.getString("filmTitle")
+        }
+
         binding.toolBar.title = filmTitle
 
         snackBar = SnackBarWrapper()

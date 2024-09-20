@@ -11,7 +11,13 @@ import com.kliachenko.search.databinding.SuccessSearchStateBinding
 
 class SearchAdapter(
     private val clickListener: ClickActions,
-    private val typeList: List<SearchUiType> = SearchUiType.typeList(),
+    private val navigate: (Int, String) -> Unit,
+    private val typeList: List<SearchUiType> = listOf(
+        SearchUiType.Initial,
+        SearchUiType.Error,
+        SearchUiType.Success,
+        SearchUiType.Progress
+    ),
 ) : RecyclerView.Adapter<SearchViewHolder>(), ShowList {
 
     private val list = mutableListOf<SearchUi>()
@@ -26,7 +32,7 @@ class SearchAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        return typeList[viewType].viewHolder(parent, clickListener)
+        return typeList[viewType].viewHolder(parent, clickListener, navigate)
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
@@ -50,7 +56,7 @@ abstract class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     class Initial(private val binding: InitialSearchStateBinding) : SearchViewHolder(binding.root) {
         override fun bind(item: SearchUi) {
-            super.bind(item)
+            item.show(binding)
         }
     }
 
@@ -59,26 +65,36 @@ abstract class SearchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val clickListener: ClickActions,
     ) : SearchViewHolder(binding.root) {
         override fun bind(item: SearchUi) {
-            super.bind(item)
+            item.show(binding)
             binding.searchRetryButton.setOnClickListener {
                 clickListener.retry()
             }
         }
     }
 
-    class Success(private val binding: SuccessSearchStateBinding) : SearchViewHolder(binding.root) {
+    class Success(
+        private val binding: SuccessSearchStateBinding,
+        private val navigate: (Int, String) -> Unit,
+    ) : SearchViewHolder(binding.root) {
         override fun bind(item: SearchUi) {
-            super.bind(item)
+            item.show(binding)
+//            binding.filmsContainerLayout.children.forEach {
+//                navigate(item.filmId(), item.title())
+//            }
         }
+        //у меня лаяут не для кликов, надо передавать серчфилмлаяут
     }
 
     class Progress(private val binding: ProgressSearchStateBinding) :
         SearchViewHolder(binding.root) {
-
+        override fun bind(item: SearchUi) {
+            item.show(binding)
+        }
     }
 
 }
 
 interface ShowList {
+
     fun show(uiState: List<SearchUi>)
 }

@@ -1,7 +1,6 @@
 package com.kliachenko.detail.presentation.customViews
 
 import android.annotation.SuppressLint
-
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -17,7 +16,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.google.android.material.textview.MaterialTextView
-import com.kliachenko.detail.R
+import com.kliachenko.core.R
 
 class CustomDetailUiTextView : MaterialTextView {
 
@@ -42,7 +41,7 @@ class CustomDetailUiTextView : MaterialTextView {
                 ForegroundColorSpan(
                     ContextCompat.getColor(
                         context,
-                        com.kliachenko.core.R.color.error
+                        R.color.error
                     )
                 ),
                 startIndex,
@@ -108,7 +107,7 @@ class CustomDetailUiTextView : MaterialTextView {
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
                     ds.isUnderlineText = true
-                    ds.color = ContextCompat.getColor(context, com.kliachenko.core.R.color.liteLimeGreen)
+                    ds.color = ContextCompat.getColor(context, R.color.liteLimeGreen)
                 }
             }
 
@@ -123,7 +122,7 @@ class CustomDetailUiTextView : MaterialTextView {
 
             text = spannableString
             movementMethod = LinkMovementMethod.getInstance()
-        } else visibility = View.GONE
+        } else visibility = GONE
 
     }
 

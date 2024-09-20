@@ -16,7 +16,7 @@ class SearchPage {
 
     private val parentId: Matcher<View> = withParent(withId(com.kliachenko.search.R.id.rootSearchLayout))
     private val parentClass: Matcher<View> = withParent(isAssignableFrom(LinearLayout::class.java))
-    private val rootContainerResultId: Int = com.kliachenko.search.R.id.recyclerViewSearch
+    private val rootContainerResultId: Int = com.kliachenko.search.R.id.searchRecyclerView
     private val rootContainerResultClass: Class<RecyclerView> = RecyclerView::class.java
     private val searchViewUi = SearchViewUi(parentId, parentClass)
     private val initialSearchStateUi = InitialSearchStateUi(parentId, parentClass, rootContainerResultId, rootContainerResultClass)

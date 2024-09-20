@@ -10,6 +10,8 @@ import com.kliachenko.detail.DetailModule
 import com.kliachenko.detail.presentation.DetailViewModel
 import com.kliachenko.filmoteka.main.MainModule
 import com.kliachenko.filmoteka.main.MainViewModel
+import com.kliachenko.search.SearchModule
+import com.kliachenko.search.presentation.SearchViewModel
 
 interface ProvideModule {
 
@@ -26,6 +28,7 @@ interface ProvideModule {
                MainViewModel::class.java -> MainModule(clear)
                DashboardViewModel::class.java -> DashboardModule(core, clear)
                DetailViewModel::class.java -> DetailModule(core, clear)
+               SearchViewModel::class.java -> SearchModule(core, clear)
                else -> throw IllegalStateException("unknown viewModel $clazz")
            } as Module<T>
         }

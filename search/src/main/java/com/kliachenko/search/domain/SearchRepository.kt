@@ -22,12 +22,12 @@ interface LoadResult {
 
         fun mapError(message: String): T
 
-        fun mapEmpty(): T
+        fun mapEmpty(message: String): T
     }
 
-    object Empty: LoadResult {
+    data class Empty(private val message: String): LoadResult {
         override fun <T : Any> map(mapper: Mapper<T>): T {
-            return mapper.mapEmpty()
+            return mapper.mapEmpty(message)
         }
     }
 

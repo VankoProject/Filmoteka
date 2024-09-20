@@ -1,8 +1,12 @@
 package com.kliachenko.search.presentation
 
+import android.util.Log
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.kliachenko.core.BaseViewModel
 import com.kliachenko.core.ManageResource
+import com.kliachenko.core.Observe
 import com.kliachenko.core.RunAsync
 import com.kliachenko.core.modules.Clear
 import com.kliachenko.search.domain.LoadResult
@@ -16,7 +20,7 @@ class SearchViewModel(
     private val manageResource: ManageResource.Search,
     private val clear: Clear,
     runAsync: RunAsync,
-) : BaseViewModel(runAsync), Clear, ClickActions {
+) : BaseViewModel(runAsync), Clear, ClickActions, Observe<SearchUiState> {
 
     private var lastQuery: String = ""
 
@@ -35,10 +39,10 @@ class SearchViewModel(
 
     fun search(query: String) {
         lastQuery = query
-        if (query.length < 2) {
+        if (query.isEmpty()) init()
+        if (query.length < 3)
             communication.update(SearchUiState.Progress(manageResource.continueText()))
-        }
-        else
+        else {
             communication.update(SearchUiState.Progress(manageResource.searchingText()))
             runAsync({
                 interactor.search(query)
@@ -46,15 +50,20 @@ class SearchViewModel(
                 val items = result.map(uiMapper)
                 communication.update(items)
             }
+        }
     }
 
     override fun retry() {
+        Log.d("Filmoteka", "lastQuery: $lastQuery")
         search(lastQuery)
     }
 
-
     override fun clear(viewModelClass: Class<out ViewModel>) {
         clear.clear(this.javaClass)
+    }
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<SearchUiState>) {
+        communication.observe(owner, observer)
     }
 
 }

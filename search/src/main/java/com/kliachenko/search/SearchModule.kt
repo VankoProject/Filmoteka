@@ -34,6 +34,7 @@ class SearchModule(
                     ),
                     mapToCache = FilmSearchMapper.ToCache.Base,
                     mapToDomain = FilmSearchMapper.ToDomain.Base,
+                    manageResource = core.provideManageResources(),
                     handleError = HandleError.Base(core.provideManageResources())
                 )
             ),

@@ -11,11 +11,15 @@ interface SearchUiType {
 
     fun viewHolder(
         parent: ViewGroup,
-        clickActions: ClickActions,
+        clickActions: ClickActions, navigate: (Int, String) -> Unit,
     ): SearchViewHolder
 
     object Initial : SearchUiType {
-        override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
+        override fun viewHolder(
+            parent: ViewGroup,
+            clickActions: ClickActions,
+            navigate: (Int, String) -> Unit,
+        ) =
             SearchViewHolder.Initial(
                 InitialSearchStateBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -26,16 +30,24 @@ interface SearchUiType {
     }
 
     object Success : SearchUiType {
-        override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
+        override fun viewHolder(
+            parent: ViewGroup,
+            clickActions: ClickActions,
+            navigate: (Int, String) -> Unit,
+        ) =
             SearchViewHolder.Success(
                 SuccessSearchStateBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                )
+                ), navigate = navigate
             )
     }
 
     object Error : SearchUiType {
-        override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
+        override fun viewHolder(
+            parent: ViewGroup,
+            clickActions: ClickActions,
+            navigate: (Int, String) -> Unit,
+        ) =
             SearchViewHolder.Error(
                 ErrorSearchStateBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
@@ -45,24 +57,16 @@ interface SearchUiType {
     }
 
     object Progress : SearchUiType {
-        override fun viewHolder(parent: ViewGroup, clickActions: ClickActions) =
+        override fun viewHolder(
+            parent: ViewGroup,
+            clickActions: ClickActions,
+            navigate: (Int, String) -> Unit,
+        ) =
             SearchViewHolder.Progress(
                 ProgressSearchStateBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
             )
     }
-
-    companion object {
-        fun typeList(): List<SearchUiType> {
-            return listOf(
-                Initial,
-                Error,
-                Success,
-                Progress
-            )
-        }
-    }
-
 
 }

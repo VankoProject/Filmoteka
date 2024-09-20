@@ -1,8 +1,8 @@
 package com.kliachenko.filmoteka.pageobjects.search.success
 
 import android.view.View
+import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -19,7 +19,7 @@ import org.hamcrest.Matchers.not
 class SearchResultsUi(parentId: Int, parentClass: Matcher<View>) {
 
     private val rootLayoutId: Matcher<View> = withId(com.kliachenko.search.R.id.searchScrollView)
-    private val rootLayoutClass: Matcher<View> = isAssignableFrom(ScrollView::class.java)
+    private val rootLayoutClass: Matcher<View> = isAssignableFrom(HorizontalScrollView::class.java)
     private val filmsContainerLayoutId: Matcher<View> =
         withParent(withId(com.kliachenko.search.R.id.filmsContainerLayout))
     private val filmsContainerClass: Matcher<View> =

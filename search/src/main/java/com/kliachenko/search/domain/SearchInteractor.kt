@@ -14,7 +14,6 @@ interface SearchInteractor {
         private val repository: SearchRepository,
     ) : SearchInteractor {
         override suspend fun search(query: String): LoadResult {
-            if (query.length < 2) return LoadResult.Empty
             return repository.search(query)
         }
 

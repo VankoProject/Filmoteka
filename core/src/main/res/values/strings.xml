@@ -16,4 +16,21 @@
     <string name="search_results">Search results</string>
     <string name="recent">Recent</string>
 
+    //Detail
+    <string name="database_error_info">Error loading information.\n" +
+                    "Please, try again…</string>
+    <string name="poster_of_the_film">Poster of the film</string>
+    <string name="tmdb">TMDb</string>
+    <string name="favorite_icon_text">Favorites</string>
+    <string name="like_count">Like</string>
+    <string name="country_production">Country production</string>
+    <string name="home_page">Home page</string>
+    <string name="hyper_link">Visit Official Website</string>
+    <string name="tmdb_scores_of_the_film">TMDb scores of the film</string>
+    <string name="original_language">Original language</string>
+    <string name="adult_age">18+</string>
+    <string name="all_ages">All ages</string>
+    <string name="minutes_label">min</string>
+    <string name="age_rating">Age Rating</string>
+
 </resources>
