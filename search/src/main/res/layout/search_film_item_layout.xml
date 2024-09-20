@@ -11,7 +11,7 @@
     android:layout_marginStart="@dimen/medium_margin"
     android:layout_marginTop="@dimen/medium_margin">
 
-    <com.kliachenko.search.presentation.customView.CustomImageView
+    <com.kliachenko.core.customView.CustomImageView
         android:id="@+id/searchItemImageView"
         android:layout_width="140dp"
         android:layout_height="192dp"

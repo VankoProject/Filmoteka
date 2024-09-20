@@ -1,4 +1,4 @@
-package com.kliachenko.dashboard.presentation.customViews
+package com.kliachenko.dashboard.presentation
 
 import android.content.Context
 import android.os.Parcel
@@ -9,7 +9,6 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kliachenko.dashboard.presentation.DashboardUiState
 import com.kliachenko.dashboard.presentation.adapter.DashboardUiType
 
 class CustomRecyclerView : RecyclerView {

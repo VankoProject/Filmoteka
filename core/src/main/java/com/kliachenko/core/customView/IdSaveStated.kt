@@ -1,10 +1,10 @@
-package com.kliachenko.dashboard.presentation.customViews
+package com.kliachenko.core.customView
 
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.View
 
-internal class IdSavedState : View.BaseSavedState {
+class IdSavedState : View.BaseSavedState {
 
     var savedId: Int = 0
 

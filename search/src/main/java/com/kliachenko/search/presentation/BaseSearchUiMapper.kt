@@ -1,12 +1,11 @@
 package com.kliachenko.search.presentation
 
 import com.kliachenko.domain.SearchItem
-import com.kliachenko.search.presentation.adapter.SearchUi
 
-class BaseSearchUiMapper : SearchItem.Mapper<SearchUi> {
+class BaseSearchUiMapper : SearchItem.Mapper<Film> {
 
-    override fun mapItem(filmId: Int, title: String, posterPath: String): SearchUi {
-        return SearchUi.Success(filmId = filmId, title = title, imageUrl = URL_POSTER + posterPath)
+    override fun mapItem(filmId: Int, title: String, posterPath: String): Film {
+        return Film(filmId = filmId, title = title, imageUrl = URL_POSTER + posterPath)
     }
 
     companion object {
@@ -14,3 +13,9 @@ class BaseSearchUiMapper : SearchItem.Mapper<SearchUi> {
     }
 
 }
+
+data class Film(
+    val filmId: Int,
+    val title: String,
+    val imageUrl: String
+)

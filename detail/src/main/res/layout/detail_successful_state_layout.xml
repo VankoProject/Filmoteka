@@ -15,7 +15,7 @@
         android:layout_margin="@dimen/x_medium_margin"
         android:orientation="vertical">
 
-        <com.kliachenko.dashboard.presentation.customViews.CustomImageView
+        <com.kliachenko.core.customView.CustomImageView
             android:id="@+id/filmPosterView"
             android:layout_width="600dp"
             android:layout_height="300dp"
@@ -126,7 +126,7 @@
                 app:layout_constraintStart_toEndOf="@+id/scoreIconLayoutId"
                 app:layout_constraintTop_toTopOf="@+id/scoreIconLayoutId">
 
-                <com.kliachenko.detail.presentation.customViews.CustomFavoriteImageButton
+                <com.kliachenko.core.customView.CustomFavoriteImageButton
                     android:id="@+id/favoriteIconBackgroundId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

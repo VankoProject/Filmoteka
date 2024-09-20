@@ -23,8 +23,6 @@ data class FilmSearchDomain(
     private val posterPath: String,
 ) : SearchItem, MapSearchFilms<FilmSearchDomain> {
 
-    fun id(): Int = filmId
-
     override fun <T : Any> map(mapper: SearchItem.Mapper<T>): T {
         return mapper.mapItem(filmId = filmId, title = title, posterPath = posterPath)
     }

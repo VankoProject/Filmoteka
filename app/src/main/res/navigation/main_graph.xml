@@ -10,4 +10,6 @@
         android:name="com.kliachenko.filmoteka.main.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+
+    <include app:graph="@navigation/bottom_tabs_graph"/>
 </navigation>

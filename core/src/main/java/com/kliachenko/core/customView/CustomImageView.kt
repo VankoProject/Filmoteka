@@ -1,4 +1,4 @@
-package com.kliachenko.dashboard.presentation.customViews
+package com.kliachenko.core.customView
 
 import android.content.Context
 import android.util.AttributeSet

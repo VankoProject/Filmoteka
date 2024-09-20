@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context="com.kliachenko.dashboard.presentation.DashboardFragment">
 
-    <com.kliachenko.dashboard.presentation.customViews.CustomTabLayout
+    <com.kliachenko.dashboard.presentation.CustomTabLayout
         android:id="@+id/dashboardTabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,9 +35,9 @@
             android:layout_height="wrap_content"
             android:text="@string/upcoming_tab"/>
 
-    </com.kliachenko.dashboard.presentation.customViews.CustomTabLayout>
+    </com.kliachenko.dashboard.presentation.CustomTabLayout>
 
-    <com.kliachenko.dashboard.presentation.customViews.CustomRecyclerView
+    <com.kliachenko.dashboard.presentation.CustomRecyclerView
         android:id="@+id/dashboardRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

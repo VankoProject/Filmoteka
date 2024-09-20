@@ -31,7 +31,7 @@ interface SearchUiState {
         }
     }
 
-    object Empty: SearchUiState {
+    object Empty : SearchUiState {
         override fun updateAdapter(adapter: ShowList) = Unit
     }
 

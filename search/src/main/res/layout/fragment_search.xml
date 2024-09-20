@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/stillBlue"
+    tools:background="@color/stillBlue"
     tools:context="com.kliachenko.search.presentation.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
@@ -14,13 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:queryHint="@string/search_hint"
-        android:layout_marginBottom="@dimen/medium_margin"/>
+        app:iconifiedByDefault="false"
+        android:inputType="text"
+        android:background="@drawable/custom_search_view"
+        android:layout_margin="@dimen/medium_margin"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewSearch"
+        android:id="@+id/searchRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
 </LinearLayout>

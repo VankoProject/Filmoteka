@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:background="@color/stillBlue">
+    tools:background="@color/lightBlue">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/subscriptionTextView"
@@ -14,19 +14,19 @@
         android:textColor="@color/white"
         android:layout_marginStart="@dimen/medium_margin"
         android:textSize="@dimen/medium_text"
-        android:text="@string/recent" />
+        tools:text="@string/recent" />
 
-    <ScrollView
+    <HorizontalScrollView
         android:id="@+id/searchScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/filmsContainerLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"/>
+            android:orientation="horizontal"/>
 
-    </ScrollView>
+    </HorizontalScrollView>
 
 </LinearLayout>
