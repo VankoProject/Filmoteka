@@ -13,7 +13,8 @@ class FilmItem(
     private val rate: String,
     private val isFavorite: Boolean,
 ) {
-
+    private val likeBookmarkIcon = com.kliachenko.core.R.drawable.ic_like_bookmark
+    private val unLikeBookmarkIcon = com.kliachenko.core.R.drawable.ic_unlike_bookmark
     private val recyclerViewId: Int = R.id.dashboardRecyclerView
 
     fun check(position: Int) {
@@ -58,8 +59,8 @@ class FilmItem(
         ).check(
             matches(
                 ImageViewDrawableMatcher(
-                    if (isFavorite) R.drawable.ic_like_bookmark
-                    else R.drawable.ic_unlike_bookmark
+                    if (isFavorite) likeBookmarkIcon
+                    else unLikeBookmarkIcon
                 )
             )
         )

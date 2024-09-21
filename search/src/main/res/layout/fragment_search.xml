@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/searchFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootSearchLayout"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@color/stillBlue"
     tools:context="com.kliachenko.search.presentation.SearchFragment">
 
-    <TextView
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="SEARCH"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        app:queryHint="@string/search_hint"
+        app:iconifiedByDefault="false"
+        android:inputType="text"
+        android:background="@drawable/custom_search_view"
+        android:layout_margin="@dimen/medium_margin"/>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecyclerView"
+        android:layout_width="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

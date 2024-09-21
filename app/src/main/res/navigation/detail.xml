@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/detail"
+    app:startDestination="@id/detailFragment">
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.kliachenko.detail.presentation.DetailFragment"
+        android:label="Detail">
+
+        <argument
+            android:name="filmId"
+            app:argType="integer"/>
+        <argument
+            android:name="filmTitle"
+            app:argType="string"/>
+    </fragment>
+
+</navigation>

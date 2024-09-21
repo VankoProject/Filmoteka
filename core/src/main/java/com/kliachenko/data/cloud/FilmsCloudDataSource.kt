@@ -12,7 +12,11 @@ interface FilmsCloudDataSource {
         suspend fun filmDetail(filmId: Int): FilmDetailCloud
     }
 
-    interface Mutable: Films, FilmDetail
+    interface FilmsSearch {
+        suspend fun filmsSearch(query: String): FilmsSearchResponse
+    }
+
+    interface Mutable : Films, FilmDetail, FilmsSearch
 
     class Base(
         private val service: FilmsService,
@@ -23,5 +27,9 @@ interface FilmsCloudDataSource {
 
         override suspend fun filmDetail(filmId: Int): FilmDetailCloud =
             handleRequest(service.filmDetail(filmId = filmId))
+
+        override suspend fun filmsSearch(query: String): FilmsSearchResponse =
+            handleRequest(service.searchFilm(query))
+
     }
 }

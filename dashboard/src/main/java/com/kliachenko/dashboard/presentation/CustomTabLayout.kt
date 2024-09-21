@@ -1,9 +1,10 @@
-package com.kliachenko.dashboard.presentation.customView
+package com.kliachenko.dashboard.presentation
 
 import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
 import com.google.android.material.tabs.TabLayout
+import com.kliachenko.core.customView.IdSavedState
 
 class CustomTabLayout : TabLayout {
 

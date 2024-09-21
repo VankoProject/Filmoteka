@@ -4,33 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dashboard"
     app:startDestination="@id/dashboardFragment">
-
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.kliachenko.dashboard.presentation.DashboardFragment"
-        android:label="Films"
+        android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard">
-
         <action
-            android:id="@+id/action_dashBoardFragment_to_detailFragment"
-            app:destination="@+id/detailFragment"
+            android:id="@+id/action_dashboardFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_enter_anim"
-            app:popExitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/dashboardFragment"/>
     </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.kliachenko.detail.presentation.DetailFragment"
-        android:label="Detail film info" >
-        <argument
-            android:name="filmId"
-            app:argType="integer" />
-        <argument
-            android:name="filmTitle"
-            app:argType="string" />
-    </fragment>
+        android:label="fragment_detail"/>
 
 </navigation>

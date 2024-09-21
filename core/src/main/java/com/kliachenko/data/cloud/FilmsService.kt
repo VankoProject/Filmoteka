@@ -13,15 +13,22 @@ interface FilmsService {
         @Path("category") category: String,
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
         @Query(QUERY_PARAM_LANGUAGE) language: String = "en-US",
-        @Query(QUERY_PARAM_PAGE) page: Int
+        @Query(QUERY_PARAM_PAGE) page: Int,
     ): Call<FilmsResponse>
 
     @GET("3/movie/{movie_id}")
     fun filmDetail(
         @Path("movie_id") filmId: Int,
         @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
-        @Query(QUERY_PARAM_LANGUAGE) language: String = "en-US"
+        @Query(QUERY_PARAM_LANGUAGE) language: String = "en-US",
     ): Call<FilmDetailCloud>
+
+    @GET("3/search/movie")
+    fun searchFilm(
+        @Query("query") query: String,
+        @Query(QUERY_PARAM_API_KEY) apiKey: String = API_KEY,
+        @Query("include_adult") includeAdult: Boolean = false,
+    ): Call<FilmsSearchResponse>
 
     companion object {
         private const val QUERY_PARAM_API_KEY = "api_key"

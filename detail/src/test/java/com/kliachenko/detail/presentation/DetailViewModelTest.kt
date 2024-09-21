@@ -97,7 +97,7 @@ class DetailViewModelTest {
             ), false)
         )
 
-        viewModel.changeStatus(filmId = 0)
+        viewModel.changeStatus(filmId = 0, onStatusChanged = { })
         runAsync.returnLoadResult()
         interactor.expectedResult(LoadResult.Success(
             FilmDetailDomain(
@@ -117,7 +117,7 @@ class DetailViewModelTest {
                 voteCount = 10,
             ), isFavorite = true))
         interactor.checkAddToFavoriteCalled()
-        viewModel.changeStatus(filmId = 0)
+        viewModel.changeStatus(filmId = 0, onStatusChanged = { })
         runAsync.returnLoadResult()
         interactor.expectedResult(LoadResult.Success(
             FilmDetailDomain(

@@ -6,7 +6,7 @@ interface HandleError<T : Any> {
 
     fun handle(e: Exception): T
 
-    class Base(private val manageResource: ManageResource) : HandleError<String> {
+    class Base(private val manageResource: ManageResource.LoadError) : HandleError<String> {
 
         override fun handle(e: Exception) =
             if (e is UnknownHostException)

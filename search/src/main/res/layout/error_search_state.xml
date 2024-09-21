@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchErrorStateLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:background="@color/lightBlue">
+
+    <TextView
+        android:id="@+id/searchErrorTextView"
+        style="@style/ErrorTextViewStyle"
+        android:gravity="center" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/searchRetryButton"
+        style="@style/RetryButtonStyle"
+        android:backgroundTint="@color/royalBlue"/>
+
+</LinearLayout>

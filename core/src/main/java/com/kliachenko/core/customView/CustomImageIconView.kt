@@ -1,10 +1,10 @@
-package com.kliachenko.dashboard.presentation.customView
+package com.kliachenko.core.customView
 
 import android.content.Context
 import android.os.Parcelable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
-import com.kliachenko.dashboard.R
+import com.kliachenko.core.R
 
 class CustomImageIconView : AppCompatImageView, SetIcon {
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/initialSearchTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/x_medium_margin"
+    android:textColor="@color/white"
+    android:textSize="@dimen/x_medium_text"
+    tools:text="@string/initial_search_message"
+    tools:background="@color/lightBlue">
+
+</com.google.android.material.textview.MaterialTextView>
